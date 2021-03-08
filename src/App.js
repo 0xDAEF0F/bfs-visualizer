@@ -1,12 +1,15 @@
 import "bootswatch/dist/yeti/bootstrap.min.css";
 import './App.css';
 import Navbar from "./components/Navbar"
+import MainContainer from "./components/MainContainer"
+import Footer from "./components/Footer"
 
 function App() {
   return (
     <div>
       <Navbar />
-      <h1>My First Project</h1>
+      <MainContainer />
+      <Footer/>
     </div>
   );
 }
