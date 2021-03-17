@@ -1,30 +1,37 @@
 import React from 'react'
 import useWindowDimensions from './useWindowDimensions'
+import Node from './Node'
 
 function Grid() {
 
     const { width, height } = useWindowDimensions();
 
-    let tileW = 20;
-    let rows = Math.floor((width * .85) / tileW)
-    let cols = Math.floor((height * .8) / tileW)
+    let tileW = 30;
+    let rows = Math.floor((height * .8) / tileW);
+    let cols = Math.floor((width * .8) / tileW);
 
-    let items = [];
 
+    let nodes = [];
+
+    let counter = 0;
     for (let i = 0; i < rows; i++) {
-        items.push(<tr>{i}</tr>)
+        nodes.push([])
         for (let j = 0; j < cols; j++) {
-            items.push(<td>{j}</td>)
+            nodes[i].push(<Node id={counter}></Node>)
+            counter++;
         }
     }
 
+
+    let htmlGrid = []
+
+    for (let i = 0; i < rows; i++) {
+        htmlGrid.push(<div className='board-row'>{nodes[i]}</div>)
+    }
+
     return (
-        <div>
-            <table>
-                <tbody>
-                    {items}
-                </tbody>
-            </table>
+        <div className='grid'>
+            {htmlGrid}
         </div>
     )
 }
