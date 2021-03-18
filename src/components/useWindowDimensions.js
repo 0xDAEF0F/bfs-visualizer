@@ -22,7 +22,3 @@ export default function useWindowDimensions() {
 
     return windowDimensions;
 }
-
-export function findMyNeighbors(Node) {
-
-}

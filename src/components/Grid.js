@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useWindowDimensions, { findMyNeighbors } from './useWindowDimensions'
+import useWindowDimensions from './useWindowDimensions'
 import Node from './Node'
 import Toolbar from './Toolbar'
 import GenerateMaze from './GenerateMaze'
@@ -24,23 +24,35 @@ function Grid() {
             nodes[i].push(<Node
                 isMouseDown={isChObs}
                 id={counter}
+                index={{
+                    row: i,
+                    column: j,
+                    rows: rows,
+                    cols: cols
+                }}
+                key={counter}
                 free={true}
                 visited={false}
-                neighbors={undefined}
+                neighbors={{
+                    top: undefined,
+                    right: undefined,
+                    bottom: undefined,
+                    left: undefined
+                }}
             >
             </Node>)
             counter++;
         }
     }
 
-    // Update Neighbors
-
+    // console.log(nodes[0][0].props.neighbors);
+    console.log(nodes);
 
     // Nodes rendered to HTML
     let htmlGrid = []
 
     for (let i = 0; i < rows; i++) {
-        htmlGrid.push(<div className='board-row'>{nodes[i]}</div>)
+        htmlGrid.push(<div key={i} className='board-row'>{nodes[i]}</div>)
     }
 
     return (
