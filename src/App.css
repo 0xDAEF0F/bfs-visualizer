@@ -4,6 +4,11 @@
     padding: 0;
 }
 
+::selection {
+    color: none;
+    background: none;
+}
+
 .app {
     position: relative;
     min-height: 100vh;
@@ -36,6 +41,21 @@
 .node {
   background: #fff;
   border: 1px solid #999;
+  float: left;
+  font-size: 8px;
+  font-weight: bold;
+  line-height: 30px;
+  height: 30px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 30px;
+}
+
+.wall-node {
+  background: red;
+  /* border: 1px solid #999; */
   float: left;
   font-size: 8px;
   font-weight: bold;

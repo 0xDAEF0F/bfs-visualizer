@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Toolbar() {
+function Toolbar(props) {
     return (
         <div className='toolbar'>
-            <button>Create Maze</button>
+            <button onClick={() => props.generateMaze()}>Create Maze</button>
             <button>Choose Starting Node</button>
             <button>Choose Ending Node</button>
         </div>

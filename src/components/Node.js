@@ -5,14 +5,24 @@ export default class Node extends Component {
         super(props);
         this.state = {
             id: props.id,
-            neighbors: [],
-            free: true,
+            neighbors: props.neighbors,
+            free: props.free,
+            visited: props.visited,
             start: false,
+            class: 'node'
         }
     }
+    toggleColor(bool) {
+        if (bool) {
+            this.setState({ free: false, class: 'wall-node' });
+        }
+    }
+
     render() {
+
         return (
-            <div className='node'>
+            <div className={this.state.class}
+                onMouseEnter={() => this.toggleColor(this.props.isMouseDown)}>
                 {this.state.id}
             </div>
         )
