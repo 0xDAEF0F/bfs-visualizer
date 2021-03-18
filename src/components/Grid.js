@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import useWindowDimensions from './useWindowDimensions'
+import { useWindowDimensions, updateNeighbors } from './helperMethods'
 import Node from './Node'
 import Toolbar from './Toolbar'
 import GenerateMaze from './GenerateMaze'
 
 function Grid() {
 
-    const [isChObs, setIsChObs] = useState(false);
+    const [isChOb, setIsChOb] = useState(false);
 
     const { width, height } = useWindowDimensions();
 
@@ -22,31 +22,17 @@ function Grid() {
         nodes.push([])
         for (let j = 0; j < cols; j++) {
             nodes[i].push(<Node
-                isMouseDown={isChObs}
+                isMouseDown={isChOb}
                 id={counter}
-                index={{
-                    row: i,
-                    column: j,
-                    rows: rows,
-                    cols: cols
-                }}
                 key={counter}
                 free={true}
                 visited={false}
-                neighbors={{
-                    top: undefined,
-                    right: undefined,
-                    bottom: undefined,
-                    left: undefined
-                }}
+                neighbors={updateNeighbors(i, j, rows, cols)}
             >
             </Node>)
             counter++;
         }
     }
-
-    // console.log(nodes[0][0].props.neighbors);
-    console.log(nodes);
 
     // Nodes rendered to HTML
     let htmlGrid = []
@@ -57,9 +43,9 @@ function Grid() {
 
     return (
         <>
-            <Toolbar generateMaze={() => GenerateMaze(nodes[0][0].props)} />
-            <div onMouseDown={() => setIsChObs(true)}
-                onMouseUp={() => setIsChObs(false)}
+            <Toolbar generateMaze={() => GenerateMaze(nodes[2][2].props)} />
+            <div onMouseDown={() => setIsChOb(true)}
+                onMouseUp={() => setIsChOb(false)}
                 className='grid'>
                 {htmlGrid}
             </div>
