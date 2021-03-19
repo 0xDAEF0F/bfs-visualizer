@@ -5,17 +5,27 @@ import Toolbar from './Toolbar'
 // import GenerateMaze from './GenerateMaze'
 
 function Grid() {
-
-    const [isChOb, setIsChOb] = useState(false);
-    const [wall, setWall] = useState(true)
-    const { width, height } = useWindowDimensions();
-
     let tileW = 30;
+    const { width, height } = useWindowDimensions();
     let rows = Math.floor((height * .8) / tileW);
     let cols = Math.floor((width * .8) / tileW);
 
+    const [isChOb, setIsChOb] = useState(false);
+    const [wall, setWall] = useState(true)
+
+    const [nodes2, setNodes] = useState({
+        id: [],
+        key: [],
+        free: [],
+        visited: [],
+        neighbors: []
+    });
+
+    const [visited, setVisited] = useState(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
     // Here is the DS nodes[row][col]
     let nodes = [];
+
+
 
     let counter = 0;
     for (let i = 0; i < rows; i++) {
@@ -26,8 +36,7 @@ function Grid() {
                 id={counter}
                 key={counter}
                 free={wall}
-                // classN={'node'}
-                visited={false}
+                visited={visited[i][j]}
                 neighbors={updateNeighbors(i, j, rows, cols)}
             >
             </Node>)
@@ -42,14 +51,12 @@ function Grid() {
         htmlGrid.push(<div key={i} className='board-row'>{nodes[i]}</div>)
     }
 
-    function turnToWalls() {
-        setWall(!wall);
-    }
-
     function GenerateMaze({ visited, neighbors, classN }) {
+        // Turn everything into a wall
+        setWall(!wall);
 
-        turnToWalls();
         console.log(visited, neighbors, classN);
+
         return (
             <div>
 
