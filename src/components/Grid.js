@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { useWindowDimensions, updateNeighbors } from './helperMethods'
 import Node from './Node'
 import Toolbar from './Toolbar'
-import GenerateMaze from './GenerateMaze'
+// import GenerateMaze from './GenerateMaze'
 
 function Grid() {
 
     const [isChOb, setIsChOb] = useState(false);
-
+    const [wall, setWall] = useState(true)
     const { width, height } = useWindowDimensions();
 
     let tileW = 30;
@@ -25,7 +25,8 @@ function Grid() {
                 isMouseDown={isChOb}
                 id={counter}
                 key={counter}
-                free={true}
+                free={wall}
+                // classN={'node'}
                 visited={false}
                 neighbors={updateNeighbors(i, j, rows, cols)}
             >
@@ -41,9 +42,24 @@ function Grid() {
         htmlGrid.push(<div key={i} className='board-row'>{nodes[i]}</div>)
     }
 
+    function turnToWalls() {
+        setWall(!wall);
+    }
+
+    function GenerateMaze({ visited, neighbors, classN }) {
+
+        turnToWalls();
+        console.log(visited, neighbors, classN);
+        return (
+            <div>
+
+            </div>
+        )
+    }
+
     return (
         <>
-            <Toolbar generateMaze={() => GenerateMaze(nodes[2][2].props)} />
+            <Toolbar generateMaze={() => GenerateMaze(nodes[1][1].props)} />
             <div onMouseDown={() => setIsChOb(true)}
                 onMouseUp={() => setIsChOb(false)}
                 className='grid'>

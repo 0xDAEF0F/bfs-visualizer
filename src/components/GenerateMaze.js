@@ -1,8 +1,8 @@
 import React from 'react'
 
-function GenerateMaze(node) {
+function GenerateMaze({ id, visited, neighbors }) {
 
-    console.log(node);
+    console.log(id, visited, neighbors);
 
     return (
         <div>
