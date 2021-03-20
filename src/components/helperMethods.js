@@ -43,12 +43,7 @@ export const updateNeighbors = (row, col, maxRows, maxCols) => {
         left = null;
     }
 
-    return {
-        top: top,
-        right: right,
-        bottom: bottom,
-        left: left
-    }
+    return [top, right, bottom, left];
 }
 
 

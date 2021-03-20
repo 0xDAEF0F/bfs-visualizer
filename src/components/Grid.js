@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useWindowDimensions, updateNeighbors } from './helperMethods'
 import Node from './Node'
 import Toolbar from './Toolbar'
-// import GenerateMaze from './GenerateMaze'
+import GenerateMaze from './GenerateMaze'
 
 function Grid() {
     let tileW = 30;
@@ -11,21 +11,14 @@ function Grid() {
     let cols = Math.floor((width * .8) / tileW);
 
     const [isChOb, setIsChOb] = useState(false);
-    const [wall, setWall] = useState(true)
+    const [wall, setWall] = useState(true);
+    const [isVisited, setVisited] = useState(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
 
-    const [nodes2, setNodes] = useState({
-        id: [],
-        key: [],
-        free: [],
-        visited: [],
-        neighbors: []
-    });
 
-    const [visited, setVisited] = useState(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
     // Here is the DS nodes[row][col]
     let nodes = [];
-
-
+    // Nodes with div in between rows
+    let htmlGrid = [];
 
     let counter = 0;
     for (let i = 0; i < rows; i++) {
@@ -35,8 +28,9 @@ function Grid() {
                 isMouseDown={isChOb}
                 id={counter}
                 key={counter}
+                coord={[i, j]}
                 free={wall}
-                visited={visited[i][j]}
+                visited={isVisited[i][j]}
                 neighbors={updateNeighbors(i, j, rows, cols)}
             >
             </Node>)
@@ -44,29 +38,13 @@ function Grid() {
         }
     }
 
-    // Nodes rendered to HTML
-    let htmlGrid = []
-
     for (let i = 0; i < rows; i++) {
         htmlGrid.push(<div key={i} className='board-row'>{nodes[i]}</div>)
     }
 
-    function GenerateMaze({ visited, neighbors, classN }) {
-        // Turn everything into a wall
-        setWall(!wall);
-
-        console.log(visited, neighbors, classN);
-
-        return (
-            <div>
-
-            </div>
-        )
-    }
-
     return (
         <>
-            <Toolbar generateMaze={() => GenerateMaze(nodes[1][1].props)} />
+            <Toolbar generateMaze={() => GenerateMaze(nodes)} />
             <div onMouseDown={() => setIsChOb(true)}
                 onMouseUp={() => setIsChOb(false)}
                 className='grid'>

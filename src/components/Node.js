@@ -18,8 +18,8 @@ export default class Node extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.free !== this.props.free) {
-            this.setState({ free: this.props.free });
+        if (prevProps !== this.props) {
+            this.setState(this.props);
         }
     }
 
