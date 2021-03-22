@@ -1,8 +1,9 @@
 
 
 function GenerateMaze(node) {
+    // setWall(false);
 
-    console.log();
+    console.log('hey');
 
     return (
         <div>

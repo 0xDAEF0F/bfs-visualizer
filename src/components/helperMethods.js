@@ -46,4 +46,7 @@ export const updateNeighbors = (row, col, maxRows, maxCols) => {
     return [top, right, bottom, left];
 }
 
+export const range = (size, startAt = 0) => {
+    return [...Array(size).keys()].map(i => i + startAt);
+}
 
