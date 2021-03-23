@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import _ from 'lodash'
 
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -43,10 +44,64 @@ export const updateNeighbors = (row, col, maxRows, maxCols) => {
         left = null;
     }
 
-    return [top, right, bottom, left];
+    const allNeighbors = [top, right, bottom, left];
+
+    return allNeighbors.filter((oneNeighbor) => oneNeighbor);
 }
 
 export const range = (size, startAt = 0) => {
     return [...Array(size).keys()].map(i => i + startAt);
 }
 
+export function whoAreMyUnvisitedNeighbors(neighborsArray, allNodesVisitedStateArray) {
+
+    // By default all neighbors are visited
+    let neighbors = [];
+
+    neighborsArray.forEach(pairOfCoordinates => {
+        let [coord1, coord2] = pairOfCoordinates;
+        const amIvisited = allNodesVisitedStateArray[coord1][coord2];
+        if (amIvisited === false) {
+            neighbors.push([coord1, coord2]);
+        }
+    })
+
+    return neighbors;
+}
+
+export const noAdjacentVisitedNeighbors = (unvisitedNeighbors, allNodesVisitedStateArray, maxRows, maxCols, myCurrCoord) => {
+
+    let result = [];
+
+    unvisitedNeighbors.forEach(pairOfCoordinates => {
+        let [coord1, coord2] = pairOfCoordinates;
+
+        // get neighbors of this pair of coord
+        let neighbors = updateNeighbors(coord1, coord2, maxRows, maxCols);
+        // console.log(neighbors);
+        // take off the starting node
+        let newNeighbors = neighbors.filter(neigh => _.isEqual(neigh, myCurrCoord) === false);
+        // check for a visited neighbor
+        let areAnyVisited = anyVisitedNeighbors(newNeighbors, allNodesVisitedStateArray);
+        // if it has then dont push it to the result.
+        if (areAnyVisited === false) {
+            result.push(pairOfCoordinates);
+        }
+    })
+    return result;
+}
+
+export function anyVisitedNeighbors(nodesArr, isVisitedState) {
+    let result = false;
+    console.log(isVisitedState);
+    nodesArr.forEach(node => {
+        let [coord1, coord2] = node;
+        // console.log(isVisitedState[coord1][coord2], node);
+        if (isVisitedState[coord1][coord2] === true) {
+            result = true;
+            return
+        }
+    })
+    // console.log(result);
+    return result
+}
