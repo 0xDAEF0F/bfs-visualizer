@@ -14,12 +14,11 @@ const Node = ({ free, isMouseDown, id, visited }) => {
     useEffect(() => {
         // when generate maze marks node as visited the node gets 
         // marked as free.
-        setFree(true);
         setVisited(visited);
     }, [visited])
 
     return (
-        <div className={isFree ? 'node' : 'wall-node'}
+        <div className={isFree || isVisited ? 'node' : 'wall-node'}
             onMouseEnter={() => isMouseDown ? setFree(false) : ''}>
             {id}
         </div>

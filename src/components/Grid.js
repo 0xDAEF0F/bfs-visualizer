@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     useWindowDimensions, updateNeighbors,
     whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors
@@ -47,41 +47,37 @@ function Grid() {
         // Set all nodes to walls
         setFree(false)
 
-        let stack = [];
+        let stack = [[...coord]];
         // Step #1 Change node to visited
         // And push it to stack
         let [coord1, coord2] = coord;
         let visitedValues = _.cloneDeep(isVisited);
         visitedValues[coord1][coord2] = true;
-        setVisited(visitedValues);
-        stack.push(coord);
+        visitedValues[7][5] = true;
+        visitedValues[3][5] = true;
+        visitedValues[coord1][coord2] = true;
 
         // Step #2 While the stack is not empty
-        //while (stack) {
-        // Step #2.1 Pop last cell from stack and make it the current one
-        let currCoord = stack.pop();
-        //  Step #2.2 If the current cell has neighbours which have not been traversed
-        //  and no adjacent visited neighbors except for itself
-        let myNeighbors = updateNeighbors(currCoord[0], currCoord[1], height, width);
-        const unvisitedNeighbors = whoAreMyUnvisitedNeighbors(myNeighbors, isVisited);
-        let otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, isVisited, height, width, coord);
-        console.log(otherCond);
+        while (stack.length > 0) {
+            // Step #2.1 Pop last cell from stack and make it the current one
+            let currCoord = stack.pop();
+            // console.log(currCoord);
+            //  Step #2.2 If the current cell has neighbours which have not been traversed
+            //  and no adjacent visited neighbors except for itself
+            const myNeighbors = updateNeighbors(currCoord[0], currCoord[1], rows, cols);
+            const unvisitedNeighbors = whoAreMyUnvisitedNeighbors(myNeighbors, visitedValues);
+            const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, visitedValues, rows, cols, coord);
 
-        if (unvisitedNeighbors === true) {
-
-
-
-
-            // let randomNumber = Math.floor(Math.random() * myNeighbors.length);
-            // let randomNeighbor = myNeighbors[randomNumber];
+            if (otherCond.length > 0) {
+                stack.push(currCoord);
+                let randomNumber = Math.floor(Math.random() * otherCond.length);
+                let randomNeighbor = otherCond[randomNumber];
+                visitedValues[randomNeighbor[0]][randomNeighbor[1]] = true;
+                stack.push(randomNeighbor)
+            }
         }
-
-
-
-        //}
+        setVisited(visitedValues);
     }
-
-
 
 
     return (

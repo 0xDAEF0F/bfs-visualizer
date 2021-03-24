@@ -57,10 +57,12 @@ export function whoAreMyUnvisitedNeighbors(neighborsArray, allNodesVisitedStateA
 
     // By default all neighbors are visited
     let neighbors = [];
+    // console.log(allNodesVisitedStateArray);
 
     neighborsArray.forEach(pairOfCoordinates => {
         let [coord1, coord2] = pairOfCoordinates;
         const amIvisited = allNodesVisitedStateArray[coord1][coord2];
+        // console.log(amIvisited);
         if (amIvisited === false) {
             neighbors.push([coord1, coord2]);
         }
@@ -78,7 +80,6 @@ export const noAdjacentVisitedNeighbors = (unvisitedNeighbors, allNodesVisitedSt
 
         // get neighbors of this pair of coord
         let neighbors = updateNeighbors(coord1, coord2, maxRows, maxCols);
-        // console.log(neighbors);
         // take off the starting node
         let newNeighbors = neighbors.filter(neigh => _.isEqual(neigh, myCurrCoord) === false);
         // check for a visited neighbor
@@ -93,15 +94,12 @@ export const noAdjacentVisitedNeighbors = (unvisitedNeighbors, allNodesVisitedSt
 
 export function anyVisitedNeighbors(nodesArr, isVisitedState) {
     let result = false;
-    console.log(isVisitedState);
     nodesArr.forEach(node => {
         let [coord1, coord2] = node;
-        // console.log(isVisitedState[coord1][coord2], node);
         if (isVisitedState[coord1][coord2] === true) {
             result = true;
-            return
         }
+        return
     })
-    // console.log(result);
     return result
 }
