@@ -54,7 +54,7 @@
 }
 
 .wall-node {
-  background: red;
+  background: teal;
   /* border: 1px solid #999; */
   float: left;
   font-size: 8px;

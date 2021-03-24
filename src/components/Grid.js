@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {
     useWindowDimensions, updateNeighbors,
-    whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors
+    whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors, anyVisitedNeighbors
 } from './helperMethods'
 import Node from './Node'
 import Toolbar from './Toolbar'
@@ -43,30 +43,29 @@ function Grid() {
         <div key={i} className='board-row'>{node}</div>
     ));
 
-    function generateMaze({ coord }) {
+
+    function generateMaze() {
         // Set all nodes to walls
         setFree(false)
 
-        let stack = [[...coord]];
+        let stack = [];
         // Step #1 Change node to visited
         // And push it to stack
-        let [coord1, coord2] = coord;
+        let startingNode = [10, 10];
+        let [coord1, coord2] = startingNode;
         let visitedValues = _.cloneDeep(isVisited);
         visitedValues[coord1][coord2] = true;
-        visitedValues[7][5] = true;
-        visitedValues[3][5] = true;
-        visitedValues[coord1][coord2] = true;
+        stack.push(startingNode);
 
         // Step #2 While the stack is not empty
         while (stack.length > 0) {
             // Step #2.1 Pop last cell from stack and make it the current one
             let currCoord = stack.pop();
-            // console.log(currCoord);
             //  Step #2.2 If the current cell has neighbours which have not been traversed
             //  and no adjacent visited neighbors except for itself
             const myNeighbors = updateNeighbors(currCoord[0], currCoord[1], rows, cols);
             const unvisitedNeighbors = whoAreMyUnvisitedNeighbors(myNeighbors, visitedValues);
-            const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, visitedValues, rows, cols, coord);
+            const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, visitedValues, rows, cols, currCoord);
 
             if (otherCond.length > 0) {
                 stack.push(currCoord);
@@ -82,7 +81,7 @@ function Grid() {
 
     return (
         <>
-            <Toolbar generateMaze={() => generateMaze(nodes[5][5].props)} />
+            <Toolbar generateMaze={() => generateMaze()} />
             <div onMouseDown={() => setIsChoosingObstacles(true)}
                 onMouseUp={() => setIsChoosingObstacles(false)}
                 className='grid'>

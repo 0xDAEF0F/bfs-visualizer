@@ -20,7 +20,7 @@ const Node = ({ free, isMouseDown, id, visited }) => {
     return (
         <div className={isFree || isVisited ? 'node' : 'wall-node'}
             onMouseEnter={() => isMouseDown ? setFree(false) : ''}>
-            {id}
+            {/* {id} */}
         </div>
     )
 }
