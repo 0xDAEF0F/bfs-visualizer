@@ -14,7 +14,11 @@ function Grid() {
     const [isChoosingObstacles, setIsChoosingObstacles] = useState(false);
     const [isFree, setFree] = useState(true);
     const [isVisited, setVisited] = useState(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
-    console.log(isVisited);
+    // console.log(isVisited); 
+
+    useEffect(() => {
+        setVisited(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
+    }, [rows, cols])
 
     // Here is the DS nodes[row][col]
     let nodes = [];
