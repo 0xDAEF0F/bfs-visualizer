@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 import _ from 'lodash'
 
+export function GetRowsCols() {
+    const { width, height } = useWindowDimensions();
+
+    let tileW = 30;
+    let rows = Math.floor((height * .8) / tileW);
+    let cols = Math.floor((width * .8) / tileW);
+
+    return [rows, cols];
+}
+
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -102,4 +112,20 @@ export function anyVisitedNeighbors(nodesArr, isVisitedState) {
         return
     })
     return result
+}
+
+export function filterOutEdges(nodes, rows, cols) {
+
+    let result = [];
+
+    nodes.forEach(node => {
+        let [coord1, coord2] = node;
+
+        if (coord1 == 0 || coord1 == rows - 1 || coord2 == 0 || coord2 == cols - 1) {
+            return
+        } else {
+            result.push(node);
+        }
+    })
+    return result;
 }

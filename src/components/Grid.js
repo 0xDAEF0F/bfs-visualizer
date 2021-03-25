@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import {
-    useWindowDimensions, updateNeighbors,
-    whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors, anyVisitedNeighbors
+    GetRowsCols, updateNeighbors,
+    whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors, filterOutEdges
 } from './helperMethods'
 import Node from './Node'
 import Toolbar from './Toolbar'
 import _ from 'lodash'
 
 function Grid() {
-    let tileW = 30;
-    const { width, height } = useWindowDimensions();
-    let rows = Math.floor((height * .8) / tileW);
-    let cols = Math.floor((width * .8) / tileW);
+
+    let [rows, cols] = GetRowsCols();
 
     const [isChoosingObstacles, setIsChoosingObstacles] = useState(false);
     const [isFree, setFree] = useState(true);
     const [isVisited, setVisited] = useState(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
+    console.log(isVisited);
 
     // Here is the DS nodes[row][col]
     let nodes = [];
@@ -30,7 +29,7 @@ function Grid() {
                 key={counter}
                 coord={[i, j]}
                 free={isFree}
-                visited={isVisited[i][j]}
+                // visited={isVisited[i][j]}
                 neighbors={updateNeighbors(i, j, rows, cols)}
             >
             </Node>)
@@ -51,9 +50,9 @@ function Grid() {
         let stack = [];
         // Step #1 Change node to visited
         // And push it to stack
-        let startingNode = [10, 10];
+        let startingNode = [1, 1];
         let [coord1, coord2] = startingNode;
-        let visitedValues = _.cloneDeep(isVisited);
+        let visitedValues = isVisited.map(row => row.map(node => false));
         visitedValues[coord1][coord2] = true;
         stack.push(startingNode);
 
@@ -66,11 +65,12 @@ function Grid() {
             const myNeighbors = updateNeighbors(currCoord[0], currCoord[1], rows, cols);
             const unvisitedNeighbors = whoAreMyUnvisitedNeighbors(myNeighbors, visitedValues);
             const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, visitedValues, rows, cols, currCoord);
+            const edgesFiltered = filterOutEdges(otherCond, rows, cols);
 
-            if (otherCond.length > 0) {
+            if (edgesFiltered.length > 0) {
                 stack.push(currCoord);
-                let randomNumber = Math.floor(Math.random() * otherCond.length);
-                let randomNeighbor = otherCond[randomNumber];
+                let randomNumber = Math.floor(Math.random() * edgesFiltered.length);
+                let randomNeighbor = edgesFiltered[randomNumber];
                 visitedValues[randomNeighbor[0]][randomNeighbor[1]] = true;
                 stack.push(randomNeighbor)
             }
