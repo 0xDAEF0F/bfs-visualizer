@@ -121,7 +121,7 @@ export function filterOutEdges(nodes, rows, cols) {
     nodes.forEach(node => {
         let [coord1, coord2] = node;
 
-        if (coord1 == 0 || coord1 == rows - 1 || coord2 == 0 || coord2 == cols - 1) {
+        if (coord1 === 0 || coord1 === rows - 1 || coord2 === 0 || coord2 === cols - 1) {
             return
         } else {
             result.push(node);
