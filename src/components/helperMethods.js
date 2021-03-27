@@ -34,6 +34,17 @@ export function useWindowDimensions() {
     return windowDimensions;
 }
 
+export function fillMatrix(loop1, loop2, elem = null) {
+    let arr = [];
+    for (let i = 0; i < loop1; i++) {
+        arr.push([]);
+        for (let j = 0; j < loop2; j++) {
+            arr[i].push(elem);
+        }
+    }
+    return arr;
+}
+
 export const updateNeighbors = (row, col, maxRows, maxCols) => {
 
     let top = [row - 1, col];

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {
     GetRowsCols, updateNeighbors,
-    whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors, filterOutEdges
+    whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors,
+    filterOutEdges, fillMatrix
 } from './helperMethods'
 import Node from './Node'
 import Toolbar from './Toolbar'
@@ -11,67 +12,45 @@ function Grid() {
 
     let [rows, cols] = GetRowsCols();
 
-    const [isChoosingObstacles, setIsChoosingObstacles] = useState(false);
-    const [isFree, setFree] = useState(true);
-    const [isVisited, setVisited] = useState(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
+    // useEffect(() => {
+    //     setVisited(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
+    // }, [rows, cols])
 
-    useEffect(() => {
-        setVisited(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
-    }, [rows, cols])
+    const [globalState, setGlobalState] = useState({
+        // Global 
+        mouseDown: false,
+        // Choose starting node and finish randomly
+        // but first checking if is a wall || !carved
+        startNode: undefined,
+        finishNode: undefined,
+        // Independent
+        isWall: fillMatrix(rows, cols, false), // for computer UI
+        carved: fillMatrix(rows, cols, false), // maze generator
+        traversed: fillMatrix(rows, cols, false), // pathfinding
+        // All vertices and their edges (check walls || !carved)
+        adjacencyList: [],
+    })
 
-    let nodes = [];
+    let gridObj = fillMatrix(rows, cols);
 
-    const fillGrid = () => {
-        let counter = 0;
-        for (let i = 0; i < rows; i++) {
-            nodes.push([])
-            for (let j = 0; j < cols; j++) {
-                nodes[i].push(<Node
-                    isMouseDown={isChoosingObstacles}
-                    id={counter}
-                    key={counter}
-                    coord={[i, j]}
-                    free={isFree}
-                    visited={isVisited[i][j]}
-                >
-                </Node>)
-                counter++;
-            }
-        }
-    }
-    fillGrid();
-
-    console.log(nodes);
-
-    // Nodes with div in between rows
-    const htmlGrid = nodes.map((node, i) => (
-        <div key={i} className='board-row'>{node}</div>
-    ));
-
-
-    function bfs(grid, startNode) {
-        let queue = [];
-        // mark starting node as discovered/traversed
-        queue.push(startNode);
-        while (queue.length > 0) {
-            let v = queue.shift()
-            // if v is goal return v
-
-        }
-    }
-
+    let grid = gridObj.map((rows, i) => rows.map((nodes, j) => <Node
+        key={[i, j]}
+        isMouseDown={globalState.mouseDown}
+        carved={globalState.carved[i][j]}
+        isWall={globalState.isWall[i][j]}
+    ></Node>))
 
     function generateMaze() {
         // Set all nodes to walls
-        setFree(false)
+        setGlobalState((prev) => ({ ...prev, isWall: fillMatrix(rows, cols, true) }))
 
         let stack = [];
         // Step #1 Change node to visited
         // And push it to stack
         let startingNode = [1, 1];
         let [coord1, coord2] = startingNode;
-        let visitedValues = isVisited.map(row => row.map(node => false));
-        visitedValues[coord1][coord2] = true;
+        let { carved } = globalState
+        carved[coord1][coord2] = true;
         stack.push(startingNode);
 
         // Step #2 While the stack is not empty
@@ -81,29 +60,32 @@ function Grid() {
             //  Step #2.2 If the current cell has neighbours which have not been traversed
             //  and no adjacent visited neighbors except for itself
             const myNeighbors = updateNeighbors(currCoord[0], currCoord[1], rows, cols);
-            const unvisitedNeighbors = whoAreMyUnvisitedNeighbors(myNeighbors, visitedValues);
-            const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, visitedValues, rows, cols, currCoord);
+            const unvisitedNeighbors = whoAreMyUnvisitedNeighbors(myNeighbors, carved);
+            const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, carved, rows, cols, currCoord);
             const edgesFiltered = filterOutEdges(otherCond, rows, cols);
 
             if (edgesFiltered.length > 0) {
                 stack.push(currCoord);
                 let randomNumber = Math.floor(Math.random() * edgesFiltered.length);
                 let randomNeighbor = edgesFiltered[randomNumber];
-                visitedValues[randomNeighbor[0]][randomNeighbor[1]] = true;
+                carved[randomNeighbor[0]][randomNeighbor[1]] = true;
                 stack.push(randomNeighbor)
             }
         }
-        setVisited(visitedValues);
+        setGlobalState(prev => ({ ...prev, carved: carved }))
     }
-
 
     return (
         <>
-            <Toolbar generateMaze={generateMaze} />
-            <div onMouseDown={() => setIsChoosingObstacles(true)}
-                onMouseUp={() => setIsChoosingObstacles(false)}
-                className='grid'>
-                {htmlGrid}
+            <Toolbar
+                generateMaze={generateMaze}
+            />
+            <div
+                onMouseDown={() => setGlobalState(prev => ({ ...prev, mouseDown: true }))}
+                onMouseUp={() => setGlobalState(prev => ({ ...prev, mouseDown: false }))}
+                className='grid'
+            >
+                {grid.map((row, i) => <div key={i} className='board-row'>{row}</div>)}
             </div>
         </>
     )
