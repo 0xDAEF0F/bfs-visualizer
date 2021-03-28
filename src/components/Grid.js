@@ -6,8 +6,8 @@ import Toolbar from './Toolbar'
 // Functions
 import {
     GetRowsCols, fillMatrix
-} from './helperMethods'
-import generateMaze from './generateMaze'
+} from './functions/helperMethods'
+import generateMaze from './functions/generateMaze'
 
 function Grid() {
 

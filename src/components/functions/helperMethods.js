@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import _ from 'lodash'
-
 
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
