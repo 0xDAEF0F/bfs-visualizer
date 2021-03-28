@@ -10,23 +10,18 @@ function Grid() {
 
     const [rows, cols] = GetRowsCols();
     const [wall, setWall] = useState(fillMatrix(rows, cols, false));
-    const [globalState, setGlobalState] = useState({
-        // Global 
-        mouseDown: false,
-        startNode: undefined,
-        finishNode: undefined,
-        // Independent
-        traversed: fillMatrix(rows, cols, false),
-        adjacencyList: [],
-    })
+    const [startNode, setStartNode] = useState(undefined);
+    const [goalNode, setGoalNode] = useState(undefined);
+    const [isMouseDown, setIsMouseDown] = useState(false);
 
     let gridObj = fillMatrix(rows, cols);
     let grid = gridObj.map((rows, i) => rows.map((_, j) => <Node
         key={[i, j]}
         coord={[i, j]}
         turnToWall={turnToWall}
-        startNode={globalState.startNode}
-        isMouseDown={globalState.mouseDown}
+        startNode={startNode}
+        goalNode={goalNode}
+        isMouseDown={isMouseDown}
         isWall={wall[i][j]}
     ></Node>))
 
@@ -37,7 +32,7 @@ function Grid() {
         setWall(walls);
     }
 
-    function pickRandomStart(wallState, globalState) {
+    function pickRandomFreeNode(wallState, setter) {
         let [...allWalls] = wallState;
 
         // Turning all paths into coordinates
@@ -55,21 +50,19 @@ function Grid() {
         const randomRow = Math.floor(Math.random() * allPathCoord.length);
         const randomCol = Math.floor(Math.random() * allPathCoord[randomRow].length);
 
-        globalState(prev => ({
-            ...prev,
-            startNode: allPathCoord[randomRow][randomCol]
-        }))
+        setter(allPathCoord[randomRow][randomCol])
     }
 
     return (
         <>
             <Toolbar
-                generateMaze={() => generateMaze(rows, cols, setWall)}
-                pickRandomStart={() => pickRandomStart(wall, setGlobalState)}
+                generateMaze={() => generateMaze(rows, cols, setWall, setStartNode, setGoalNode)}
+                pickRandomStart={() => pickRandomFreeNode(wall, setStartNode)}
+                pickRandomEnd={() => pickRandomFreeNode(wall, setGoalNode)}
             />
             <div
-                onMouseDown={() => setGlobalState(prev => ({ ...prev, mouseDown: true }))}
-                onMouseUp={() => setGlobalState(prev => ({ ...prev, mouseDown: false }))}
+                onMouseDown={() => setIsMouseDown(true)}
+                onMouseUp={() => setIsMouseDown(false)}
                 className='grid'
             >
                 {grid.map((row, i) => <div key={i} className='board-row'>{row}</div>)}

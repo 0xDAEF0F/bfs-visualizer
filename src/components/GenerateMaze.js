@@ -5,7 +5,7 @@ import {
     filterOutEdges
 } from "./helperMethods"
 
-export default function generateMaze(rows, cols, stateSetter) {
+export default function generateMaze(rows, cols, walSetter, startSetter, goalSetter) {
 
     let carved = fillMatrix(rows, cols, false);
 
@@ -36,5 +36,7 @@ export default function generateMaze(rows, cols, stateSetter) {
             stack.push(randomNeighbor)
         }
     }
-    stateSetter(carved.map(row => row.map(value => !value)));
+    walSetter(carved.map(row => row.map(value => !value)));
+    startSetter(undefined);
+    goalSetter(undefined);
 }

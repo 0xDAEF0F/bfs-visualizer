@@ -1,17 +1,21 @@
 
 
 
-const Node = ({ isWall, isMouseDown, coord, turnToWall, startNode }) => {
+const Node = ({ isWall, isMouseDown, coord, turnToWall, startNode, goalNode }) => {
 
     let className;
 
     if (isWall === true) {
         className = 'wall-node';
-    } else if (JSON.stringify(coord) === JSON.stringify(startNode)) {
-        className = 'start-node';
-        console.log('object');
-    } else if (isWall === false) {
+    }
+    if (isWall === false) {
         className = 'node';
+    }
+    if (JSON.stringify(coord) === JSON.stringify(startNode)) {
+        className = 'start-node';
+    }
+    if (JSON.stringify(coord) === JSON.stringify(goalNode)) {
+        className = 'goal-node';
     }
 
     return (
