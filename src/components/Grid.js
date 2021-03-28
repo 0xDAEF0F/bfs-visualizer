@@ -20,14 +20,11 @@ function Grid() {
     const [globalState, setGlobalState] = useState({
         // Global 
         mouseDown: false,
-        // Choose starting node and finish randomly
-        // but first checking if is a wall || !carved
         startNode: undefined,
         finishNode: undefined,
         // Independent
-        isWall: fillMatrix(rows, cols, false), // for computer UI
-        traversed: fillMatrix(rows, cols, false), // pathfinding
-        // All vertices and their edges (check walls || !carved)
+        isWall: fillMatrix(rows, cols, false),
+        traversed: fillMatrix(rows, cols, false),
         adjacencyList: [],
     })
 
@@ -35,9 +32,20 @@ function Grid() {
 
     let grid = gridObj.map((rows, i) => rows.map((nodes, j) => <Node
         key={[i, j]}
+        coord={[i, j]}
+        turnToWall={turnToWall}
         isMouseDown={globalState.mouseDown}
         isWall={globalState.isWall[i][j]}
     ></Node>))
+
+    function turnToWall([i, j]) {
+        let { isWall } = globalState;
+        isWall[i][j] = true;
+        setGlobalState(prev => ({
+            ...prev,
+            isWall: isWall
+        }))
+    }
 
     function generateMaze() {
 

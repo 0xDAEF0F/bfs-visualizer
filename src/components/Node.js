@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
 
-const Node = ({ isWall, isMouseDown }) => {
-
-    const [wall, setWall] = useState(false);
-
-    useEffect(() => {
-
-        setWall(isWall);
-
-    }, [isWall])
+const Node = ({ isWall, isMouseDown, coord, turnToWall }) => {
 
     return (
         <div
-            className={!wall ? 'node' : 'wall-node'}
-            onMouseEnter={() => isMouseDown ? setWall(true) : ''}
+            className={!isWall ? 'node' : 'wall-node'}
+            onMouseEnter={() => isMouseDown ? turnToWall(coord) : ''}
         >
         </div >
     )
