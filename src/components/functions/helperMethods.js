@@ -43,3 +43,26 @@ export function fillMatrix(loop1, loop2, elem = null) {
     }
     return arr;
 }
+
+export function allPathCoord(wallState) {
+    const allCoord = wallState.map((row, i) => {
+        return row.map((isWall, j) => {
+            if (isWall === false) {
+                return [i, j];
+            }
+            return null;
+        }).filter(emptyCoord => emptyCoord);
+    }).filter(row => row.length > 0);
+
+    return allCoord;
+}
+
+export function pickRandomFreeNode(wallState, setter) {
+
+    const allPathCoords = allPathCoord(wallState)
+
+    const randomRow = Math.floor(Math.random() * allPathCoords.length);
+    const randomCol = Math.floor(Math.random() * allPathCoords[randomRow].length);
+
+    setter(allPathCoords[randomRow][randomCol])
+}

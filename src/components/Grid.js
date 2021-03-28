@@ -5,7 +5,8 @@ import Node from './Node'
 import Toolbar from './Toolbar'
 // Functions
 import {
-    GetRowsCols, fillMatrix
+    GetRowsCols, fillMatrix,
+    pickRandomFreeNode
 } from './functions/helperMethods'
 import generateMaze from './functions/generateMaze'
 
@@ -33,27 +34,6 @@ function Grid() {
         walls[i][j] = true;
 
         setWall(walls);
-    }
-
-    function pickRandomFreeNode(wallState, setter) {
-        let [...allWalls] = wallState;
-
-        // Turning all paths into coordinates
-        // And placing them to an array filtering
-        // empty spaces.
-        const allPathCoord = allWalls.map((row, i) => {
-            return row.map((isWall, j) => {
-                if (isWall === false) {
-                    return [i, j];
-                }
-                return null;
-            }).filter(emptyCoord => emptyCoord);
-        }).filter(row => row.length > 0);
-
-        const randomRow = Math.floor(Math.random() * allPathCoord.length);
-        const randomCol = Math.floor(Math.random() * allPathCoord[randomRow].length);
-
-        setter(allPathCoord[randomRow][randomCol])
     }
 
     return (
