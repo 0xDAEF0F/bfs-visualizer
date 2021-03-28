@@ -8,6 +8,7 @@ import {
     GetRowsCols, fillMatrix,
     pickRandomFreeNode
 } from './functions/helperMethods'
+import makeAdjacencyList from './functions/makeAdjacencyList'
 import generateMaze from './functions/generateMaze'
 
 function Grid() {
@@ -17,6 +18,7 @@ function Grid() {
     const [startNode, setStartNode] = useState(undefined);
     const [goalNode, setGoalNode] = useState(undefined);
     const [isMouseDown, setIsMouseDown] = useState(false);
+    const [adjList, setAdjList] = useState(undefined);
 
     let gridObj = fillMatrix(rows, cols);
     let grid = gridObj.map((rows, i) => rows.map((_, j) => <Node
@@ -39,6 +41,7 @@ function Grid() {
     return (
         <>
             <Toolbar
+                onClick={() => makeAdjacencyList(wall, setAdjList)}
                 generateMaze={() => generateMaze(rows, cols, setWall, setStartNode, setGoalNode)}
                 pickRandomStart={() => pickRandomFreeNode(wall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(wall, setGoalNode)}

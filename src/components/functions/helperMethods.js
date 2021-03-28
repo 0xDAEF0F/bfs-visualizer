@@ -60,6 +60,7 @@ export function allPathCoord(wallState) {
 export function pickRandomFreeNode(wallState, setter) {
 
     const allPathCoords = allPathCoord(wallState)
+    console.log(allPathCoords);
 
     const randomRow = Math.floor(Math.random() * allPathCoords.length);
     const randomCol = Math.floor(Math.random() * allPathCoords[randomRow].length);
