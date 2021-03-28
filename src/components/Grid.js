@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import {
     GetRowsCols, updateNeighbors,
-    whoAreMyUnvisitedNeighbors, noAdjacentVisitedNeighbors,
+    whoAreMyUnvisitedNeighbors,
+    noAdjacentVisitedNeighbors,
     filterOutEdges, fillMatrix
 } from './helperMethods'
 import Node from './Node'
 import Toolbar from './Toolbar'
-import _ from 'lodash'
 
 function Grid() {
 
     let [rows, cols] = GetRowsCols();
 
-    // useEffect(() => {
-    //     setVisited(new Array(rows).fill([]).map(() => new Array(cols).fill(false)));
-    // }, [rows, cols])
+    useEffect(() => {
+
+    }, [rows, cols])
+
 
     const [globalState, setGlobalState] = useState({
         // Global 
@@ -25,7 +26,6 @@ function Grid() {
         finishNode: undefined,
         // Independent
         isWall: fillMatrix(rows, cols, false), // for computer UI
-        carved: fillMatrix(rows, cols, false), // maze generator
         traversed: fillMatrix(rows, cols, false), // pathfinding
         // All vertices and their edges (check walls || !carved)
         adjacencyList: [],
@@ -36,20 +36,18 @@ function Grid() {
     let grid = gridObj.map((rows, i) => rows.map((nodes, j) => <Node
         key={[i, j]}
         isMouseDown={globalState.mouseDown}
-        carved={globalState.carved[i][j]}
         isWall={globalState.isWall[i][j]}
     ></Node>))
 
     function generateMaze() {
-        // Set all nodes to walls
-        setGlobalState((prev) => ({ ...prev, isWall: fillMatrix(rows, cols, true) }))
+
+        let carved = fillMatrix(rows, cols, false);
 
         let stack = [];
         // Step #1 Change node to visited
         // And push it to stack
         let startingNode = [1, 1];
         let [coord1, coord2] = startingNode;
-        let { carved } = globalState
         carved[coord1][coord2] = true;
         stack.push(startingNode);
 
@@ -72,7 +70,11 @@ function Grid() {
                 stack.push(randomNeighbor)
             }
         }
-        setGlobalState(prev => ({ ...prev, carved: carved }))
+        setGlobalState(prev => (
+            {
+                ...prev,
+                isWall: carved.map(row => row.map(value => !value))
+            }))
     }
 
     return (

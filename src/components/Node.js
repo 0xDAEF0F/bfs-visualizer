@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 
 
-const Node = ({ isWall, isMouseDown, carved }) => {
+const Node = ({ isWall, isMouseDown }) => {
 
-    const [wall, setWall] = useState(isWall);
+    const [wall, setWall] = useState(false);
 
     useEffect(() => {
-        // props isWall state will only change when generate maze button is clicked.
+
         setWall(isWall);
+
     }, [isWall])
 
     return (
         <div
-            className={carved || !wall ? 'node' : 'wall-node'}
+            className={!wall ? 'node' : 'wall-node'}
             onMouseEnter={() => isMouseDown ? setWall(true) : ''}
         >
         </div >
