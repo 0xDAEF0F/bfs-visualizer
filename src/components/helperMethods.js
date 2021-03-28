@@ -71,10 +71,6 @@ export const updateNeighbors = (row, col, maxRows, maxCols) => {
     return allNeighbors.filter((oneNeighbor) => oneNeighbor);
 }
 
-export const range = (size, startAt = 0) => {
-    return [...Array(size).keys()].map(i => i + startAt);
-}
-
 export function whoAreMyUnvisitedNeighbors(neighborsArray, allNodesVisitedStateArray) {
 
     // By default all neighbors are visited
