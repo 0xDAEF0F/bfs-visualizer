@@ -41,7 +41,6 @@ function Grid() {
     }
     fillGrid();
 
-    console.log(nodes);
 
     // Nodes with div in between rows
     const htmlGrid = nodes.map((node, i) => (
