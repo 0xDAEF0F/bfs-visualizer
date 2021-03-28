@@ -25,6 +25,7 @@ function Grid() {
         key={[i, j]}
         coord={[i, j]}
         turnToWall={turnToWall}
+        startNode={globalState.startNode}
         isMouseDown={globalState.mouseDown}
         isWall={wall[i][j]}
     ></Node>))
@@ -36,10 +37,35 @@ function Grid() {
         setWall(walls);
     }
 
+    function pickRandomStart(wallState, globalState) {
+        let [...allWalls] = wallState;
+
+        // Turning all paths into coordinates
+        // And placing them to an array filtering
+        // empty spaces.
+        const allPathCoord = allWalls.map((row, i) => {
+            return row.map((isWall, j) => {
+                if (isWall === false) {
+                    return [i, j];
+                }
+                return null;
+            }).filter(emptyCoord => emptyCoord);
+        }).filter(row => row.length > 0);
+
+        const randomRow = Math.floor(Math.random() * allPathCoord.length);
+        const randomCol = Math.floor(Math.random() * allPathCoord[randomRow].length);
+
+        globalState(prev => ({
+            ...prev,
+            startNode: allPathCoord[randomRow][randomCol]
+        }))
+    }
+
     return (
         <>
             <Toolbar
                 generateMaze={() => generateMaze(rows, cols, setWall)}
+                pickRandomStart={() => pickRandomStart(wall, setGlobalState)}
             />
             <div
                 onMouseDown={() => setGlobalState(prev => ({ ...prev, mouseDown: true }))}
