@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     GetRowsCols, fillMatrix
 } from './helperMethods'
@@ -8,8 +8,7 @@ import generateMaze from './generateMaze'
 
 function Grid() {
 
-    let [rows, cols] = GetRowsCols();
-
+    const [rows, cols] = GetRowsCols();
     const [wall, setWall] = useState(fillMatrix(rows, cols, false));
     const [globalState, setGlobalState] = useState({
         // Global 
@@ -17,13 +16,11 @@ function Grid() {
         startNode: undefined,
         finishNode: undefined,
         // Independent
-        isWall: fillMatrix(rows, cols, false),
         traversed: fillMatrix(rows, cols, false),
         adjacencyList: [],
     })
 
     let gridObj = fillMatrix(rows, cols);
-
     let grid = gridObj.map((rows, i) => rows.map((_, j) => <Node
         key={[i, j]}
         coord={[i, j]}
