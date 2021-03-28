@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
+
+// Components
+import Node from './Node'
+import Toolbar from './Toolbar'
+// Functions
 import {
     GetRowsCols, fillMatrix
 } from './helperMethods'
-import Node from './Node'
-import Toolbar from './Toolbar'
 import generateMaze from './generateMaze'
 
 function Grid() {
