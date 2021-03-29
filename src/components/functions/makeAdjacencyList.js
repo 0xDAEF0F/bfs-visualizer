@@ -1,7 +1,7 @@
-import { allPathCoord, GetRowsCols } from './helperMethods'
+import { allPathCoord } from './helperMethods'
 import { updateNeighbors, unmarkedNeighbors } from './generateMaze'
 
-export default function makeAdjacencyList(walls, adjLiSetter, rows, cols) {
+export default function makeAdjacencyList(walls, rows, cols) {
 
     const allPathCoords = allPathCoord(walls);
 
@@ -10,8 +10,9 @@ export default function makeAdjacencyList(walls, adjLiSetter, rows, cols) {
         const freeNeighbors = unmarkedNeighbors(neighbors, walls);
         return {
             coord: node,
-            neighbors: freeNeighbors
+            neighbors: freeNeighbors,
+            traversed: false
         }
     }))
-    adjLiSetter(adjList);
+    return adjList;
 }
