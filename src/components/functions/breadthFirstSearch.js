@@ -1,12 +1,15 @@
 import makeAdjacencyList from './makeAdjacencyList';
 
-export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol], totalRows, totalCols) {
+export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol], totalRows, totalCols, traversed, setTraversed) {
+
+    let [...traversedNodes] = traversed;
 
     let graph = makeAdjacencyList(walls, totalRows, totalCols);
 
-    let queue = [];
-
     console.log(graph)
+
+    // let queue = [];
+
     // graph[sRow][sCol].traversed = true;
 
     // queue.push([sRow, sCol]);
