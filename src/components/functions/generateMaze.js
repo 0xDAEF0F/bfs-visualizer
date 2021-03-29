@@ -21,10 +21,10 @@ export default function generateMaze(rows, cols, walSetter, startSetter, goalSet
         let currCoord = stack.pop();
         //  Step #2.2 If the current cell has neighbours which have not been traversed
         //  and no adjacent visited neighbors except for itself
-        const myNeighbors = updateNeighbors(currCoord[0], currCoord[1], rows, cols);
-        const unvisitedNeighbors = whoAreMyUnvisitedNeighbors(myNeighbors, carved);
+        const myNeighbors = updateNeighbors(currCoord, rows, cols);
+        const unvisitedNeighbors = unmarkedNeighbors(myNeighbors, carved);
         const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, carved, rows, cols, currCoord);
-        const edgesFiltered = filterOutEdges(otherCond, rows, cols);
+        const edgesFiltered = filterEdges(otherCond, rows, cols);
 
         if (edgesFiltered.length > 0) {
             stack.push(currCoord);
@@ -39,7 +39,7 @@ export default function generateMaze(rows, cols, walSetter, startSetter, goalSet
     goalSetter(undefined);
 }
 
-function updateNeighbors(row, col, maxRows, maxCols) {
+export function updateNeighbors([row, col], maxRows, maxCols) {
 
     let top = [row - 1, col];
     let right = [row, col + 1];
@@ -64,17 +64,15 @@ function updateNeighbors(row, col, maxRows, maxCols) {
     return allNeighbors.filter((oneNeighbor) => oneNeighbor);
 }
 
-function whoAreMyUnvisitedNeighbors(neighborsArray, allNodesVisitedStateArray) {
+export function unmarkedNeighbors(coordsArr, matrixToCheck) {
 
-    // By default all neighbors are visited
     let neighbors = [];
-    // console.log(allNodesVisitedStateArray);
 
-    neighborsArray.forEach(pairOfCoordinates => {
-        let [coord1, coord2] = pairOfCoordinates;
-        const amIvisited = allNodesVisitedStateArray[coord1][coord2];
-        // console.log(amIvisited);
-        if (amIvisited === false) {
+    coordsArr.forEach(coords => {
+        let [coord1, coord2] = coords;
+        const iAmMarked = matrixToCheck[coord1][coord2];
+
+        if (iAmMarked === false) {
             neighbors.push([coord1, coord2]);
         }
     })
@@ -87,10 +85,9 @@ function noAdjacentVisitedNeighbors(unvisitedNeighbors, allNodesVisitedStateArra
     let result = [];
 
     unvisitedNeighbors.forEach(pairOfCoordinates => {
-        let [coord1, coord2] = pairOfCoordinates;
 
         // get neighbors of this pair of coord
-        let neighbors = updateNeighbors(coord1, coord2, maxRows, maxCols);
+        let neighbors = updateNeighbors(pairOfCoordinates, maxRows, maxCols);
         // take off the starting node
         let newNeighbors = neighbors.filter(neigh => _.isEqual(neigh, myCurrCoord) === false);
         // check for a visited neighbor
@@ -115,7 +112,7 @@ function anyVisitedNeighbors(nodesArr, isVisitedState) {
     return result
 }
 
-function filterOutEdges(nodes, rows, cols) {
+function filterEdges(nodes, rows, cols) {
 
     let result = [];
 

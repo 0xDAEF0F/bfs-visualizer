@@ -41,7 +41,7 @@ function Grid() {
     return (
         <>
             <Toolbar
-                onClick={() => makeAdjacencyList(wall, setAdjList)}
+                onClick={() => makeAdjacencyList(wall, setAdjList, rows, cols)}
                 generateMaze={() => generateMaze(rows, cols, setWall, setStartNode, setGoalNode)}
                 pickRandomStart={() => pickRandomFreeNode(wall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(wall, setGoalNode)}
