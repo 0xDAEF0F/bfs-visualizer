@@ -44,22 +44,28 @@ export function fillMatrix(loop1, loop2, elem = null) {
     return arr;
 }
 
-export function allPathCoord(wallState) {
+export function allPathCoord(wallState, filtered = true) {
+
     const allCoord = wallState.map((row, i) => {
         return row.map((isWall, j) => {
             if (isWall === false) {
                 return [i, j];
             }
-            return null;
-        }).filter(emptyCoord => emptyCoord);
-    }).filter(row => row.length > 0);
+            return [null];
+        })
+    })
 
-    return allCoord;
+    if (filtered === false) {
+        return allCoord;
+    }
+
+    return allCoord.map(row => row.map(col => col.filter(obj => obj)).filter(node => node.length > 0)).filter(row => row.length > 0);
 }
 
 export function pickRandomFreeNode(wallState, setter) {
 
     const allPathCoords = allPathCoord(wallState)
+    // console.log(allPathCoords)
 
     const randomRow = Math.floor(Math.random() * allPathCoords.length);
     const randomCol = Math.floor(Math.random() * allPathCoords[randomRow].length);

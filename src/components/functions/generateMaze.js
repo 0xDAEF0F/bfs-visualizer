@@ -3,7 +3,7 @@ import {
 } from "./helperMethods"
 import _ from 'lodash'
 
-export default function generateMaze(rows, cols, wallSetter, startSetter, goalSetter) {
+export default function generateMaze(rows, cols, wallSetter, startSetter, goalSetter, traversedSetter) {
 
     let carved = fillMatrix(rows, cols, false);
 
@@ -37,6 +37,7 @@ export default function generateMaze(rows, cols, wallSetter, startSetter, goalSe
     wallSetter(carved.map(row => row.map(value => !value)));
     startSetter(undefined);
     goalSetter(undefined);
+    traversedSetter(fillMatrix(rows, cols, false))
 }
 
 export function updateNeighbors([row, col], maxRows, maxCols) {

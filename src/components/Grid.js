@@ -30,6 +30,7 @@ function Grid() {
         goalNode={goalNode}
         isMouseDown={isMouseDown}
         isWall={wall[i][j]}
+        isTraversed={traversed[i][j]}
     ></Node>))
 
     function turnToWall([i, j]) {
@@ -42,7 +43,7 @@ function Grid() {
     return (
         <>
             <Toolbar
-                generateMaze={() => generateMaze(rows, cols, setWall, setStartNode, setGoalNode)}
+                generateMaze={() => generateMaze(rows, cols, setWall, setStartNode, setGoalNode, setTraversed)}
                 pickRandomStart={() => pickRandomFreeNode(wall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(wall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?

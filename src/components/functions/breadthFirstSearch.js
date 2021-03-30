@@ -6,29 +6,30 @@ export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol], totalRows,
 
     let graph = makeAdjacencyList(walls, totalRows, totalCols);
 
-    console.log(graph)
+    let queue = [];
 
-    // let queue = [];
+    graph[sRow][sCol].traversed = true;
+    traversedNodes[sRow][sCol] = true;
 
-    // graph[sRow][sCol].traversed = true;
+    queue.push([sRow, sCol]);
 
-    // queue.push([sRow, sCol]);
+    while (queue.length > 0) {
 
-    // while (queue.length > 0) {
+        let [i, j] = queue.shift();
 
-    //     let [i, j] = queue.shift();
+        if (i === fRow && j === fCol) {
+            // console.log(traversedNodes);
+            setTraversed(traversedNodes);
+            return [i, j];
+        }
 
-    //     if (i === fRow && j === fCol) {
-    //         console.log('object')
-    //         return [i, j];
-    //     }
+        for (let [coord1, coord2] of graph[i][j].neighbors) {
+            if (graph[coord1][coord2].traversed === false) {
+                graph[coord1][coord2].traversed = true;
+                traversedNodes[coord1][coord2] = true;
+                queue.push([coord1, coord2]);
+            }
+        }
 
-    //     for (let [coord1, coord2] of graph[i][j].neighbors) {
-    //         if (graph[coord1][coord2].traversed === false) {
-    //             graph[coord1][coord2].traversed = true;
-    //             queue.push([coord1, coord2]);
-    //         }
-    //     }
-
-    // }
+    }
 }
