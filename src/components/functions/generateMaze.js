@@ -3,7 +3,8 @@ import {
 } from "./helperMethods"
 import _ from 'lodash'
 
-export default function generateMaze(rows, cols, wallSetter, startSetter, goalSetter, traversedSetter) {
+export default function generateMaze(rows, cols, wallSetter,
+    startSetter, goalSetter, traversedSetter) {
 
     let carved = fillMatrix(rows, cols, false);
 

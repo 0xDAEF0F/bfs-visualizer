@@ -1,33 +1,36 @@
+import { fillMatrix } from './helperMethods';
 import makeAdjacencyList from './makeAdjacencyList';
 
-export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol], totalRows, totalCols, traversed, setTraversed) {
+export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
+    totalRows, totalCols, setTraversed) {
 
-    let [...traversedNodes] = traversed;
+    let traversedNodes = fillMatrix(totalRows, totalCols, false);
 
     let graph = makeAdjacencyList(walls, totalRows, totalCols);
 
-    let queue = [];
+    let queue = [[[sRow, sCol]]];
 
     graph[sRow][sCol].traversed = true;
     traversedNodes[sRow][sCol] = true;
 
-    queue.push([sRow, sCol]);
-
     while (queue.length > 0) {
 
-        let [i, j] = queue.shift();
+        let path = queue.shift();
+        let vertex = path.slice(-1)[0];
 
-        if (i === fRow && j === fCol) {
-            // console.log(traversedNodes);
+        if (vertex[0] === fRow && vertex[1] === fCol) {
             setTraversed(traversedNodes);
-            return [i, j];
+            return
         }
 
-        for (let [coord1, coord2] of graph[i][j].neighbors) {
+        for (let [coord1, coord2] of graph[vertex[0]][vertex[1]].neighbors) {
             if (graph[coord1][coord2].traversed === false) {
+                let [...newPath] = path;
+                newPath.push([coord1, coord2]);
                 graph[coord1][coord2].traversed = true;
                 traversedNodes[coord1][coord2] = true;
-                queue.push([coord1, coord2]);
+                queue.push(newPath);
+
             }
         }
 

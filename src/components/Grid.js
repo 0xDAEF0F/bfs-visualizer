@@ -18,8 +18,7 @@ function Grid() {
     const [startNode, setStartNode] = useState(undefined);
     const [goalNode, setGoalNode] = useState(undefined);
     const [isMouseDown, setIsMouseDown] = useState(false);
-    // const [adjList, setAdjList] = useState(undefined);
-    const [traversed, setTraversed] = useState(fillMatrix(rows, cols, false));
+    const [traversed, setTraversed] = useState(undefined);
 
     let gridObj = fillMatrix(rows, cols);
     let grid = gridObj.map((rows, i) => rows.map((_, j) => <Node
@@ -30,7 +29,7 @@ function Grid() {
         goalNode={goalNode}
         isMouseDown={isMouseDown}
         isWall={wall[i][j]}
-        isTraversed={traversed[i][j]}
+        isTraversed={traversed?.[i][j]}
     ></Node>))
 
     function turnToWall([i, j]) {
@@ -48,7 +47,7 @@ function Grid() {
                 pickRandomEnd={() => pickRandomFreeNode(wall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?
                     alert('Please Pick a Start and a Goal Node!!') :
-                    breadthFirstSearch(wall, startNode, goalNode, rows, cols, traversed, setTraversed))}
+                    breadthFirstSearch(wall, startNode, goalNode, rows, cols, setTraversed))}
             />
             <div
                 onMouseDown={() => setIsMouseDown(true)}
