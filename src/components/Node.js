@@ -1,7 +1,8 @@
 
 
 
-const Node = ({ isWall, isMouseDown, coord, turnToWall, startNode, goalNode, isTraversed }) => {
+const Node = ({ isWall, isMouseDown, coord, turnToWall,
+    startNode, goalNode, isTraversed }) => {
 
     let className;
 

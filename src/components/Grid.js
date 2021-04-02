@@ -42,7 +42,8 @@ function Grid() {
     return (
         <>
             <Toolbar
-                generateMaze={() => generateMaze(rows, cols, setWall, setStartNode, setGoalNode, setTraversed)}
+                generateMaze={() => generateMaze(rows, cols, setWall, setStartNode,
+                    setGoalNode, setTraversed)}
                 pickRandomStart={() => pickRandomFreeNode(wall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(wall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?
