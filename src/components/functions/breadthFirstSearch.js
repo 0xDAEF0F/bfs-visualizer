@@ -2,13 +2,15 @@ import { fillMatrix } from './helperMethods';
 import makeAdjacencyList from './makeAdjacencyList';
 
 export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
-    totalRows, totalCols, setTraversed) {
+    totalRows, totalCols, setTraversed, setTraversalOrder, setShortestPath) {
 
     let traversedNodes = fillMatrix(totalRows, totalCols, false);
 
     let graph = makeAdjacencyList(walls, totalRows, totalCols);
 
     let queue = [[[sRow, sCol]]];
+    let traversalOrder = [];
+    let shortestPath;
 
     graph[sRow][sCol].traversed = true;
     traversedNodes[sRow][sCol] = true;
@@ -19,7 +21,10 @@ export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
         let vertex = path.slice(-1)[0];
 
         if (vertex[0] === fRow && vertex[1] === fCol) {
+            shortestPath = path;
             setTraversed(traversedNodes);
+            setTraversalOrder(traversalOrder);
+            setShortestPath(shortestPath);
             return
         }
 
@@ -30,7 +35,7 @@ export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
                 graph[coord1][coord2].traversed = true;
                 traversedNodes[coord1][coord2] = true;
                 queue.push(newPath);
-
+                traversalOrder.push([coord1, coord2]);
             }
         }
 
