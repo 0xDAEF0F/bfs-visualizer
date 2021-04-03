@@ -21,7 +21,7 @@ function Grid() {
     const [isMouseDown, setIsMouseDown] = useState(false);
     // Graph Wall Representation
     const [isWall, setWall] = useState(matrix);
-    const [orderWall, setOrderWall] = useState(matrix);
+    const [carvedOrder, setCarvedOrder] = useState(undefined);
     // Graph Traversal Representation
     const [isTraversed, setTraversed] = useState(undefined);
     const [traversalOrder, setTraversalOrder] = useState([[]]);
@@ -37,7 +37,7 @@ function Grid() {
         isMouseDown={isMouseDown}
         // Individuals
         isWall={isWall?.[i]?.[j]}
-        orderWall={orderWall}
+        carvedOrder={carvedOrder}
         isTraversed={isTraversed?.[i][j]}
         traversalOrder={traversalOrder}
         // Shortest Path Coordinates
@@ -57,7 +57,7 @@ function Grid() {
         <>
             <Toolbar
                 generateMaze={() => generateMaze(rows, cols, setWall, setStartNode,
-                    setGoalNode, setTraversed, setOrderWall)}
+                    setGoalNode, setTraversed, setCarvedOrder)}
                 pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(isWall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?

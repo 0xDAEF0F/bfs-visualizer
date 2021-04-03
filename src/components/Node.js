@@ -1,31 +1,29 @@
 import { useState } from "react";
 
 const Node = ({ coord, startNode, goalNode, isMouseDown,
-    isWall, orderWall, isTraversed, traversalOrder,
+    isWall, carvedOrder, isTraversed, traversalOrder,
     shortestPath, turnToWall }) => {
 
     const [style, setStyle] = useState({});
     let className;
 
     if (isWall === true) {
-        className = 'wall-node';
-    } else if (isWall === false) {
-        className = 'node';
+        className = 'wall';
     }
     if (isTraversed === true) {
         className = 'traversed'
     }
     if (JSON.stringify(coord) === JSON.stringify(startNode)) {
-        className = 'start-node';
+        className = 'start';
     }
     if (JSON.stringify(coord) === JSON.stringify(goalNode)) {
-        className = 'goal-node';
+        className = 'goal';
     }
 
     return (
         <div
             style={style}
-            className={className}
+            className={`node ${className}`}
             onMouseEnter={() => isMouseDown ? turnToWall(coord) : ''}
         >
         </div >
@@ -43,13 +41,16 @@ export default Node
             }, 10 * idx)
         }
     });
-}
-    if (isTraversed === true) {
-        setStyle({ backgroundColor: "teal" });
-    }
-    if (JSON.stringify(coord) === JSON.stringify(startNode)) {
-        setStyle({ backgroundColor: "teal" });
-    }
-    if (JSON.stringify(coord) === JSON.stringify(goalNode)) {
-        setStyle({ backgroundColor: "teal" });
-    } */
+}*/
+// if (carvedOrder) {
+//     carvedOrder?.forEach((each, i) => {
+//         if (each[0] === coord[0] && each[1] === coord[1]) {
+//             setTimeout(() => {
+//                 setStyle({
+//                     backgroundColor: 'grey',
+//                     border: '1px solid #999'
+//                 })
+//             }, 15 * i)
+//         }
+//     });
+// }

@@ -4,48 +4,59 @@ import {
 import _ from 'lodash'
 
 export default function generateMaze(rows, cols, wallSetter,
-    startSetter, goalSetter, traversedSetter, setOrderWall) {
+    startSetter, goalSetter, traversedSetter, setOrderCarved) {
 
-    let carved = fillMatrix(rows, cols, false);
-
-    let stack = [];
-    let orderCarved = [];
-    // Step #1 Change node to visited
-    // And push it to stack
-    let startingNode = [1, 1];
-    let [coord1, coord2] = startingNode;
-    carved[coord1][coord2] = true;
-    stack.push(startingNode);
-
-    // Step #2 While the stack is not empty
-    while (stack.length > 0) {
-        // Step #2.1 Pop last cell from stack and make it the current one
-        let currCoord = stack.pop();
-        //  Step #2.2 If the current cell has neighbours which have not been traversed
-        //  and no adjacent visited neighbors except for itself
-        const myNeighbors = updateNeighbors(currCoord, rows, cols);
-        const unvisitedNeighbors = unmarkedNeighbors(myNeighbors, carved);
-        const otherCond = noAdjVisNeigh(unvisitedNeighbors, carved, rows, cols, currCoord);
-        const edgesFiltered = filterEdges(otherCond, rows, cols);
-
-        if (edgesFiltered.length > 0) {
-            stack.push(currCoord);
-
-            let randomNumber = Math.floor(Math.random() * edgesFiltered.length);
-            let randomNeighbor = edgesFiltered[randomNumber];
-
-            carved[randomNeighbor[0]][randomNeighbor[1]] = true;
-            orderCarved.push(randomNeighbor);
-
-            stack.push(randomNeighbor)
-        }
-    }
-    wallSetter(carved.map(row => row.map(value => !value)));
-    // Reset Values
+    wallSetter(fillMatrix(rows, cols, true));
     startSetter(undefined);
     goalSetter(undefined);
     traversedSetter(undefined);
-    console.log(orderCarved);
+    setOrderCarved(undefined);
+
+    setTimeout(() => {
+
+        let carved = fillMatrix(rows, cols, false);
+
+        let stack = [];
+        let orderCarved = [[1, 1]];
+        // Step #1 Change node to visited
+        // And push it to stack
+        let startingNode = [1, 1];
+        let [coord1, coord2] = startingNode;
+        carved[coord1][coord2] = true;
+        stack.push(startingNode);
+
+        // Step #2 While the stack is not empty
+        while (stack.length > 0) {
+            // Step #2.1 Pop last cell from stack and make it the current one
+            let currCoord = stack.pop();
+            //  Step #2.2 If the current cell has neighbours which have not been traversed
+            //  and no adjacent visited neighbors except for itself
+            const myNeighbors = updateNeighbors(currCoord, rows, cols);
+            const unvisitedNeighbors = unmarkedNeighbors(myNeighbors, carved);
+            const otherCond = noAdjVisNeigh(unvisitedNeighbors, carved, rows, cols, currCoord);
+            const edgesFiltered = filterEdges(otherCond, rows, cols);
+
+            if (edgesFiltered.length > 0) {
+                stack.push(currCoord);
+
+                let randomNumber = Math.floor(Math.random() * edgesFiltered.length);
+                let randomNeighbor = edgesFiltered[randomNumber];
+
+                carved[randomNeighbor[0]][randomNeighbor[1]] = true;
+                orderCarved.push(randomNeighbor);
+
+                stack.push(randomNeighbor)
+            }
+        }
+        wallSetter(carved.map(row => row.map(value => !value)));
+        // Reset Values
+        startSetter(undefined);
+        goalSetter(undefined);
+        traversedSetter(undefined);
+        setOrderCarved(orderCarved);
+
+    }, 1000)
+
 }
 
 export function updateNeighbors([row, col], maxRows, maxCols) {

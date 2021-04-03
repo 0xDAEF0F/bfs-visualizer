@@ -53,60 +53,20 @@
   width: 30px;
 }
 
-.wall-node {
-    background: teal;
-    float: left;
-    font-size: 8px;
-    font-weight: bold;
-    line-height: 30px;
-    height: 30px;
-    margin-right: -1px;
-    width: 30px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
+.wall {
+    background-color: teal;
 }
 
-.start-node {
+.start {
     background-color: rgb(233, 60, 100);
-    float: left;
-    font-size: 8px;
-    font-weight: bold;
-    line-height: 30px;
-    height: 30px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 30px;
 }
 
-.goal-node {
+.goal {
     background-color: rgb(95, 233, 60);
-    float: left;
-    font-size: 8px;
-    font-weight: bold;
-    line-height: 30px;
-    height: 30px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 30px;
 }
 
 .traversed {
     background-color: yellow;
-    float: left;
-    font-size: 8px;
-    font-weight: bold;
-    line-height: 30px;
-    height: 30px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 30px;
 }
 
 .board-row::after {
