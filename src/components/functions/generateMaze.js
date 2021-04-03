@@ -4,11 +4,12 @@ import {
 import _ from 'lodash'
 
 export default function generateMaze(rows, cols, wallSetter,
-    startSetter, goalSetter, traversedSetter) {
+    startSetter, goalSetter, traversedSetter, setOrderWall) {
 
     let carved = fillMatrix(rows, cols, false);
 
     let stack = [];
+    let orderCarved = [];
     // Step #1 Change node to visited
     // And push it to stack
     let startingNode = [1, 1];
@@ -24,21 +25,27 @@ export default function generateMaze(rows, cols, wallSetter,
         //  and no adjacent visited neighbors except for itself
         const myNeighbors = updateNeighbors(currCoord, rows, cols);
         const unvisitedNeighbors = unmarkedNeighbors(myNeighbors, carved);
-        const otherCond = noAdjacentVisitedNeighbors(unvisitedNeighbors, carved, rows, cols, currCoord);
+        const otherCond = noAdjVisNeigh(unvisitedNeighbors, carved, rows, cols, currCoord);
         const edgesFiltered = filterEdges(otherCond, rows, cols);
 
         if (edgesFiltered.length > 0) {
             stack.push(currCoord);
+
             let randomNumber = Math.floor(Math.random() * edgesFiltered.length);
             let randomNeighbor = edgesFiltered[randomNumber];
+
             carved[randomNeighbor[0]][randomNeighbor[1]] = true;
+            orderCarved.push(randomNeighbor);
+
             stack.push(randomNeighbor)
         }
     }
     wallSetter(carved.map(row => row.map(value => !value)));
+    // Reset Values
     startSetter(undefined);
     goalSetter(undefined);
-    traversedSetter(fillMatrix(rows, cols, false))
+    traversedSetter(undefined);
+    console.log(orderCarved);
 }
 
 export function updateNeighbors([row, col], maxRows, maxCols) {
@@ -82,7 +89,7 @@ export function unmarkedNeighbors(coordsArr, matrixToCheck) {
     return neighbors;
 }
 
-function noAdjacentVisitedNeighbors(unvisitedNeighbors, allNodesVisitedStateArray, maxRows, maxCols, myCurrCoord) {
+function noAdjVisNeigh(unvisitedNeighbors, allNodesVisitedStateArray, maxRows, maxCols, myCurrCoord) {
 
     let result = [];
 
