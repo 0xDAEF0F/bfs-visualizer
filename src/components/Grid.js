@@ -19,26 +19,35 @@ function Grid() {
     const [startNode, setStartNode] = useState(undefined);
     const [goalNode, setGoalNode] = useState(undefined);
     const [isMouseDown, setIsMouseDown] = useState(false);
-    // Graph Variable Representation
-    const [wall, setWall] = useState(matrix);
-    const [traversed, setTraversed] = useState(undefined);
+    // Graph Wall Representation
+    const [isWall, setWall] = useState(matrix);
+    const [orderWall, setOrderWall] = useState(matrix);
+    // Graph Traversal Representation
+    const [isTraversed, setTraversed] = useState(undefined);
     const [traversalOrder, setTraversalOrder] = useState([[]]);
+    // Graph Shortest Path
     const [shortestPath, setShortestPath] = useState([[]]);
 
     let grid = matrix.map((rows, i) => rows.map((_, j) => <Node
+        // Globals
         key={[i, j]}
         coord={[i, j]}
-        turnToWall={turnToWall}
         startNode={startNode}
         goalNode={goalNode}
         isMouseDown={isMouseDown}
-        isWall={wall?.[i]?.[j]}
-        isTraversed={traversed?.[i][j]}
-        TraversalOrder={traversalOrder}
+        // Individuals
+        isWall={isWall?.[i]?.[j]}
+        orderWall={orderWall}
+        isTraversed={isTraversed?.[i][j]}
+        traversalOrder={traversalOrder}
+        // Shortest Path Coordinates
+        shortestPath={shortestPath}
+        // Function passed to child
+        turnToWall={turnToWall}
     ></Node>))
 
     function turnToWall([i, j]) {
-        let [...walls] = wall;
+        let [...walls] = isWall;
         walls[i][j] = true;
 
         setWall(walls);
@@ -49,11 +58,11 @@ function Grid() {
             <Toolbar
                 generateMaze={() => generateMaze(rows, cols, setWall, setStartNode,
                     setGoalNode, setTraversed)}
-                pickRandomStart={() => pickRandomFreeNode(wall, setStartNode)}
-                pickRandomEnd={() => pickRandomFreeNode(wall, setGoalNode)}
+                pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode)}
+                pickRandomEnd={() => pickRandomFreeNode(isWall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?
                     alert('Please Pick a Start and a Goal Node!!') :
-                    breadthFirstSearch(wall, startNode, goalNode, rows,
+                    breadthFirstSearch(isWall, startNode, goalNode, rows,
                         cols, setTraversed, setTraversalOrder, setShortestPath))}
             />
             <div

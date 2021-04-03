@@ -55,7 +55,6 @@
 
 .wall-node {
     background: teal;
-    /* border: 1px solid #999; */
     float: left;
     font-size: 8px;
     font-weight: bold;
@@ -70,7 +69,6 @@
 
 .start-node {
     background-color: rgb(233, 60, 100);
-    border: 1px solid rgb(233, 60, 100);
     float: left;
     font-size: 8px;
     font-weight: bold;
@@ -85,7 +83,6 @@
 
 .goal-node {
     background-color: rgb(95, 233, 60);
-    border: 1px solid rgb(38, 179, 57);
     float: left;
     font-size: 8px;
     font-weight: bold;
@@ -100,7 +97,6 @@
 
 .traversed {
     background-color: yellow;
-    /* border: 1px solid rgb(38, 179, 57); */
     float: left;
     font-size: 8px;
     font-weight: bold;
