@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useRef } from "react";
 
 const Node = ({ coord, startNode, goalNode, isMouseDown,
     isWall, carvedOrder, isTraversed, traversalOrder,
     shortestPath, turnToWall }) => {
 
-    const [style, setStyle] = useState({});
-    let className;
+    const additional = useRef();
+
+    let className = "";
+
+    // console.log(carvedOrder)
+
+    function animateCarved() {
+        for (let i = 0; i < carvedOrder.length; i++) {
+            let [y, x] = carvedOrder[i];
+            if (coord[0] === y && coord[1] === x) {
+                setTimeout(() => {
+                    additional.current.className = 'node wall';
+                }, 50 * i)
+            }
+        }
+    }
 
     if (isWall === true) {
-        className = 'wall';
+        // className = 'wall';
+        if (carvedOrder) {
+            animateCarved();
+            // console.log(additional.current)
+        }
     }
     if (isTraversed === true) {
         className = 'traversed'
@@ -22,7 +40,7 @@ const Node = ({ coord, startNode, goalNode, isMouseDown,
 
     return (
         <div
-            style={style}
+            ref={additional}
             className={`node ${className}`}
             onMouseEnter={() => isMouseDown ? turnToWall(coord) : ''}
         >
