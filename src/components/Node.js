@@ -23,10 +23,11 @@ const Node = ({ coord, startNode, goalNode, isMouseDown,
 
     if (isWall === true) {
         // className = 'wall';
-        if (carvedOrder) {
-            animateCarved();
-            // console.log(additional.current)
-        }
+        additional.current.className = 'node wall';
+        // if (carvedOrder) {
+        //     animateCarved();
+        //     console.log(additional.current)
+        // }
     }
     if (isTraversed === true) {
         className = 'traversed'

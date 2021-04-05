@@ -28,6 +28,8 @@ function Grid() {
     // Graph Shortest Path
     const [shortestPath, setShortestPath] = useState([[]]);
 
+    // console.log('rerender')
+
     let grid = matrix.map((rows, i) => rows.map((_, j) => <Node
         // Globals
         key={[i, j]}
