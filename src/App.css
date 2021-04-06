@@ -69,6 +69,10 @@
     background-color: yellow;
 }
 
+.carved {
+    background-color: aliceblue;
+}
+
 .board-row::after {
   clear: both;
   content: "";

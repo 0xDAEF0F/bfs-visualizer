@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 // Components
 import Node from './Node'
@@ -28,12 +28,13 @@ function Grid() {
     // Graph Shortest Path
     const [shortestPath, setShortestPath] = useState([[]]);
 
-    // console.log('rerender')
+    const refCollection = useRef(matrix.map(rows => rows.map(nodes => React.createRef())));
 
     let grid = matrix.map((rows, i) => rows.map((_, j) => <Node
         // Globals
         key={[i, j]}
         coord={[i, j]}
+        ref={refCollection.current[i][j]}
         startNode={startNode}
         goalNode={goalNode}
         isMouseDown={isMouseDown}
@@ -55,11 +56,20 @@ function Grid() {
         setWall(walls);
     }
 
+    function createMazeAndAnimate() {
+        const orderCarved = generateMaze(rows, cols, setWall, setStartNode,
+            setGoalNode, setTraversed, setCarvedOrder);
+        orderCarved.forEach(([y, x], i) => {
+            setTimeout(() => {
+                refCollection.current[y][x].current.className = 'node carved';
+            }, i * 20);
+        })
+    }
+
     return (
         <>
             <Toolbar
-                generateMaze={() => generateMaze(rows, cols, setWall, setStartNode,
-                    setGoalNode, setTraversed, setCarvedOrder)}
+                generateMaze={createMazeAndAnimate}
                 pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(isWall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?
