@@ -56,15 +56,27 @@ function Grid() {
         setWall(walls);
     }
 
-    function createMazeAndAnimate() {
-        const orderCarved = generateMaze(rows, cols, setWall, setStartNode,
-            setGoalNode, setTraversed, setCarvedOrder);
+    async function createMazeAndAnimate() {
+        setWall(fillMatrix(rows, cols, true));
+        setStartNode(undefined);
+        setGoalNode(undefined);
+        setTraversed(undefined);
+
+        const [orderCarved, walls] = generateMaze(rows, cols);
+
         orderCarved.forEach(([y, x], i) => {
             setTimeout(() => {
-                refCollection.current[y][x].current.className = 'node carved';
-            }, i * 20);
+                refCollection.current[y][x].current.className = 'node';
+            }, i * 8);
         })
+
+        await delay(orderCarved.length * 8);
+
+        setWall(walls);
+
     }
+
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     return (
         <>
