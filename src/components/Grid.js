@@ -21,30 +21,19 @@ function Grid() {
     const [isMouseDown, setIsMouseDown] = useState(false);
     // Graph Wall Representation
     const [isWall, setWall] = useState(matrix);
-    const [carvedOrder, setCarvedOrder] = useState(undefined);
-    // Graph Traversal Representation
-    const [isTraversed, setTraversed] = useState(undefined);
-    const [traversalOrder, setTraversalOrder] = useState([[]]);
-    // Graph Shortest Path
-    const [shortestPath, setShortestPath] = useState([[]]);
 
-    const refCollection = useRef(matrix.map(rows => rows.map(nodes => React.createRef())));
+    const refCollection = useRef(matrix.map(rows => rows.map(_ => React.createRef())));
 
     let grid = matrix.map((rows, i) => rows.map((_, j) => <Node
         // Globals
         key={[i, j]}
         coord={[i, j]}
-        ref={refCollection.current[i][j]}
+        ref={refCollection.current?.[i]?.[j]}
         startNode={startNode}
         goalNode={goalNode}
         isMouseDown={isMouseDown}
         // Individuals
         isWall={isWall?.[i]?.[j]}
-        carvedOrder={carvedOrder}
-        isTraversed={isTraversed?.[i][j]}
-        traversalOrder={traversalOrder}
-        // Shortest Path Coordinates
-        shortestPath={shortestPath}
         // Function passed to child
         turnToWall={turnToWall}
     ></Node>))
@@ -60,7 +49,6 @@ function Grid() {
         setWall(fillMatrix(rows, cols, true));
         setStartNode(undefined);
         setGoalNode(undefined);
-        setTraversed(undefined);
 
         const [orderCarved, walls] = generateMaze(rows, cols);
 
@@ -78,6 +66,27 @@ function Grid() {
 
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+    async function bfsAnimate() {
+
+        let [traversalOrder, shortestPath] = breadthFirstSearch(
+            isWall, startNode, goalNode, rows, cols);
+
+        traversalOrder.forEach(([y, x], i) => {
+            setTimeout(() => {
+                refCollection.current[y][x].current.className = 'node traversed';
+            }, i * 15);
+        })
+
+        await delay(traversalOrder.length * 15);
+
+        shortestPath?.forEach(([y, x], i) => {
+            setTimeout(() => {
+                refCollection.current[y][x].current.className = 'node shortest-path';
+            }, i * 8);
+        })
+
+    }
+
     return (
         <>
             <Toolbar
@@ -85,9 +94,7 @@ function Grid() {
                 pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(isWall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?
-                    alert('Please Pick a Start and a Goal Node!!') :
-                    breadthFirstSearch(isWall, startNode, goalNode, rows,
-                        cols, setTraversed, setTraversalOrder, setShortestPath))}
+                    alert('Please Pick a Start and a Goal Node!!') : bfsAnimate())}
             />
             <div
                 onMouseDown={() => setIsMouseDown(true)}

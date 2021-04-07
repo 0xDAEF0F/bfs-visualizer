@@ -1,10 +1,7 @@
-import { fillMatrix } from './helperMethods';
 import makeAdjacencyList from './makeAdjacencyList';
 
 export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
-    totalRows, totalCols, setTraversed, setTraversalOrder, setShortestPath) {
-
-    let traversedNodes = fillMatrix(totalRows, totalCols, false);
+    totalRows, totalCols) {
 
     let graph = makeAdjacencyList(walls, totalRows, totalCols);
 
@@ -13,7 +10,6 @@ export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
     let shortestPath;
 
     graph[sRow][sCol].traversed = true;
-    traversedNodes[sRow][sCol] = true;
 
     while (queue.length > 0) {
 
@@ -22,10 +18,7 @@ export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
 
         if (vertex[0] === fRow && vertex[1] === fCol) {
             shortestPath = path;
-            setTraversed(traversedNodes);
-            setTraversalOrder(traversalOrder);
-            setShortestPath(shortestPath);
-            return
+            return [traversalOrder.slice(0, -3), shortestPath.slice(1, -1)];
         }
 
         for (let [coord1, coord2] of graph[vertex[0]][vertex[1]].neighbors) {
@@ -33,11 +26,11 @@ export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
                 let [...newPath] = path;
                 newPath.push([coord1, coord2]);
                 graph[coord1][coord2].traversed = true;
-                traversedNodes[coord1][coord2] = true;
                 queue.push(newPath);
                 traversalOrder.push([coord1, coord2]);
             }
         }
 
     }
+    return [traversalOrder, shortestPath]
 }

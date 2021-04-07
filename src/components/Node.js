@@ -1,16 +1,12 @@
 import React from "react";
 
 const node = ({ coord, startNode, goalNode, isMouseDown,
-    isWall, carvedOrder, isTraversed, traversalOrder,
-    shortestPath, turnToWall }, ref) => {
+    isWall, isTraversed, turnToWall }, ref) => {
 
     let className = "";
 
     if (isWall === true) {
         className = 'wall';
-    }
-    if (isTraversed === true) {
-        className = 'traversed'
     }
     if (JSON.stringify(coord) === JSON.stringify(startNode)) {
         className = 'start';

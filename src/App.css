@@ -73,6 +73,10 @@
     background-color: aliceblue;
 }
 
+.shortest-path{
+    background-color: pink;
+}
+
 .board-row::after {
   clear: both;
   content: "";
