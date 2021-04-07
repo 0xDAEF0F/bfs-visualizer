@@ -18,7 +18,7 @@ export function breadthFirstSearch(walls, [sRow, sCol], [fRow, fCol],
 
         if (vertex[0] === fRow && vertex[1] === fCol) {
             shortestPath = path;
-            return [traversalOrder.slice(0, -3), shortestPath.slice(1, -1)];
+            return [traversalOrder, shortestPath.slice(1, -1)];
         }
 
         for (let [coord1, coord2] of graph[vertex[0]][vertex[1]].neighbors) {

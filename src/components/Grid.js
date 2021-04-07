@@ -79,11 +79,18 @@ function Grid() {
 
         await delay(traversalOrder.length * 15);
 
+        traversalOrder.forEach(([y, x], i) => {
+            refCollection.current[y][x].current.className = 'node';
+        })
+
         shortestPath?.forEach(([y, x], i) => {
             setTimeout(() => {
                 refCollection.current[y][x].current.className = 'node shortest-path';
             }, i * 8);
         })
+
+        refCollection.current[goalNode[0]][goalNode[1]].current.className = 'node goal';
+
 
     }
 
@@ -91,6 +98,14 @@ function Grid() {
         <>
             <Toolbar
                 generateMaze={createMazeAndAnimate}
+                clearGrid={() => {
+                    setWall(fillMatrix(rows, cols, false))
+                    refCollection.current.forEach(row => {
+                        row.forEach(ref => {
+                            ref.current.className = 'node';
+                        })
+                    })
+                }}
                 pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode)}
                 pickRandomEnd={() => pickRandomFreeNode(isWall, setGoalNode)}
                 startBfs={() => (!startNode || !goalNode ?
