@@ -59,13 +59,18 @@ export function allPathCoord(wallState, filtered = true) {
         return allCoord;
     }
 
-    return allCoord.map(row => row.map(col => col.filter(obj => obj)).filter(node => node.length > 0)).filter(row => row.length > 0);
+    return allCoord.map(row => {
+        return row.map(cell => {
+            return cell;
+        }).filter(cell => {
+            return cell.length > 1;
+        })
+    }).filter(row => row.length > 0)
 }
 
 export function pickRandomFreeNode(wallState, setter) {
 
     const allPathCoords = allPathCoord(wallState)
-    // console.log(allPathCoords)
 
     const randomRow = Math.floor(Math.random() * allPathCoords.length);
     const randomCol = Math.floor(Math.random() * allPathCoords[randomRow].length);
