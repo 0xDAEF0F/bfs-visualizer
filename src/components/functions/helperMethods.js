@@ -68,8 +68,13 @@ export function allPathCoord(wallState, filtered = true) {
     }).filter(row => row.length > 0)
 }
 
-export function pickRandomFreeNode(wallState, setter) {
+export function pickRandomFreeNode(wallState, setter, refs, path) {
 
+    if (path) {
+        path.forEach(([y, x], i) => {
+            refs.current[y][x].current.className = 'node';
+        })
+    }
     const allPathCoords = allPathCoord(wallState)
 
     const randomRow = Math.floor(Math.random() * allPathCoords.length);

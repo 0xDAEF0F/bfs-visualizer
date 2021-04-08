@@ -1,7 +1,7 @@
 import React from "react";
 
 const node = ({ coord, startNode, goalNode, isMouseDown,
-    isWall, isTraversed, turnToWall }, ref) => {
+    isWall, turnToWall }, ref) => {
 
     let className = "";
 

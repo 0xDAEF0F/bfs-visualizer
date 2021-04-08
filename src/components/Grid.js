@@ -21,6 +21,7 @@ function Grid() {
     const [isMouseDown, setIsMouseDown] = useState(false);
     // Graph Wall Representation
     const [isWall, setWall] = useState(matrix);
+    const [finalPath, setFinalPath] = useState(undefined);
 
     const refCollection = useRef(matrix.map(rows => rows.map(_ => React.createRef())));
 
@@ -49,6 +50,7 @@ function Grid() {
         setWall(fillMatrix(rows, cols, true));
         setStartNode(undefined);
         setGoalNode(undefined);
+        setFinalPath(undefined);
 
         const [orderCarved, walls] = generateMaze(rows, cols);
 
@@ -90,7 +92,7 @@ function Grid() {
         })
 
         refCollection.current[goalNode[0]][goalNode[1]].current.className = 'node goal';
-
+        setFinalPath(shortestPath);
 
     }
 
@@ -105,9 +107,12 @@ function Grid() {
                             ref.current.className = 'node';
                         })
                     })
+                    setFinalPath(undefined);
                 }}
-                pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode)}
-                pickRandomEnd={() => pickRandomFreeNode(isWall, setGoalNode)}
+                pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode,
+                    refCollection, finalPath)}
+                pickRandomEnd={() => pickRandomFreeNode(isWall, setGoalNode,
+                    refCollection, finalPath)}
                 startBfs={() => (!startNode || !goalNode ?
                     alert('Please Pick a Start and a Goal Node!!') : bfsAnimate())}
             />
