@@ -19,7 +19,19 @@ const node = ({ coord, startNode, goalNode, isMouseDown,
         <div
             ref={ref}
             className={`node ${className}`}
-            onMouseEnter={() => isMouseDown ? turnToWall(coord) : ''}
+            onMouseEnter={() => {
+                if (isMouseDown === true &&
+                    JSON.stringify(coord) === JSON.stringify(startNode) ||
+                    JSON.stringify(coord) === JSON.stringify(goalNode)) {
+                    console.log('hi');
+                    // return;
+                } else if (isMouseDown === true &&
+                    isWall === false &&
+                    JSON.stringify(coord) !== JSON.stringify(startNode) &&
+                    JSON.stringify(coord) !== JSON.stringify(goalNode)) {
+                    turnToWall(coord);
+                }
+            }}
         >
         </div >
     )
