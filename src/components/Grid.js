@@ -21,6 +21,7 @@ function Grid() {
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [isChoosingStart, setIsChoosingStart] = useState(false);
     const [isChoosingEnd, setIsChoosingEnd] = useState(false);
+    const [algoRunning, setAlgoRunning] = useState(true);
     // Graph Wall Representation
     const [isWall, setWall] = useState(matrix);
     const [finalPath, setFinalPath] = useState(undefined);
@@ -46,7 +47,8 @@ function Grid() {
     ></Node>))
 
     function turnToWall([i, j]) {
-        if (isChoosingEnd || isChoosingStart) {
+        if (isChoosingEnd || isChoosingStart ||
+            algoRunning) {
             return;
         }
         let [...walls] = isWall;
@@ -56,6 +58,9 @@ function Grid() {
     }
 
     function turnToStartEnd([i, j], goalOrStart) {
+        if (algoRunning) {
+            return;
+        }
         if (goalOrStart === 'start' &&
             isWall[i][j] === false &&
             JSON.stringify([i, j]) !== JSON.stringify(goalNode)) {
@@ -64,6 +69,14 @@ function Grid() {
             isWall[i][j] === false &&
             JSON.stringify([i, j]) !== JSON.stringify(startNode)) {
             setGoalNode([i, j])
+        }
+    }
+
+    function clearDrawnShortestPath(finalPath, refs) {
+        if (finalPath) {
+            finalPath.forEach(([y, x]) => {
+                refs.current[y][x].current.className = 'node';
+            })
         }
     }
 
@@ -99,6 +112,7 @@ function Grid() {
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     async function bfsAnimate() {
+        setAlgoRunning(true);
 
         let [traversalOrder, shortestPath] = breadthFirstSearch(
             isWall, startNode, goalNode, rows, cols);
@@ -123,6 +137,7 @@ function Grid() {
 
         refCollection.current[goalNode[0]][goalNode[1]].current.className = 'node goal';
         setFinalPath(shortestPath);
+        setAlgoRunning(false)
 
     }
 
@@ -138,6 +153,8 @@ function Grid() {
                         })
                     })
                     setFinalPath(undefined);
+                    setStartNode(undefined);
+                    setGoalNode(undefined);
                 }}
                 pickRandomStart={() => pickRandomFreeNode(isWall, setStartNode,
                     refCollection, finalPath)}
