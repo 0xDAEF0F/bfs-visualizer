@@ -6,7 +6,8 @@ import Toolbar from './Toolbar'
 // Functions
 import {
     GetRowsCols, fillMatrix,
-    pickRandomFreeNode
+    pickRandomFreeNode,
+    clearDrawnShortestPath
 } from './functions/helperMethods'
 import generateMaze from './functions/generateMaze'
 import { breadthFirstSearch } from './functions/breadthFirstSearch'
@@ -21,7 +22,7 @@ function Grid() {
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [isChoosingStart, setIsChoosingStart] = useState(false);
     const [isChoosingEnd, setIsChoosingEnd] = useState(false);
-    const [algoRunning, setAlgoRunning] = useState(true);
+    const [algoRunning, setAlgoRunning] = useState(false);
     // Graph Wall Representation
     const [isWall, setWall] = useState(matrix);
     const [finalPath, setFinalPath] = useState(undefined);
@@ -51,6 +52,10 @@ function Grid() {
             algoRunning) {
             return;
         }
+        if (finalPath) {
+            clearDrawnShortestPath(finalPath, refCollection);
+            setFinalPath(undefined);
+        }
         let [...walls] = isWall;
         walls[i][j] = true;
 
@@ -61,6 +66,7 @@ function Grid() {
         if (algoRunning) {
             return;
         }
+        clearDrawnShortestPath(finalPath, refCollection);
         if (goalOrStart === 'start' &&
             isWall[i][j] === false &&
             JSON.stringify([i, j]) !== JSON.stringify(goalNode)) {
@@ -72,13 +78,7 @@ function Grid() {
         }
     }
 
-    function clearDrawnShortestPath(finalPath, refs) {
-        if (finalPath) {
-            finalPath.forEach(([y, x]) => {
-                refs.current[y][x].current.className = 'node';
-            })
-        }
-    }
+
 
     function isMovingStartEnd(word) {
         setIsMouseDown(true);

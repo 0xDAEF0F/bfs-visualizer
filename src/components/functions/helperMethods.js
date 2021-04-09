@@ -70,15 +70,20 @@ export function allPathCoord(wallState, filtered = true) {
 
 export function pickRandomFreeNode(wallState, setter, refs, path) {
 
-    if (path) {
-        path.forEach(([y, x], i) => {
-            refs.current[y][x].current.className = 'node';
-        })
-    }
+    clearDrawnShortestPath(path, refs)
+
     const allPathCoords = allPathCoord(wallState)
 
     const randomRow = Math.floor(Math.random() * allPathCoords.length);
     const randomCol = Math.floor(Math.random() * allPathCoords[randomRow].length);
 
     setter(allPathCoords[randomRow][randomCol])
+}
+
+export function clearDrawnShortestPath(finalPath, allRefs) {
+    if (finalPath) {
+        finalPath.forEach(([y, x]) => {
+            allRefs.current[y][x].current.className = 'node';
+        })
+    }
 }
