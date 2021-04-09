@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { clearDrawnShortestPath } from './handlers';
 
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -78,12 +79,4 @@ export function pickRandomFreeNode(wallState, setter, refs, path) {
     const randomCol = Math.floor(Math.random() * allPathCoords[randomRow].length);
 
     setter(allPathCoords[randomRow][randomCol])
-}
-
-export function clearDrawnShortestPath(finalPath, allRefs) {
-    if (finalPath) {
-        finalPath.forEach(([y, x]) => {
-            allRefs.current[y][x].current.className = 'node';
-        })
-    }
 }

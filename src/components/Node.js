@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from 'react'
 
-const node = ({ coord, startNode, goalNode, isMouseDown,
-    isChoosingStart, isChoosingEnd, isWall, turnToStartEnd,
-    turnToWall, isMovingStartEnd }, ref) => {
+const node = ({ coord, startNode, endNode, isMouseDown,
+    isChoosingStart, isChoosingEnd, isWall,
+    turnToWall, isMovingStart, isMovingEnd,
+    moveStart, moveEnd }, ref) => {
 
     let className = "";
 
@@ -12,7 +13,7 @@ const node = ({ coord, startNode, goalNode, isMouseDown,
     if (JSON.stringify(coord) === JSON.stringify(startNode)) {
         className = 'start';
     }
-    if (JSON.stringify(coord) === JSON.stringify(goalNode)) {
+    if (JSON.stringify(coord) === JSON.stringify(endNode)) {
         className = 'goal';
     }
 
@@ -22,22 +23,22 @@ const node = ({ coord, startNode, goalNode, isMouseDown,
             className={`node ${className}`}
             onMouseDown={() => {
                 if (JSON.stringify(coord) === JSON.stringify(startNode)) {
-                    isMovingStartEnd('start');
-                } else if (JSON.stringify(coord) === JSON.stringify(goalNode)) {
-                    isMovingStartEnd('end');
+                    isMovingStart();
+                } else if (JSON.stringify(coord) === JSON.stringify(endNode)) {
+                    isMovingEnd();
                 }
             }}
             onMouseEnter={() => {
                 if (isMouseDown === true &&
                     isWall === false &&
                     JSON.stringify(coord) !== JSON.stringify(startNode) &&
-                    JSON.stringify(coord) !== JSON.stringify(goalNode)) {
-                    turnToWall(coord);
+                    JSON.stringify(coord) !== JSON.stringify(endNode)) {
+                    turnToWall();
                 }
                 if (isChoosingStart === true) {
-                    turnToStartEnd(coord, 'start');
+                    moveStart(coord);
                 } else if (isChoosingEnd === true) {
-                    turnToStartEnd(coord, 'end');
+                    moveEnd(coord);
                 }
             }}
         >
