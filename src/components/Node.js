@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const node = ({ coord, startNode, goalNode, isMouseDown,
-    isWall, turnToWall }, ref) => {
+    isChoosingStart, isChoosingEnd, isWall, turnToStartEnd,
+    turnToWall, isMovingStartEnd }, ref) => {
 
     let className = "";
 
@@ -19,17 +20,24 @@ const node = ({ coord, startNode, goalNode, isMouseDown,
         <div
             ref={ref}
             className={`node ${className}`}
+            onMouseDown={() => {
+                if (JSON.stringify(coord) === JSON.stringify(startNode)) {
+                    isMovingStartEnd('start');
+                } else if (JSON.stringify(coord) === JSON.stringify(goalNode)) {
+                    isMovingStartEnd('end');
+                }
+            }}
             onMouseEnter={() => {
                 if (isMouseDown === true &&
-                    JSON.stringify(coord) === JSON.stringify(startNode) ||
-                    JSON.stringify(coord) === JSON.stringify(goalNode)) {
-                    console.log('hi');
-                    // return;
-                } else if (isMouseDown === true &&
                     isWall === false &&
                     JSON.stringify(coord) !== JSON.stringify(startNode) &&
                     JSON.stringify(coord) !== JSON.stringify(goalNode)) {
                     turnToWall(coord);
+                }
+                if (isChoosingStart === true) {
+                    turnToStartEnd(coord, 'start');
+                } else if (isChoosingEnd === true) {
+                    turnToStartEnd(coord, 'end');
                 }
             }}
         >

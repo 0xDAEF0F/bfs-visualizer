@@ -19,6 +19,8 @@ function Grid() {
     const [startNode, setStartNode] = useState(undefined);
     const [goalNode, setGoalNode] = useState(undefined);
     const [isMouseDown, setIsMouseDown] = useState(false);
+    const [isChoosingStart, setIsChoosingStart] = useState(false);
+    const [isChoosingEnd, setIsChoosingEnd] = useState(false);
     // Graph Wall Representation
     const [isWall, setWall] = useState(matrix);
     const [finalPath, setFinalPath] = useState(undefined);
@@ -33,17 +35,45 @@ function Grid() {
         startNode={startNode}
         goalNode={goalNode}
         isMouseDown={isMouseDown}
+        isChoosingStart={isChoosingStart}
+        isChoosingEnd={isChoosingEnd}
         // Individuals
         isWall={isWall?.[i]?.[j]}
         // Function passed to child
         turnToWall={turnToWall}
+        turnToStartEnd={turnToStartEnd}
+        isMovingStartEnd={isMovingStartEnd}
     ></Node>))
 
     function turnToWall([i, j]) {
+        if (isChoosingEnd || isChoosingStart) {
+            return;
+        }
         let [...walls] = isWall;
         walls[i][j] = true;
 
         setWall(walls);
+    }
+
+    function turnToStartEnd([i, j], goalOrStart) {
+        if (goalOrStart === 'start' &&
+            isWall[i][j] === false &&
+            JSON.stringify([i, j]) !== JSON.stringify(goalNode)) {
+            setStartNode([i, j])
+        } else if (goalOrStart === 'end' &&
+            isWall[i][j] === false &&
+            JSON.stringify([i, j]) !== JSON.stringify(startNode)) {
+            setGoalNode([i, j])
+        }
+    }
+
+    function isMovingStartEnd(word) {
+        setIsMouseDown(true);
+        if (word === 'start') {
+            setIsChoosingStart(true);
+        } else if (word === 'end') {
+            setIsChoosingEnd(true);
+        }
     }
 
     async function createMazeAndAnimate() {
@@ -117,8 +147,15 @@ function Grid() {
                     alert('Please Pick a Start and a Goal Node!!') : bfsAnimate())}
             />
             <div
-                onMouseDown={() => setIsMouseDown(true)}
-                onMouseUp={() => setIsMouseDown(false)}
+                onMouseDown={() => {
+                    setIsMouseDown(true)
+
+                }}
+                onMouseUp={() => {
+                    setIsMouseDown(false);
+                    setIsChoosingStart(false);
+                    setIsChoosingEnd(false);
+                }}
                 className='grid'
             >
                 {grid.map((row, i) => <div key={i} className='board-row'>{row}</div>)}
