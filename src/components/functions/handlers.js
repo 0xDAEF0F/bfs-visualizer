@@ -21,12 +21,6 @@ export function isMovingStart(setIsMouseDown,
     setIsChoosingStart(true);
 }
 
-export function isMovingEnd(setIsMouseDown,
-    setIsChoosingEnd) {
-    setIsMouseDown(true);
-    setIsChoosingEnd(true);
-}
-
 export function moveStart([i, j], algoRunning,
     finalPath, refCollection, isWall,
     endNode, setStartNode) {
@@ -43,6 +37,12 @@ export function moveStart([i, j], algoRunning,
     }
 
 }
+export function isMovingEnd(setIsMouseDown,
+    setIsChoosingEnd) {
+    setIsMouseDown(true);
+    setIsChoosingEnd(true);
+}
+
 
 export function moveEnd([i, j], algoRunning,
     finalPath, refCollection, isWall,

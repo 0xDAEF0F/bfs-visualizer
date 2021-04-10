@@ -45,10 +45,7 @@ function Grid() {
         endNode={endNode}
         isChoosingStart={isChoosingStart}
         isChoosingEnd={isChoosingEnd}
-        setIsChoosingStart={setIsChoosingStart}
-        setIsChoosingEnd={setIsChoosingEnd}
         isMouseDown={isMouseDown}
-        setIsMouseDown={setIsMouseDown}
         // Individuals
         isWall={walls?.[i]?.[j]}
         // Function passed to child
