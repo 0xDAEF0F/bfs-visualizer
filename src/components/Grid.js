@@ -11,6 +11,7 @@ import {
 import {
     turnToWall, isMovingStartEnd,
     moveStartEnd,
+    clearDrawnShortestPath,
 } from './functions/handlers'
 import generateMaze from './functions/generateMaze'
 import { breadthFirstSearch } from './functions/breadthFirstSearch'
@@ -29,6 +30,7 @@ function Grid() {
 
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [algoRunning, setAlgoRunning] = useState(false);
+    const [mazeRunning, setMazeRunning] = useState(false);
     // Graph Wall Representation
     const [walls, setWalls] = useState(matrix);
     const [finalPath, setFinalPath] = useState(undefined);
@@ -61,6 +63,10 @@ function Grid() {
     ></Node>))
 
     async function createMazeAndAnimate() {
+        if (algoRunning || mazeRunning) {
+            return;
+        }
+        setMazeRunning(true);
         setWalls(fillMatrix(rows, cols, true));
         setStartNode(undefined);
         setEndNode(undefined);
@@ -77,10 +83,15 @@ function Grid() {
         await delay(orderCarved.length * 8);
 
         setWalls(walls);
+        setMazeRunning(false);
 
     }
 
     async function bfsAnimate() {
+        if (algoRunning) {
+            return;
+        }
+        clearDrawnShortestPath(finalPath, refCollection);
         setAlgoRunning(true);
 
         let [traversalOrder, shortestPath] = breadthFirstSearch(
@@ -118,6 +129,9 @@ function Grid() {
             <Toolbar
                 generateMaze={createMazeAndAnimate}
                 clearGrid={() => {
+                    if (algoRunning || mazeRunning) {
+                        return;
+                    }
                     setWalls(fillMatrix(rows, cols, false))
                     refCollection.current.forEach(row => {
                         row.forEach(ref => {
@@ -129,16 +143,15 @@ function Grid() {
                     setEndNode(undefined);
                 }}
                 pickRandomStart={() => pickRandomFreeNode(walls, setStartNode,
-                    refCollection, finalPath)}
+                    refCollection, finalPath, algoRunning, mazeRunning)}
                 pickRandomEnd={() => pickRandomFreeNode(walls, setEndNode,
-                    refCollection, finalPath)}
+                    refCollection, finalPath, algoRunning, mazeRunning)}
                 startBfs={() => (!startNode || !endNode ?
                     alert('Please Pick a Start and a Goal Node!!') : bfsAnimate())}
             />
             <div
                 onMouseDown={() => {
                     setIsMouseDown(true)
-
                 }}
                 onMouseUp={() => {
                     setIsMouseDown(false);

@@ -69,7 +69,12 @@ export function allPathCoord(wallState, filtered = true) {
     }).filter(row => row.length > 0)
 }
 
-export function pickRandomFreeNode(wallState, setter, refs, path) {
+export function pickRandomFreeNode(wallState, setter, refs,
+    path, algoRunning, mazeRunning) {
+
+    if (algoRunning || mazeRunning) {
+        return;
+    }
 
     clearDrawnShortestPath(path, refs)
 
