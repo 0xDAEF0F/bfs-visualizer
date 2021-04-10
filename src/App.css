@@ -15,13 +15,13 @@
 }
 
 .header {
-    background-color: gray;
+    background-color: #A8D0E6;
     height: 3rem;
     margin-bottom: 1rem;
 }
 
 .toolbar {
-    background-color: rgb(32, 127, 216);
+    background-color: #374785;
     height: 3rem;
 }
 
@@ -40,7 +40,7 @@
 
 .node {
   background: #fff;
-  border: 1px solid #999;
+  border: 1px solid grey;
   float: left;
   font-size: 8px;
   font-weight: bold;
@@ -54,27 +54,31 @@
 }
 
 .wall {
-    background-color: teal;
+    background-color: #24305E;
 }
 
 .start {
-    background-color: rgb(233, 60, 100);
+    background-color: #F76C6C;
 }
 
 .goal {
-    background-color: rgb(95, 233, 60);
+    background-color: #f8e9a1;
 }
 
 .traversed {
-    background-color: yellow;
-}
-
-.carved {
-    background-color: aliceblue;
+    background-color: #f8e9a1;
 }
 
 .shortest-path{
-    background-color: pink;
+    background-color: #a8d0e6;
+    animation-name: shortestPath;
+    animation-duration: 1s;
+}
+
+@keyframes shortestPath {
+    /* 0%{background-color: rgb(243, 186, 195);}   
+    50%{background-color: rgb(236, 197, 215);}   
+    100%{background-color: rgb(243, 186, 195);}    */
 }
 
 .board-row::after {
@@ -90,5 +94,5 @@
     text-align: center;
     height: 2.5rem;
     width: 100%;
-    background-color: grey;
+    background-color: #a8d0e6;
 }

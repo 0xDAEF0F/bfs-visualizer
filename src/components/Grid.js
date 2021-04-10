@@ -147,7 +147,7 @@ function Grid() {
                 pickRandomEnd={() => pickRandomFreeNode(walls, setEndNode,
                     refCollection, finalPath, algoRunning, mazeRunning)}
                 startBfs={() => (!startNode || !endNode ?
-                    alert('Please Pick a Start and a Goal Node!!') : bfsAnimate())}
+                    alert('👮‍♂️Pick a Start and a Goal Node👮‍♀️‍️') : bfsAnimate())}
             />
             <div
                 onMouseDown={() => {

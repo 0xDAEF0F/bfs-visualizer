@@ -1,9 +1,8 @@
 import React from 'react'
 
 const node = ({ coord, startNode, endNode, isMouseDown,
-    isChoosingStart, isChoosingEnd, isWall,
-    turnToWall, isMovingStartEnd,
-    moveStartEnd }, ref) => {
+    isChoosingStart, isChoosingEnd, isWall, turnToWall,
+    isMovingStartEnd, moveStartEnd }, ref) => {
 
     let className = "";
 
