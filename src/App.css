@@ -15,14 +15,25 @@
 }
 
 .header {
-    background-color: #A8D0E6;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #24305e;
+    color: white;
     height: 3rem;
-    margin-bottom: 1rem;
+}
+
+.header a {
+    text-decoration: none;
+    color: #fff;
 }
 
 .toolbar {
-    background-color: #374785;
-    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #a8d0e6;
+    height: 2rem;
 }
 
 .logo-name {
@@ -62,7 +73,7 @@
 }
 
 .goal {
-    background-color: #f8e9a1;
+    background-color: #b37c36;
 }
 
 .traversed {
@@ -89,10 +100,14 @@
 
 
 .footer {
+    background-color: #24305e;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: #fff;
     position: absolute;
     bottom: 0;
     text-align: center;
     height: 2.5rem;
     width: 100%;
-    background-color: #a8d0e6;
 }
