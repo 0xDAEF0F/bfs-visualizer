@@ -9,8 +9,8 @@ import {
     pickRandomFreeNode
 } from './functions/helperMethods'
 import {
-    turnToWall,
-    isMovingStart, isMovingEnd, moveStart, moveEnd
+    turnToWall, isMovingStartEnd,
+    moveStartEnd,
 } from './functions/handlers'
 import generateMaze from './functions/generateMaze'
 import { breadthFirstSearch } from './functions/breadthFirstSearch'
@@ -49,15 +49,14 @@ function Grid() {
         // Individuals
         isWall={walls?.[i]?.[j]}
         // Function passed to child
-        isMovingStart={() => isMovingStart(setIsMouseDown, setIsChoosingStart)}
-        isMovingEnd={() => isMovingEnd(setIsMouseDown, setIsChoosingEnd)}
         turnToWall={() => turnToWall([i, j], isChoosingEnd,
             isChoosingStart, algoRunning, finalPath,
             refCollection, setFinalPath, walls, setWalls)}
-        moveStart={(coord) => moveStart(coord, algoRunning, finalPath, refCollection,
-            walls, endNode, setStartNode)}
-        moveEnd={(coord) => moveEnd(coord, algoRunning, finalPath, refCollection,
-            walls, startNode, setEndNode)}
+        isMovingStartEnd={(bool) => isMovingStartEnd(bool, setIsMouseDown,
+            setIsChoosingEnd, setIsChoosingStart)}
+        moveStartEnd={(bool, coord) => moveStartEnd(bool, coord, algoRunning,
+            finalPath, refCollection, walls, startNode, endNode,
+            setStartNode, setEndNode)}
         ref={refCollection.current?.[i]?.[j]}
     ></Node>))
 

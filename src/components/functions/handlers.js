@@ -15,48 +15,35 @@ export function turnToWall([i, j], isChoosingEnd,
     setWall(walls);
 }
 
-export function isMovingStart(setIsMouseDown,
-    setIsChoosingStart) {
+export function isMovingStartEnd(start, setIsMouseDown,
+    setIsChoosingEnd, setIsChoosingStart) {
     setIsMouseDown(true);
-    setIsChoosingStart(true);
+    if (start) {
+        setIsChoosingStart(true);
+    } else if (!start) {
+        setIsChoosingEnd(true);
+    }
+
 }
 
-export function moveStart([i, j], algoRunning,
-    finalPath, refCollection, isWall,
-    endNode, setStartNode) {
+export function moveStartEnd(start, [i, j], algoRunning,
+    finalPath, refCollection, isWall, startNode,
+    endNode, setStartNode, setEndNode) {
 
-    if (algoRunning) {
+    if (algoRunning || isWall[i][j] === true) {
         return;
     }
 
     clearDrawnShortestPath(finalPath, refCollection);
 
-    if (isWall[i][j] === false &&
-        JSON.stringify([i, j]) !== JSON.stringify(endNode)) {
-        setStartNode([i, j])
-    }
-
-}
-export function isMovingEnd(setIsMouseDown,
-    setIsChoosingEnd) {
-    setIsMouseDown(true);
-    setIsChoosingEnd(true);
-}
-
-
-export function moveEnd([i, j], algoRunning,
-    finalPath, refCollection, isWall,
-    startNode, setEndNode) {
-
-    if (algoRunning) {
-        return;
-    }
-
-    clearDrawnShortestPath(finalPath, refCollection);
-
-    if (isWall[i][j] === false &&
-        JSON.stringify([i, j]) !== JSON.stringify(startNode)) {
-        setEndNode([i, j])
+    if (start) {
+        if (JSON.stringify([i, j]) !== JSON.stringify(endNode)) {
+            setStartNode([i, j]);
+        }
+    } else if (!start) {
+        if (JSON.stringify([i, j]) !== JSON.stringify(startNode)) {
+            setEndNode([i, j]);
+        }
     }
 
 }

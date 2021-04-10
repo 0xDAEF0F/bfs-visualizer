@@ -2,8 +2,8 @@ import React from 'react'
 
 const node = ({ coord, startNode, endNode, isMouseDown,
     isChoosingStart, isChoosingEnd, isWall,
-    turnToWall, isMovingStart, isMovingEnd,
-    moveStart, moveEnd }, ref) => {
+    turnToWall, isMovingStartEnd,
+    moveStartEnd }, ref) => {
 
     let className = "";
 
@@ -23,9 +23,9 @@ const node = ({ coord, startNode, endNode, isMouseDown,
             className={`node ${className}`}
             onMouseDown={() => {
                 if (JSON.stringify(coord) === JSON.stringify(startNode)) {
-                    isMovingStart();
+                    isMovingStartEnd(true);
                 } else if (JSON.stringify(coord) === JSON.stringify(endNode)) {
-                    isMovingEnd();
+                    isMovingStartEnd(false);
                 }
             }}
             onMouseEnter={() => {
@@ -36,9 +36,9 @@ const node = ({ coord, startNode, endNode, isMouseDown,
                     turnToWall();
                 }
                 if (isChoosingStart === true) {
-                    moveStart(coord);
+                    moveStartEnd(true, coord);
                 } else if (isChoosingEnd === true) {
-                    moveEnd(coord);
+                    moveStartEnd(false, coord);
                 }
             }}
         >
