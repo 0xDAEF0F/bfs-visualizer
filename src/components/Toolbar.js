@@ -3,11 +3,11 @@ import Button from 'react-bootstrap/Button'
 function Toolbar(props) {
     return (
         <div className='toolbar'>
-            <Button className={"myBtn"} onClick={props.generateMaze}>Create Maze</Button>
-            <Button className={"myBtn"} onClick={props.clearGrid}>Clear Grid</Button>
-            <Button className={"myBtn"} onClick={props.pickRandomStart}>Pick Start</Button>
-            <Button className={"myBtn"} onClick={props.pickRandomEnd}>Pick Goal</Button>
-            <Button className={"myBtn"} onClick={props.startBfs}>Start BFS</Button>
+            <Button onClick={props.generateMaze}>Create Maze</Button>
+            <Button onClick={props.clearGrid}>Clear Grid</Button>
+            <Button onClick={props.pickRandomStart}>Pick Start</Button>
+            <Button onClick={props.pickRandomEnd}>Pick Goal</Button>
+            <Button onClick={props.startBfs}>Start BFS</Button>
         </div>
     )
 }

@@ -35,15 +35,7 @@ $text-font: "Fira Code", monospace;
     min-height: 100vh;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active,
-// .btn-primary:not(:disabled):not(.disabled):hover,
-.btn-primary:not(:disabled):not(.disabled):focus {
-    background-color: $light-dark;
-    border-color: $dark;
-    color: $light;
-}
-
-.myBtn{
+.btn-primary{
     @include flex-center(center);
     color: $light-dark;
     background-color: $light;
@@ -56,20 +48,25 @@ $text-font: "Fira Code", monospace;
     &:hover{
         background-color: $accent;
     }
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled):focus{
+        background-color: $light-dark;
+        border-color: $dark;
+        color: $light;
+    }
 }
 
 .header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: $dark;
+    @include flex-center(space-around);
     color: $light;
-    height: 3rem;
+    background-color: $dark;
+    height: 4rem;
 
     h1{
         @include reset();
         font-family: $title-font;
-        font-weight: 600;
+        font-weight: 500;
+        font-size: 2rem;
     }
 
     a {
