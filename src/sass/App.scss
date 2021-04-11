@@ -4,6 +4,20 @@ $info: #f8e9a1;
 $light-dark: #374785;
 $dark: #24305e;
 $light: #f7f9fb;
+$title-font: 'Montserrat', sans-serif;
+$subtitle-font: "Fira Sans", sans-serif;
+$text-font: "Fira Code", monospace;
+
+@mixin flex-center($var){
+    display: flex;
+    align-items: center;
+    justify-content: $var;
+}
+
+@mixin reset{
+    margin: 0;
+    padding: 0;
+}
 
 * {
     box-sizing: border-box;
@@ -21,6 +35,29 @@ $light: #f7f9fb;
     min-height: 100vh;
 }
 
+.btn-primary:not(:disabled):not(.disabled):active,
+// .btn-primary:not(:disabled):not(.disabled):hover,
+.btn-primary:not(:disabled):not(.disabled):focus {
+    background-color: $light-dark;
+    border-color: $dark;
+    color: $light;
+}
+
+.myBtn{
+    @include flex-center(center);
+    color: $light-dark;
+    background-color: $light;
+    border-color: $dark;
+    margin: 5px;
+    font-weight: 600;
+    font-size: .6rem;
+    border-width: 2px;
+    height: 60%;
+    &:hover{
+        background-color: $accent;
+    }
+}
+
 .header {
     display: flex;
     justify-content: space-around;
@@ -29,25 +66,36 @@ $light: #f7f9fb;
     color: $light;
     height: 3rem;
 
+    h1{
+        @include reset();
+        font-family: $title-font;
+        font-weight: 600;
+    }
+
     a {
+        font-family: $subtitle-font;
+        font-weight: 500;
         text-decoration: none;
         color: $light;
+
+        &:hover{
+            color: $accent;
+            font-size: 1.05rem;
+        }
     }
 
 }
 
 .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+    @include flex-center(space-evenly);
+    font-family: $text-font;
     background-color: $primary;
-    height: 2rem;
+    height: 3rem;
 }
 
 .logo-name {
     display: inline;
 }
-
 
 .grid{
     display: flex;
@@ -61,14 +109,11 @@ $light: #f7f9fb;
   background: $light;
   border: 1px solid grey;
   float: left;
-  font-size: 8px;
-  font-weight: bold;
   line-height: 30px;
   height: 30px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
-  text-align: center;
   width: 30px;
 }
 
@@ -108,14 +153,15 @@ $light: #f7f9fb;
 
 
 .footer {
+    @include flex-center(space-evenly);
+    font-family: $text-font;
     background-color: #24305e;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
     color: #fff;
     position: absolute;
     bottom: 0;
-    text-align: center;
-    height: 2.5rem;
+    height: 3rem;
     width: 100%;
+    p{
+        @include reset();
+    }
 }

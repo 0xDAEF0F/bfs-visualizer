@@ -1,13 +1,13 @@
-
+import Button from 'react-bootstrap/Button'
 
 function Toolbar(props) {
     return (
         <div className='toolbar'>
-            <button onClick={props.generateMaze}>Generate Maze</button>
-            <button onClick={props.clearGrid}>Clear Grid</button>
-            <button onClick={props.pickRandomStart}>Pick Random Start</button>
-            <button onClick={props.pickRandomEnd}>Pick Random Destination</button>
-            <button onClick={props.startBfs}>Start BFS</button>
+            <Button className={"myBtn"} onClick={props.generateMaze}>Create Maze</Button>
+            <Button className={"myBtn"} onClick={props.clearGrid}>Clear Grid</Button>
+            <Button className={"myBtn"} onClick={props.pickRandomStart}>Pick Start</Button>
+            <Button className={"myBtn"} onClick={props.pickRandomEnd}>Pick Goal</Button>
+            <Button className={"myBtn"} onClick={props.startBfs}>Start BFS</Button>
         </div>
     )
 }
