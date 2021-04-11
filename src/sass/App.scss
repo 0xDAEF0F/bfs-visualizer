@@ -1,3 +1,10 @@
+$primary: #a8d0e6;
+$accent: #f76c6c;
+$info: #f8e9a1;
+$light-dark: #374785;
+$dark: #24305e;
+$light: #f7f9fb;
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -18,21 +25,22 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #24305e;
-    color: white;
+    background-color: $dark;
+    color: $light;
     height: 3rem;
-}
 
-.header a {
-    text-decoration: none;
-    color: #fff;
+    a {
+        text-decoration: none;
+        color: $light;
+    }
+
 }
 
 .toolbar {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-color: #a8d0e6;
+    background-color: $primary;
     height: 2rem;
 }
 
@@ -50,7 +58,7 @@
 }
 
 .node {
-  background: #fff;
+  background: $light;
   border: 1px solid grey;
   float: left;
   font-size: 8px;
@@ -65,11 +73,11 @@
 }
 
 .wall {
-    background-color: #24305E;
+    background-color: $dark;
 }
 
 .start {
-    background-color: #F76C6C;
+    background-color: $accent;
 }
 
 .goal {
@@ -77,11 +85,11 @@
 }
 
 .traversed {
-    background-color: #f8e9a1;
+    background-color: $info;
 }
 
 .shortest-path{
-    background-color: #a8d0e6;
+    background-color: $primary;
     animation-name: shortestPath;
     animation-duration: 1s;
 }
