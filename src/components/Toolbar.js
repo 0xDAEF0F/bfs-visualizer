@@ -1,4 +1,6 @@
 import Button from 'react-bootstrap/Button'
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 function Toolbar(props) {
     return (
@@ -7,7 +9,14 @@ function Toolbar(props) {
             <Button onClick={props.clearGrid}>Clear Grid</Button>
             <Button onClick={props.pickRandomStart}>Pick Start</Button>
             <Button onClick={props.pickRandomEnd}>Pick Goal</Button>
-            <Button onClick={props.startBfs}>Start BFS</Button>
+            <DropdownButton title='Select Algo'>
+                <Dropdown.Item onClick={props.startBfs}>Breadth First Search</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Header>Coming Soon</Dropdown.Header>
+                <Dropdown.Item className='disabled'>Depth First Search</Dropdown.Item>
+                <Dropdown.Item className='disabled'>Djistra's</Dropdown.Item>
+                <Dropdown.Item className='disabled'>A*</Dropdown.Item>
+            </DropdownButton>
         </div>
     )
 }

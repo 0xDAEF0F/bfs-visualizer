@@ -19,12 +19,6 @@ $text-font: "Fira Code", monospace;
     padding: 0;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 ::selection {
     color: none;
     background: none;
@@ -88,6 +82,12 @@ $text-font: "Fira Code", monospace;
     font-family: $text-font;
     background-color: $primary;
     height: 3rem;
+    
+    .dropdown-item{
+        font-size: .6rem;
+        font-weight: 500;
+        color: $dark;
+    }
 }
 
 .logo-name {
@@ -95,7 +95,10 @@ $text-font: "Fira Code", monospace;
 }
 
 .grid{
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
+    background-image: url("https://www.figma.com/file/eR8nsi29ehFcBSSo8h6BOv/Untitled?node-id=101%3A2");
     flex-direction: column;
     align-items: center;
     padding-top: 5%;

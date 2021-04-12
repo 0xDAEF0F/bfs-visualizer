@@ -4,8 +4,8 @@ function Header() {
 
     return (
         <div className="header">
-            {/* <img src="#" alt="AlgoSolverLogo" /> */}
             <h1 className="logo-name">AlgoSolver</h1>
+            <h5>Pathfinding & Maze Generator</h5>
             <a href="http://">Learning</a>
         </div>
     )
