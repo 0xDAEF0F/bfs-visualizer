@@ -114,24 +114,41 @@
 }
 
 .grid {
-  background-size: contain;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   padding-top: 5%;
   padding-bottom: 8%;
 }
 
+.container2 {
+  background-image: url("../assets/comingSoon.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 50% 50%;
+  width: 100%;
+  height: 95vh;
+  background-color: #eddcc3;
+  margin: 0;
+  padding: 0;
+}
+
 @media screen and (max-width: 600px) {
   .grid {
-    background-image: url("../assets/SVG/mobile.svg");
+    background-image: url("../assets/mobile.svg");
+  }
+  .container2 {
+    background-image: url("../assets/comingSoonIphone.svg");
   }
 }
 

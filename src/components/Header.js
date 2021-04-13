@@ -25,7 +25,7 @@ function Header({ location }) {
                 <Link to={routes[1]}>{names[1]}</Link>
             </div>
             <div className="resources">
-                <Link to="/learn">Learning Resources</Link>
+                <Link to="/">Learning Resources</Link>
             </div>
         </div>
     )

@@ -106,20 +106,33 @@ $text-font: "Fira Code", monospace;
 }
 
 .grid{
-    // background-repeat: no-repeat;
-    background-size: contain;
-    display: flex;
+    @include flex-center(center);
+    // width: 100vw;
     flex-direction: column;
-    // background-image: url("../assets/SVG/Artboard\ 7.svg");
-    align-items: center;
     padding-top: 5%;
     padding-bottom: 8%;
 }
 
+.container2{
+
+    background-image: url("../assets/comingSoon.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50% 50%;
+    width: 100%;
+    height: 95vh;
+    background-color: rgb(237,220,195);
+    @include reset();
+    
+}
+
 @media screen and (max-width: 600px) {
    .grid{
-       background-image: url("../assets/SVG/mobile.svg");
-   } 
+       background-image: url("../assets/mobile.svg");
+   }
+   .container2{
+       background-image: url("../assets/comingSoonIphone.svg");
+   }
 }
 
 .node {

@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Grid from './components/Grid'
 import Footer from './components/Footer'
 import { Switch, Route } from 'react-router-dom'
+import ComingSoon from './components/ComingSoon'
 
 function App() {
     return (
@@ -14,11 +15,11 @@ function App() {
                 </Route>
                 <Route path="/sorting">
                     <Header location={2} />
-                    <h1>Nothing yet...</h1>
+                    <ComingSoon />
                 </Route>
                 <Route path='/recursion'>
                     <Header location={3} />
-                    <h1>jeje</h1>
+                    <ComingSoon />
                 </Route>
             </Switch>
             <Footer />
