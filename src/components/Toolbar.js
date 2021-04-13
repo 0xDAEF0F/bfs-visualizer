@@ -6,10 +6,10 @@ function Toolbar(props) {
     return (
         <div className='toolbar'>
             <Button onClick={props.generateMaze}>Create Maze</Button>
-            <Button onClick={props.clearGrid}>Clear Grid</Button>
+            <Button onClick={props.clearGrid}>Clear</Button>
             <Button onClick={props.pickRandomStart}>Pick Start</Button>
             <Button onClick={props.pickRandomEnd}>Pick Goal</Button>
-            <DropdownButton title='Select Algo'>
+            <DropdownButton title='Algo'>
                 <Dropdown.Item onClick={props.startBfs}>Breadth First Search</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Header>Coming Soon</Dropdown.Header>

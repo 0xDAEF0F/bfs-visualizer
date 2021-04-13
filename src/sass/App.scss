@@ -1,9 +1,9 @@
-$primary: #a8d0e6;
-$accent: #f76c6c;
-$info: #f8e9a1;
-$light-dark: #374785;
-$dark: #24305e;
-$light: #f7f9fb;
+$primary: rgb(168, 208, 230);
+$accent: rgb(247, 108, 108);
+$info: rgb(248, 233, 161);
+$light-dark: rgb(55, 71, 133);
+$dark: rgb(36, 48, 94);
+$light: rgb(247, 249, 251);
 $title-font: 'Montserrat', sans-serif;
 $subtitle-font: "Fira Sans", sans-serif;
 $text-font: "Fira Code", monospace;
@@ -52,27 +52,38 @@ $text-font: "Fira Code", monospace;
 
 .header {
     @include flex-center(space-around);
-    color: $light;
     background-color: $dark;
     height: 4rem;
 
-    h1{
+    .logo-name{
         @include reset();
         font-family: $title-font;
+        text-decoration: none;
+        color: $light;
         font-weight: 500;
         font-size: 2rem;
     }
 
-    a {
+    .resources a {
         font-family: $subtitle-font;
         font-weight: 500;
+        font-size: .9rem;
         text-decoration: none;
         color: $light;
+        margin-right: 4px;
 
         &:hover{
             color: $accent;
-            font-size: 1.05rem;
         }
+    }
+
+    .sections a {
+        font-size: .8rem;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+        color: $info;
+        margin-right: 10px;
     }
 
 }
@@ -95,14 +106,20 @@ $text-font: "Fira Code", monospace;
 }
 
 .grid{
-    background-repeat: no-repeat;
-    background-size: cover;
+    // background-repeat: no-repeat;
+    background-size: contain;
     display: flex;
-    background-image: url("https://www.figma.com/file/eR8nsi29ehFcBSSo8h6BOv/Untitled?node-id=101%3A2");
     flex-direction: column;
+    // background-image: url("../assets/SVG/Artboard\ 7.svg");
     align-items: center;
     padding-top: 5%;
-    padding-bottom: 10%;
+    padding-bottom: 8%;
+}
+
+@media screen and (max-width: 600px) {
+   .grid{
+       background-image: url("../assets/SVG/mobile.svg");
+   } 
 }
 
 .node {
