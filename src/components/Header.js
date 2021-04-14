@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom"
+import logo from "../assets/logo.svg"
 
 function Header({ location }) {
 
@@ -19,7 +20,10 @@ function Header({ location }) {
 
     return (
         <div className="header">
-            <Link to="/" className="logo-name">AlgoSolver</Link>
+            <div className={'logo-container'}>
+                <img src={logo} alt="logo" />
+                <Link to="/" className="logo-name">AlgoSolver</Link>
+            </div>
             <div className="sections">
                 <Link to={routes[0]}>{names[0]}</Link>
                 <Link to={routes[1]}>{names[1]}</Link>
