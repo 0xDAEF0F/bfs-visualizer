@@ -5,11 +5,13 @@ import Dropdown from 'react-bootstrap/Dropdown'
 function Toolbar(props) {
     return (
         <div className='toolbar'>
-            <Button onClick={props.generateMaze}>Create Maze</Button>
-            <Button onClick={props.clearGrid}>Clear</Button>
-            <Button onClick={props.pickRandomStart}>Pick Start</Button>
-            <Button onClick={props.pickRandomEnd}>Pick Goal</Button>
-            <DropdownButton title='Algo'>
+            <Button size="sm" onClick={props.generateMaze}>Create Maze</Button>
+            <Button size="sm" onClick={props.clearGrid}>Clear</Button>
+            <Button size="sm" onClick={props.pickRandomStart}>Pick Start</Button>
+
+            <Button size="sm" onClick={props.pickRandomEnd}>Pick Goal</Button>
+
+            <DropdownButton size="sm" title='Algo'>
                 <Dropdown.Item onClick={props.startBfs}>Breadth First Search</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Header>Coming Soon</Dropdown.Header>

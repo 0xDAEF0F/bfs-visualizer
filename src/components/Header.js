@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 
@@ -20,20 +19,7 @@ function Header({ location }) {
     }
 
     return (
-        // <div className="header">
-        //     <div className={'logo-container'}>
-        //         <img src={logo} alt="logo" />
-        //         <Link to="/" className="logo-name">AlgoSolver</Link>
-        //     </div>
-        //     <div className="sections">
-        //         <Link to={routes[0]}>{names[0]}</Link>
-        //         <Link to={routes[1]}>{names[1]}</Link>
-        //     </div>
-        //     <div className="resources">
-        //         <Link to="/">Learning Resources</Link>
-        //     </div>
-        // </div>
-        <Navbar className='navbar-dark' expand='lg'>
+        <Navbar className='navbar-dark' expand='md'>
             <Navbar.Brand href='/'>
                 <Logo
                     alt="logo"
