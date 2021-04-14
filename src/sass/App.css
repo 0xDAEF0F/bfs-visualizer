@@ -43,6 +43,14 @@
   color: #f7f9fb;
 }
 
+.navbar {
+  background-color: #24305e;
+}
+
+.navbar a {
+  color: #f7f9fb;
+}
+
 .header {
   display: -webkit-box;
   display: -ms-flexbox;

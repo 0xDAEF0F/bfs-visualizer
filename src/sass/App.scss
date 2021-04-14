@@ -50,6 +50,14 @@ $text-font: "Fira Code", monospace;
     }
 }
 
+.navbar{
+    background-color: $dark;
+    a {
+    color: $light;
+    }
+    
+}
+
 .header {
     @include flex-center(space-around);
     background-color: $dark;
@@ -117,7 +125,6 @@ $text-font: "Fira Code", monospace;
 
 .grid{
     @include flex-center(center);
-    // width: 100vw;
     flex-direction: column;
     padding-top: 5%;
     padding-bottom: 8%;
