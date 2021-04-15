@@ -59,6 +59,10 @@
   background-color: #24305e;
 }
 
+.navbar-nav .nav-link:hover {
+  color: #f7f9fb !important;
+}
+
 .toolbar {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -102,12 +106,12 @@
 .btn-primary:hover {
   background-color: #f76c6c !important;
   color: #f7f9fb !important;
+  border-color: black;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled):focus {
-  background-color: #374785;
-  border-color: #24305e;
-  color: #24305e;
+  background-color: #374785 !important;
+  color: #f7f9fb;
 }
 
 .btn-primary.dropdown-toggle {

@@ -19,6 +19,11 @@
 
 .navbar{
     background-color: $dark;
+    &-nav{
+        .nav-link:hover{
+            color: $light !important;
+        }
+    }
 }
 
 .toolbar {
@@ -45,12 +50,12 @@
     &:hover{
         background-color: $accent !important;
         color: $light  !important;
+        border-color: black;
     }
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled):focus{
-        background-color: $light-dark;
-        border-color: $dark;
-        color: $dark;
+        background-color: $light-dark !important;
+        color: $light;
     }
     &.dropdown-toggle{
        font-size: .6rem;
