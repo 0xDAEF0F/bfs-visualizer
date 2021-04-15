@@ -182,10 +182,6 @@
   width: 30px;
 }
 
-.node:hover {
-  opacity: 50%;
-}
-
 .node.wall {
   background-color: #24305e;
 }
