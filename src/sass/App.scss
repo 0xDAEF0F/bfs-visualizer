@@ -7,8 +7,7 @@
 @keyframes shortestPath {
     0%{background-color: $primary;}   
     50%{background-color: rgb(89, 154, 189);
-    border-radius: 3px;
-    opacity: 80%;}   
+    border-radius: 3px;}   
     100%{background-color: $primary;} 
 }
 @keyframes traversed {
