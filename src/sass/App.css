@@ -22,14 +22,24 @@
   }
 }
 
-::-moz-selection {
-  color: none;
-  background: none;
+@media (max-width: 599px) {
+  .btn.btn-primary.btn-sm {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 60%;
+  }
+  .grid {
+    background-image: url("../assets/mobile.svg");
+  }
+  .container2 {
+    background-image: url("../assets/comingSoonIphone.svg");
+  }
 }
 
-::selection {
-  color: none;
-  background: none;
+@media (min-width: 1200px) {
+  .grid {
+    background-image: url("../assets/xlaptop.svg");
+  }
 }
 
 .app {
@@ -103,22 +113,6 @@
   background-color: #f76c6c !important;
 }
 
-.logo-name {
-  display: inline;
-}
-
-.board-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
 .grid {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -140,10 +134,16 @@
   padding-bottom: 8%;
 }
 
-@media (min-width: 1200px) {
-  .grid {
-    background-image: url("../assets/xlaptop.svg");
-  }
+.grid .board-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .container2 {
@@ -156,20 +156,6 @@
   background-color: #eddcc3;
   margin: 0;
   padding: 0;
-}
-
-@media (max-width: 599px) {
-  .btn.btn-primary.btn-sm {
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 60%;
-  }
-  .grid {
-    background-image: url("../assets/mobile.svg");
-  }
-  .container2 {
-    background-image: url("../assets/comingSoonIphone.svg");
-  }
 }
 
 .node {
@@ -206,13 +192,6 @@
           animation-name: shortestPath;
   -webkit-animation-duration: 1s;
           animation-duration: 1s;
-}
-
-.board-row::after {
-  clear: both;
-  content: "";
-  display: -ms-grid;
-  display: grid;
 }
 
 .footer {

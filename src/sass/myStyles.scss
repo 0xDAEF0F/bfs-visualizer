@@ -1,0 +1,36 @@
+$primary: rgb(168, 208, 230);
+$accent: rgb(247, 108, 108);
+$info: rgb(248, 233, 161);
+$light-dark: rgb(55, 71, 133);
+$dark: rgb(36, 48, 94);
+$light: rgb(247, 249, 251);
+$title-font: 'Montserrat', sans-serif;
+$subtitle-font: "Fira Sans", sans-serif;
+$text-font: "Fira Code", monospace;
+
+@mixin flex-center($var){
+    display: flex;
+    align-items: center;
+    justify-content: $var;
+}
+
+@mixin reset{
+    margin: 0;
+    padding: 0;
+}
+
+@mixin for-phone-only {
+  @media (max-width: 599px) { @content; }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) { @content; }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) { @content; }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) { @content; }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) { @content; }
+}

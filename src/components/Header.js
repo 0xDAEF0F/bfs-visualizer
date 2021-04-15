@@ -20,7 +20,9 @@ function Header({ location }) {
 
     return (
         <Navbar className='navbar-dark' expand='md'>
-            <Navbar.Brand href='/'>
+            <Navbar.Brand href='/' style={{
+                padding: 0,
+            }}>
                 <Logo
                     alt="logo"
                 />

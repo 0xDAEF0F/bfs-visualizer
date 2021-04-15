@@ -1,39 +1,4 @@
-$primary: rgb(168, 208, 230);
-$accent: rgb(247, 108, 108);
-$info: rgb(248, 233, 161);
-$light-dark: rgb(55, 71, 133);
-$dark: rgb(36, 48, 94);
-$light: rgb(247, 249, 251);
-$title-font: 'Montserrat', sans-serif;
-$subtitle-font: "Fira Sans", sans-serif;
-$text-font: "Fira Code", monospace;
-
-@mixin flex-center($var){
-    display: flex;
-    align-items: center;
-    justify-content: $var;
-}
-
-@mixin reset{
-    margin: 0;
-    padding: 0;
-}
-
-@mixin for-phone-only {
-  @media (max-width: 599px) { @content; }
-}
-@mixin for-tablet-portrait-up {
-  @media (min-width: 600px) { @content; }
-}
-@mixin for-tablet-landscape-up {
-  @media (min-width: 900px) { @content; }
-}
-@mixin for-desktop-up {
-  @media (min-width: 1200px) { @content; }
-}
-@mixin for-big-desktop-up {
-  @media (min-width: 1800px) { @content; }
-}
+@import "myStyles";
 
 @keyframes shortestPath {
     0%{background-color: $primary;}   
@@ -41,9 +6,29 @@ $text-font: "Fira Code", monospace;
     100%{background-color: $primary;} 
 }
 
-::selection {
-    color: none;
-    background: none;
+@include for-phone-only(){
+    .btn.btn-primary{
+        &.btn-sm {
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 60%;
+        }
+
+    }
+        
+   .grid{
+       background-image: url("../assets/mobile.svg");
+   }
+   .container2{
+       background-image: url("../assets/comingSoonIphone.svg");
+   }
+}
+
+@include for-desktop-up(){
+    .grid{
+
+        background-image: url("../assets/xlaptop.svg");
+    }
 }
 
 .app {
@@ -60,8 +45,8 @@ $text-font: "Fira Code", monospace;
     font-family: $text-font;
     background-color: $primary;
     height: 4rem;
-    
 }
+
 .btn-primary{
     @include flex-center(center);
     border-radius: 8px;
@@ -90,20 +75,11 @@ $text-font: "Fira Code", monospace;
        font-size: .6rem;
         font-weight: 500;
         color: $dark; 
-        // height: 60%;
         background-color: $light !important;
         &:hover{
             background-color: $accent !important;
         }
     }
-}
-
-.logo-name {
-    display: inline;
-}
-
-.board-row{
-    @include flex-center(center);
 }
 
 .grid{
@@ -114,14 +90,9 @@ $text-font: "Fira Code", monospace;
     background-position: 100% 100%;
     padding-top: 5%;
     padding-bottom: 8%;
-}
-
-@include for-desktop-up(){
-    .grid{
-
-        background-image: url("../assets/xlaptop.svg");
+    .board-row{
+        @include flex-center(center);
     }
-    
 }
 
 .container2{
@@ -133,24 +104,6 @@ $text-font: "Fira Code", monospace;
     height: 100vh;
     background-color: rgb(237,220,195);
     @include reset();
-}
-
-@include for-phone-only(){
-    .btn.btn-primary{
-        &.btn-sm {
-            padding-left: 10px;
-            padding-right: 10px;
-            height: 60%;
-        }
-
-    }
-        
-   .grid{
-       background-image: url("../assets/mobile.svg");
-   }
-   .container2{
-       background-image: url("../assets/comingSoonIphone.svg");
-   }
 }
 
 .node {
@@ -186,13 +139,6 @@ $text-font: "Fira Code", monospace;
   }
 
 }
-
-.board-row::after {
-  clear: both;
-  content: "";
-  display: grid;
-}
-
 
 .footer {
     @include flex-center(space-evenly);
