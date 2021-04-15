@@ -172,12 +172,12 @@
   background: #f7f9fb;
   border: 1px solid grey;
   float: left;
-  line-height: 30px;
+  width: 30px;
   height: 30px;
+  line-height: 30px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
-  width: 30px;
 }
 
 .node.wall {
@@ -230,6 +230,11 @@
 }
 
 @media (max-width: 599px) {
+  .node {
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+  }
   .btn.btn-primary.btn-sm {
     padding-left: 10px;
     padding-right: 10px;

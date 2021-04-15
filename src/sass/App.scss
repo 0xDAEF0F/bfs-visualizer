@@ -95,12 +95,12 @@
   background: $light;
   border: 1px solid grey;
   float: left;
-  line-height: 30px;
+  width: 30px;
   height: 30px;
+  line-height: 30px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
-  width: 30px;
 
 //   &:hover{
 //     // opacity: 50%;
@@ -143,6 +143,11 @@
 }
 
 @include for-phone-only(){
+    .node{
+        width: 15px;
+  height: 15px;
+  line-height: 15px;
+    }
     .btn.btn-primary{
         &.btn-sm {
             padding-left: 10px;

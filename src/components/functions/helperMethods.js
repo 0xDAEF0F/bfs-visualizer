@@ -27,7 +27,7 @@ export function useWindowDimensions() {
 export function GetRowsCols() {
     const { width, height } = useWindowDimensions();
 
-    let tileW = 30;
+    let tileW = width > 600 ? 30 : 15;
     let rows = Math.floor((height * .8) / tileW);
     let cols = Math.floor((width * .8) / tileW);
 
