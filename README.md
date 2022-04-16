@@ -1,19 +1,6 @@
 
 👋👋👋👋👋👋👋
 
-This project's purpose is to help CS enthusiasts visualize:
-
-  ~ Pathfinding Algorithms.
-  
-  ~ Sorting Algorithms.
-  
-  ~ Famous recursion problems.
-
-The tools for this project are:
-
-  ~ ReactJS
-  
-  ~ CSS
-  
+Maze generator and path-finding algorithm project.
   
 Happy Coding!!!
