@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Flag, Trash2, Info, House } from "lucide-react";
-import Tippy from "@tippyjs/react";
-import { Tooltip } from "react-tippy";
 import Modal from "./Modal";
 
 function Toolbar(props) {
@@ -38,18 +36,9 @@ function Toolbar(props) {
       <Modal />
       <div className='toolbar'>
         <div>
-          <Tippy
-            className='tippy'
-            placement='bottom'
-            arrow={true}
-            visible={true}
-            content={customContent}
-            theme='light'
-          >
             <button className='toolbar-button' onClick={props.generateMaze}>
               <p>Generate Maze</p>
             </button>
-          </Tippy>
           <button
             className='toolbar-button svg'
             onClick={props.pickRandomStart}
