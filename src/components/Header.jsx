@@ -1,9 +1,7 @@
-import React from "react";
-
 function Header() {
   return (
-    <div className='header'>
-      <h1>Find the shortest path</h1>
+    <div className='flex items-center justify-center min-h-20'>
+      <h1 className="font-normal text-xl sm:text-2xl md:text-4xl">Find the shortest path</h1>
     </div>
   );
 }

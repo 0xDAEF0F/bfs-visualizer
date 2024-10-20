@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
-export default function Modal() {
+export default function Modal({ setIsTour }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDialog = () => setIsOpen(!isOpen);
 
-  return (
-    <div>
-      <button onClick={toggleDialog} className='open-button'>
-        Open Dialog
-      </button>
+  useEffect(() => {
+    const hasUserVisited = localStorage.getItem("hasUserVisited");
+    if (!hasUserVisited) {
+      localStorage.setItem("hasUserVisited", "true");
+      setIsOpen(true);
+      return;
+    }
+  }, []);
 
+  return (
+    <>
       {isOpen && (
         <div onClick={toggleDialog} className='dialog-overlay'>
           <div className='dialog'>
@@ -26,13 +31,19 @@ export default function Modal() {
               <button onClick={toggleDialog} className='skip-button'>
                 Skip
               </button>
-              <button onClick={() => {}} className='close-button'>
+              <button
+                onClick={() => {
+                  setIsTour(true);
+                  toggleDialog();
+                }}
+                className='close-button'
+              >
                 Start
               </button>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
