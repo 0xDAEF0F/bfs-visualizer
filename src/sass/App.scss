@@ -1,99 +1,128 @@
 @import "myStyles";
 
-.app {
-    position: relative;
-    height: 100vh;
-}
-@keyframes shortestPath {
-    0%{background-color: $primary;}   
-    50%{background-color: rgb(89, 154, 189);
-    border-radius: 3px;}   
-    100%{background-color: $primary;} 
-}
-@keyframes traversed {
-    0%{background-color: $info;}   
-    50%{background-color: rgb(83, 112, 67);}   
-    100%{background-color: $info;} 
+* {
+  font-family: "Orbitron", sans-serif;
+  color: #7f8b97;
 }
 
-.navbar{
-    background-color: $dark;
-    &-nav{
-        .nav-link:hover{
-            color: $light !important;
-        }
-    }
+.app {
+  position: relative;
+  min-height: 100vh;
+  background-color: $background;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 5rem;
+
+  h1 {
+    @include reset();
+    font-size: 2rem;
+    font-weight: 400;
+  }
 }
 
 .toolbar {
-    @include flex-center(space-evenly);
-    font-family: $text-font;
-    background-color: $primary;
-    height: 4rem;
+  @include flex-center(center);
+
+  div {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .button-text {
+    background: radial-gradient(
+      57.63% 57.63% at 45% 26%,
+      rgba(84, 86, 89, 0.5) 0%,
+      rgba(35, 38, 41, 0.5) 100%
+    );
+    border: 1px solid var($lin-1, rgba(0, 0, 0, 0.45));
+    padding: 0.5rem;
+    border-radius: 100px;
+    font-size: 0.5rem;
+  }
 }
 
-.btn-primary{
-    @include flex-center(center);
-    border-radius: 8px;
-    color: $light-dark;
-    background-color: $light !important;
-    border-color: $dark;
-    margin: 5px;
-    font-weight: 600;
-    font-size: .6rem;
-    border-width: 2px;
-    text-transform: none;
-    &.btn-sm{
-        padding: 11px 20px;
-    }
-    &:hover{
-        background-color: $accent !important;
-        color: $light  !important;
-        border-color: black;
-    }
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled):focus{
-        background-color: $light-dark !important;
-        color: $light;
-    }
-    &.dropdown-toggle{
-       font-size: .6rem;
-        font-weight: 500;
-        color: $dark; 
-        background-color: $light !important;
-        &:hover{
-            background-color: $accent !important;
-        }
-    }
+.svgs {
+  stroke-width: 1px;
+  width: 20px;
+  height: auto;
 }
 
-.grid{
-    @include flex-center(center);
-    flex-direction: column;
-    background-image: url("../assets/Artboard\ 7.svg");
-    background-repeat: no-repeat;
-    background-position: 100% 100%;
-    padding-top: 5%;
-    padding-bottom: 8%;
-    .board-row{
-        @include flex-center(center);
-    }
-}
+.toolbar-button {
+  @include reset();
+  border-radius: 9999px;
+  background: radial-gradient(
+    57.63% 57.63% at 45% 26%,
+    rgba(84, 86, 89, 0.5) 0%,
+    rgba(35, 38, 41, 0.5) 100%
+  );
+  border: 1px solid #1f2224;
 
-.container2{
-    background-image: url("../assets/comingSoon.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 50% 50%;
-    width: 100%;
-    height: 100vh;
-    background-color: rgb(237,220,195);
+  &.svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  p {
     @include reset();
+    font-size: 0.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+.button-svg {
+  background: radial-gradient(
+    57.63% 57.63% at 45% 26%,
+    rgba(84, 86, 89, 0.5) 0%,
+    rgba(35, 38, 41, 0.5) 100%
+  );
+  border: 1px solid var($lin-1, rgba(0, 0, 0, 0.45));
+  border-radius: 100px;
+  font-size: 14px;
+  color: #7f8b97;
+}
+
+.grid {
+  @include flex-center(center);
+  flex-direction: column;
+  background: $background;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  padding: 2rem 0;
+  .board-row {
+    @include flex-center(center);
+  }
+}
+
+.modal {
+  position: relative;
+  z-index: 50;
+
+  :nth-child(1) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    position: fixed;
+    inset: 0px;
+    width: 100vw;
+  }
+}
+
+.dialog-panel {
+  max-width: 32rem;
+  margin-top: 1rem;
+  border-width: 1px;
+  background: white;
+  padding: 3rem;
 }
 
 .node {
-  background: $light;
-  border: 1px solid grey;
+  background: #303438;
+  border: 1px solid #191b1d;
   float: left;
   width: 30px;
   height: 30px;
@@ -102,72 +131,77 @@
   margin-top: -1px;
   padding: 0;
 
-//   &:hover{
-//     // opacity: 50%;
-//   }
-
-  &.wall{
-    background-color: $dark;
+  &.wall {
+    background: #1f2224;
   }
   &.start {
-      background-color: $accent;
+    background: #0c86ff;
   }
-  
+
   &.goal {
-      background-color: #b37c36;
+    background: #ff9a34;
   }
-  
+
   &.traversed {
-      background-color: $info;
-      animation-name: traversed;
-      animation-duration: .2s;
-  }
-  
-  &.shortest-path{
-      background-color: $primary;
-      animation-name: shortestPath;
-      animation-duration: 1.5s;
+    background: #3f5462;
+    animation-name: traversed;
+    animation-duration: 0.2s;
   }
 
+  &.shortest-path {
+    background: #3f5462;
+    animation-name: shortestPath;
+    animation-duration: 1.5s;
+  }
 }
 
-.footer {
-    @include flex-center(space-evenly);
-    font-family: $text-font;
-    background-color: #24305e;
-    color: #fff;
-    height: 3rem;
-    p{
-        @include reset();
+@include for-phone-only() {
+  .header {
+    h1 {
+      font-size: 1.5rem;
     }
+
+    .logo {
+      display: none;
+    }
+  }
+
+  .node {
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+  }
 }
 
-@include for-phone-only(){
-    .node{
-        width: 15px;
-  height: 15px;
-  line-height: 15px;
+@include for-tablet-portrait-up() {
+  .header {
+    h1 {
+      font-size: 2rem;
     }
-    .btn.btn-primary{
-        &.btn-sm {
-            padding-left: 10px;
-            padding-right: 10px;
-            height: 60%;
-        }
-
-    }
-        
-   .grid{
-       background-image: url("../assets/mobile.svg");
-   }
-   .container2{
-       background-image: url("../assets/comingSoonIphone.svg");
-   }
+  }
 }
 
-@include for-big-desktop-up(){
-    .grid{
+@keyframes shortestPath {
+  0% {
+    background-color: $primary;
+  }
+  50% {
+    background-color: rgb(89, 154, 189);
+    border-radius: 3px;
+  }
+  100% {
+    background-color: $primary;
+  }
+}
 
-        background-image: url("../assets/xlaptop.svg");
-    }
+@keyframes traversed {
+  0% {
+    background-color: $info;
+  }
+  50% {
+    background-color: rgb(83, 112, 67);
+  }
+  100% {
+    background-color: $info;
+  }
 }

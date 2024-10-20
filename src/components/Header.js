@@ -1,21 +1,11 @@
-import React from 'react';
-import {  Navbar } from "react-bootstrap";
-import { ReactComponent as Logo } from "../assets/logo.svg";
+import React from "react";
 
 function Header() {
-
-    return (
-        <Navbar className='navbar-dark' expand='md'>
-            <Navbar.Brand href='/' style={{
-                padding: 0,
-            }}>
-                <Logo
-                    alt="logo"
-                />
-                algosolver
-            </Navbar.Brand>
-        </Navbar>
-    )
+  return (
+    <div className='header'>
+      <h1>Find the shortest path</h1>
+    </div>
+  );
 }
 
-export default Header
+export default Header;
