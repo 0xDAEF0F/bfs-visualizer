@@ -197,11 +197,13 @@ function Grid() {
             mazeRunning
           )
         }
-        startBfs={() =>
-          !startNode || !endNode
-            ? alert("👮‍♂️Pick a Start and a Goal Node👮‍♀️‍️")
-            : bfsAnimate()
-        }
+        startBfs={async () => {
+          if (!startNode || !endNode) {
+            alert("👮‍♂️Pick a Start and a Goal Node👮‍♀️‍️");
+            return;
+          }
+          await bfsAnimate();
+        }}
       />
       <div
         onMouseDown={() => {

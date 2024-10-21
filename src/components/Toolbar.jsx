@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Flag, Trash2, Info, House } from "lucide-react";
-import Modal from "./Modal";
+import { Flag, Trash2, House, Info } from "lucide-react";
 import { Tooltip } from "react-tooltip";
+import Modal from "./Modal";
 
 function Toolbar(props) {
   const [isTour, setIsTour] = useState(false);
   const [step, setStep] = useState(0);
+
+  let timeout;
 
   return (
     <>
@@ -14,9 +16,13 @@ function Toolbar(props) {
         <div>
           <button
             className='generate-maze toolbar-button'
-            onClick={() => {
-              props.generateMaze();
-              if (isTour) setStep(1);
+            onClick={async () => {
+              setStep(Infinity);
+              await props.generateMaze();
+              if (isTour) {
+                clearTimeout(timeout);
+                setStep(1);
+              }
             }}
           >
             <p>Generate maze</p>
@@ -24,7 +30,7 @@ function Toolbar(props) {
           <Tooltip
             isOpen={isTour && step === 0}
             afterShow={() => {
-              setTimeout(() => setStep(undefined), 3000);
+              timeout = setTimeout(() => setStep(undefined), 5000);
             }}
             className='text-xs font-sans'
             place='bottom'
@@ -36,7 +42,11 @@ function Toolbar(props) {
             className='home toolbar-button svg flex items-center justify-center'
             onClick={() => {
               props.pickRandomStart();
-              if (isTour) setStep(2);
+              if (isTour) {
+                if (step !== 1) setIsTour(false);
+                clearTimeout(timeout);
+                setStep(2);
+              }
             }}
           >
             <House className='stroke-1 w-5 h-auto' />
@@ -44,7 +54,7 @@ function Toolbar(props) {
           <Tooltip
             isOpen={isTour && step === 1}
             afterShow={() => {
-              setTimeout(() => setStep(undefined), 3000);
+              timeout = setTimeout(() => setStep(undefined), 5000);
             }}
             className='text-xs font-sans'
             place='bottom'
@@ -56,7 +66,11 @@ function Toolbar(props) {
             className='goal toolbar-button svg flex items-center justify-center'
             onClick={() => {
               props.pickRandomEnd();
-              if (isTour) setStep(3);
+              if (isTour) {
+                if (step !== 2) setIsTour(false);
+                clearTimeout(timeout);
+                setStep(3);
+              }
             }}
           >
             <Flag className='stroke-1 w-5 h-auto' />
@@ -64,7 +78,7 @@ function Toolbar(props) {
           <Tooltip
             isOpen={isTour && step === 2}
             afterShow={() => {
-              setTimeout(() => setStep(undefined), 3000);
+              timeout = setTimeout(() => setStep(undefined), 5000);
             }}
             className='text-xs font-sans'
             place='bottom'
@@ -74,14 +88,17 @@ function Toolbar(props) {
 
           <button
             className='clear-grid toolbar-button svg flex items-center justify-center'
-            onClick={props.clearGrid}
+            onClick={() => {
+              props.clearGrid();
+              if (isTour && step !== 4) setIsTour(false);
+            }}
           >
             <Trash2 className='stroke-1 w-5 h-auto' />
           </button>
           <Tooltip
             isOpen={isTour && step === 4}
             afterShow={() => {
-              setTimeout(() => setStep(undefined), 3000);
+              timeout = setTimeout(() => setIsTour(false), 5000);
             }}
             className='text-xs font-sans'
             place='bottom'
@@ -91,9 +108,14 @@ function Toolbar(props) {
 
           <button
             className='bfs toolbar-button'
-            onClick={() => {
-              props.startBfs();
-              if (isTour) setStep(4);
+            onClick={async () => {
+              setStep(Infinity);
+              await props.startBfs();
+              if (isTour) {
+                if (step !== 3) setIsTour(false);
+                clearTimeout(timeout);
+                setStep(4);
+              }
             }}
           >
             <p>Breadth First Search</p>
@@ -101,7 +123,7 @@ function Toolbar(props) {
           <Tooltip
             isOpen={isTour && step === 3}
             afterShow={() => {
-              setTimeout(() => setStep(undefined), 3000);
+              timeout = setTimeout(() => setStep(undefined), 5000);
             }}
             className='text-xs font-sans'
             place='bottom'
