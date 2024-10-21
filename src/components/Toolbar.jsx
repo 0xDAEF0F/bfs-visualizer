@@ -19,10 +19,10 @@ function Toolbar(props) {
   return (
     <>
       <Modal setIsTour={setIsTour} />
-      <div className='toolbar'>
-        <div>
+      <div className="toolbar">
+        <div className="mx-10 flex flex-wrap gap-2 gap-y-3 md:gap-4">
           <button
-            className='generate-maze toolbar-button'
+            className="generate-maze toolbar-button h-10"
             onClick={async () => {
               setStep(Infinity);
               await props.generateMaze();
@@ -32,21 +32,21 @@ function Toolbar(props) {
               }
             }}
           >
-            <p>Generate maze</p>
+            <p className="px-3 text-xs">Generate maze</p>
           </button>
           <Tooltip
             isOpen={isTour && step === 0}
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
-            className='text-xs font-sans'
-            place='bottom'
-            anchorSelect='.generate-maze'
-            content='Click “generate maze” to create a maze.'
+            className="font-sans text-xs"
+            place="bottom"
+            anchorSelect=".generate-maze"
+            content="Click “generate maze” to create a maze."
           />
 
           <button
-            className='home toolbar-button svg flex items-center justify-center'
+            className="home toolbar-button flex h-10 w-10 items-center justify-center"
             onClick={() => {
               setButtonStates((prev) => ({ ...prev, pickStart: true }));
               props.pickRandomStart();
@@ -58,9 +58,7 @@ function Toolbar(props) {
             }}
           >
             <House
-              className={`${
-                buttonStates.pickStart ? "stroke-[#0C86FF]" : ""
-              } stroke-1 w-5 h-auto`}
+              className={`${buttonStates.pickStart && "stroke-[#0C86FF]"} h-auto w-5 stroke-1`}
             />
           </button>
           <Tooltip
@@ -68,14 +66,14 @@ function Toolbar(props) {
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
-            className='text-xs font-sans'
-            place='bottom'
-            anchorSelect='.home'
-            content='Pick a starting point.'
+            className="font-sans text-xs"
+            place="bottom"
+            anchorSelect=".home"
+            content="Pick a starting point."
           />
 
           <button
-            className='goal toolbar-button svg flex items-center justify-center'
+            className="goal toolbar-button flex h-10 w-10 items-center justify-center"
             onClick={() => {
               setButtonStates((prev) => ({ ...prev, pickGoal: true }));
               props.pickRandomEnd();
@@ -87,9 +85,7 @@ function Toolbar(props) {
             }}
           >
             <Flag
-              className={`${
-                buttonStates.pickGoal && "stroke-[#FF9A34]"
-              } stroke-1 w-5 h-auto`}
+              className={`${buttonStates.pickGoal && "stroke-[#FF9A34]"} h-auto w-5 stroke-1`}
             />
           </button>
           <Tooltip
@@ -97,14 +93,14 @@ function Toolbar(props) {
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
-            className='text-xs font-sans'
-            place='bottom'
-            anchorSelect='.goal'
-            content='Pick a destination point.'
+            className="font-sans text-xs"
+            place="bottom"
+            anchorSelect=".goal"
+            content="Pick a destination point."
           />
 
           <button
-            className={`clear-grid toolbar-button svg flex items-center justify-center ${
+            className={`clear-grid toolbar-button active-stroke flex h-10 w-10 items-center justify-center active:border-[#B1000E] active:bg-clear-btn ${
               buttonStates.clearGrid && "bg-clear-btn"
             }`}
             onClick={() => {
@@ -118,9 +114,7 @@ function Toolbar(props) {
             }}
           >
             <Trash2
-              className={`${
-                buttonStates.clearGrid && "stroke-[#FFB5AE]"
-              } stroke-1 w-5 h-auto`}
+              className={`${buttonStates.clearGrid && "stroke-[#FFB5AE]"} h-auto w-5 stroke-1`}
             />
           </button>
           <Tooltip
@@ -128,14 +122,14 @@ function Toolbar(props) {
             afterShow={() => {
               timeout = setTimeout(() => setIsTour(false), 5000);
             }}
-            className='text-xs font-sans'
-            place='bottom'
-            anchorSelect='.clear-grid'
-            content='Click to clear the grid. Feel free to play around!'
+            className="font-sans text-xs"
+            place="bottom"
+            anchorSelect=".clear-grid"
+            content="Click to clear the grid. Feel free to play around!"
           />
 
           <button
-            className='bfs toolbar-button'
+            className={`bfs toolbar-button h-10 ${buttonStates.bfs && "bg-green-600"}`}
             onClick={async () => {
               setStep(Infinity);
               await props.startBfs();
@@ -147,17 +141,17 @@ function Toolbar(props) {
               }
             }}
           >
-            <p>Breadth First Search</p>
+            <p className="px-3 text-xs">Breadth First Search</p>
           </button>
           <Tooltip
             isOpen={isTour && step === 3}
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
-            className='text-xs font-sans'
-            place='bottom'
-            anchorSelect='.bfs'
-            content='Click to visualize BFS algorithm.'
+            className="font-sans text-xs"
+            place="bottom"
+            anchorSelect=".bfs"
+            content="Click to visualize BFS algorithm."
           />
         </div>
         {/* <Info style={{ marginLeft: "40px" }} /> */}
