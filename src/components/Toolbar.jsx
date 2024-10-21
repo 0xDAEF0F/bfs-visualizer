@@ -6,6 +6,13 @@ import Modal from "./Modal";
 function Toolbar(props) {
   const [isTour, setIsTour] = useState(false);
   const [step, setStep] = useState(0);
+  const [buttonStates, setButtonStates] = useState({
+    generateMaze: false,
+    pickStart: false,
+    pickGoal: false,
+    clearGrid: false,
+    bfs: false,
+  });
 
   let timeout;
 
@@ -41,6 +48,7 @@ function Toolbar(props) {
           <button
             className='home toolbar-button svg flex items-center justify-center'
             onClick={() => {
+              setButtonStates((prev) => ({ ...prev, pickStart: true }));
               props.pickRandomStart();
               if (isTour) {
                 if (step !== 1) setIsTour(false);
@@ -49,7 +57,11 @@ function Toolbar(props) {
               }
             }}
           >
-            <House className='stroke-1 w-5 h-auto' />
+            <House
+              className={`${
+                buttonStates.pickStart ? "stroke-[#0C86FF]" : ""
+              } stroke-1 w-5 h-auto`}
+            />
           </button>
           <Tooltip
             isOpen={isTour && step === 1}
@@ -65,6 +77,7 @@ function Toolbar(props) {
           <button
             className='goal toolbar-button svg flex items-center justify-center'
             onClick={() => {
+              setButtonStates((prev) => ({ ...prev, pickGoal: true }));
               props.pickRandomEnd();
               if (isTour) {
                 if (step !== 2) setIsTour(false);
@@ -73,7 +86,11 @@ function Toolbar(props) {
               }
             }}
           >
-            <Flag className='stroke-1 w-5 h-auto' />
+            <Flag
+              className={`${
+                buttonStates.pickGoal && "stroke-[#FF9A34]"
+              } stroke-1 w-5 h-auto`}
+            />
           </button>
           <Tooltip
             isOpen={isTour && step === 2}
@@ -87,13 +104,24 @@ function Toolbar(props) {
           />
 
           <button
-            className='clear-grid toolbar-button svg flex items-center justify-center'
+            className={`clear-grid toolbar-button svg flex items-center justify-center ${
+              buttonStates.clearGrid && "bg-clear-btn"
+            }`}
             onClick={() => {
               props.clearGrid();
+              setButtonStates((prev) => {
+                let curr = { ...prev };
+                for (let key in curr) curr[key] = false;
+                return curr;
+              });
               if (isTour && step !== 4) setIsTour(false);
             }}
           >
-            <Trash2 className='stroke-1 w-5 h-auto' />
+            <Trash2
+              className={`${
+                buttonStates.clearGrid && "stroke-[#FFB5AE]"
+              } stroke-1 w-5 h-auto`}
+            />
           </button>
           <Tooltip
             isOpen={isTour && step === 4}
@@ -115,6 +143,7 @@ function Toolbar(props) {
                 if (step !== 3) setIsTour(false);
                 clearTimeout(timeout);
                 setStep(4);
+                setButtonStates((prev) => ({ ...prev, clearGrid: true }));
               }
             }}
           >
