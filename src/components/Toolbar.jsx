@@ -24,6 +24,15 @@ function Toolbar(props) {
           <button
             className="generate-maze toolbar-button h-10"
             onClick={async () => {
+              if (step === 4 && isTour) {
+                setButtonStates((prev) => {
+                  const newSt = { ...prev };
+                  newSt.pickStart = false;
+                  newSt.pickGoal = false;
+                  newSt.clearGrid = false;
+                  return newSt;
+                });
+              }
               setStep(Infinity);
               await props.generateMaze();
               if (isTour) {
@@ -48,6 +57,15 @@ function Toolbar(props) {
           <button
             className="home toolbar-button flex h-10 w-10 items-center justify-center"
             onClick={() => {
+              if (step === 4 && isTour) {
+                setButtonStates((prev) => {
+                  const newSt = { ...prev };
+                  newSt.pickStart = true;
+                  newSt.pickGoal = false;
+                  newSt.clearGrid = false;
+                  return newSt;
+                });
+              }
               setButtonStates((prev) => ({ ...prev, pickStart: true }));
               props.pickRandomStart();
               if (isTour) {
@@ -75,6 +93,15 @@ function Toolbar(props) {
           <button
             className="goal toolbar-button flex h-10 w-10 items-center justify-center"
             onClick={() => {
+              if (step === 4 && isTour) {
+                setButtonStates((prev) => {
+                  const newSt = { ...prev };
+                  newSt.pickStart = true;
+                  newSt.pickGoal = true;
+                  newSt.clearGrid = false;
+                  return newSt;
+                });
+              }
               setButtonStates((prev) => ({ ...prev, pickGoal: true }));
               props.pickRandomEnd();
               if (isTour) {
@@ -131,6 +158,15 @@ function Toolbar(props) {
           <button
             className={`bfs toolbar-button h-10 ${buttonStates.bfs && "bg-green-600"}`}
             onClick={async () => {
+              if (step === 4 && isTour) {
+                setButtonStates((prev) => {
+                  const newSt = { ...prev };
+                  newSt.pickStart = true;
+                  newSt.pickGoal = true;
+                  newSt.clearGrid = false;
+                  return newSt;
+                });
+              }
               setStep(Infinity);
               await props.startBfs();
               if (isTour) {
