@@ -10,9 +10,7 @@ function getWindowDimensions() {
 }
 
 export function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   useEffect(() => {
     function handleResize() {
@@ -30,8 +28,10 @@ export function GetRowsCols() {
   const { width, height } = useWindowDimensions();
 
   let tileW = width > 600 ? 30 : 15;
-  let rows = Math.floor((height * 0.8) / tileW);
-  let cols = Math.floor((width * 0.8) / tileW);
+  let pctRows = width > 600 ? 0.8 : 0.72;
+  let pctCols = width > 600 ? 0.8 : 0.95;
+  let rows = Math.floor((height * pctRows) / tileW);
+  let cols = Math.floor((width * pctCols) / tileW);
 
   return [rows, cols];
 }
@@ -74,14 +74,7 @@ export function allPathCoord(wallState, filtered = true) {
     .filter((row) => row.length > 0);
 }
 
-export function pickRandomFreeNode(
-  wallState,
-  setter,
-  refs,
-  path,
-  algoRunning,
-  mazeRunning
-) {
+export function pickRandomFreeNode(wallState, setter, refs, path, algoRunning, mazeRunning) {
   if (algoRunning || mazeRunning) {
     return;
   }

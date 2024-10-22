@@ -65,7 +65,7 @@
 
 .app {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   background-color: #2a2d32;
 }
 
@@ -88,9 +88,6 @@
 }
 
 .toolbar-button {
-  margin: 0;
-  padding: 0;
-  border-radius: 9999px;
   background: radial-gradient(
     57.63% 57.63% at 45% 26%,
     rgba(84, 86, 89, 0.5) 0%,

@@ -32,7 +32,7 @@ function Grid() {
   const [walls, setWalls] = useState(matrix);
   const [finalPath, setFinalPath] = useState(undefined);
   // DOM Refs
-  const refCollection = useRef(matrix.map((rows) => rows.map((_) => React.createRef())));
+  const refCollection = useRef(matrix.map((rows) => rows.map(() => React.createRef())));
   // Async
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -144,6 +144,7 @@ function Grid() {
   return (
     <>
       <Toolbar
+        mazeOrAlgoRunning={algoRunning || mazeRunning}
         generateMaze={createMazeAndAnimate}
         clearGrid={() => {
           if (algoRunning || mazeRunning) {
@@ -180,6 +181,7 @@ function Grid() {
           await bfsAnimate();
         }}
       />
+
       <div
         onMouseDown={() => {
           setIsMouseDown(true);
@@ -189,7 +191,7 @@ function Grid() {
           setIsChoosingStart(false);
           setIsChoosingEnd(false);
         }}
-        className="flex flex-col items-center justify-center p-5"
+        className="flex flex-col items-center justify-center"
       >
         {grid.map((row, i) => (
           <div key={i} className="flex items-center justify-center">

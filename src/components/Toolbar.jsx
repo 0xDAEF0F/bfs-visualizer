@@ -4,6 +4,7 @@ import { Tooltip } from "react-tooltip";
 import Modal from "./Modal";
 
 function Toolbar(props) {
+  const { mazeOrAlgoRunning } = props;
   const [isTour, setIsTour] = useState(false);
   const [step, setStep] = useState(0);
   const [buttonStates, setButtonStates] = useState({
@@ -17,24 +18,26 @@ function Toolbar(props) {
   let timeout;
 
   return (
-    <>
+    <div className="mb-5 sm:mb-10">
       <Modal setIsTour={setIsTour} />
       <div className="toolbar">
         <div className="mx-10 flex flex-wrap gap-2 gap-y-3 md:gap-4">
           <button
-            className="generate-maze toolbar-button h-10"
+            className={`generate-maze toolbar-button h-10 rounded-full ${buttonStates.generateMaze && "border-white"}`}
             onClick={async () => {
-              if (step === 4 && isTour) {
-                setButtonStates((prev) => {
-                  const newSt = { ...prev };
-                  newSt.pickStart = false;
-                  newSt.pickGoal = false;
-                  newSt.clearGrid = false;
-                  return newSt;
-                });
-              }
+              setButtonStates((prev) => {
+                let curr = { ...prev };
+                for (let key in curr) curr[key] = false;
+                curr.generateMaze = true;
+                return curr;
+              });
               setStep(Infinity);
               await props.generateMaze();
+              setButtonStates((prev) => {
+                let curr = { ...prev };
+                curr.generateMaze = false;
+                return curr;
+              });
               if (isTour) {
                 clearTimeout(timeout);
                 setStep(1);
@@ -59,8 +62,9 @@ function Toolbar(props) {
           </Tooltip>
 
           <button
-            className="home toolbar-button flex h-10 w-10 items-center justify-center"
+            className="home toolbar-button flex h-10 w-10 items-center justify-center rounded-full"
             onClick={() => {
+              if (mazeOrAlgoRunning) return;
               if (step === 4 && isTour) {
                 setButtonStates((prev) => {
                   const newSt = { ...prev };
@@ -97,8 +101,9 @@ function Toolbar(props) {
           />
 
           <button
-            className="goal toolbar-button flex h-10 w-10 items-center justify-center"
+            className="goal toolbar-button flex h-10 w-10 items-center justify-center rounded-full"
             onClick={() => {
+              if (mazeOrAlgoRunning) return;
               if (step === 4 && isTour) {
                 setButtonStates((prev) => {
                   const newSt = { ...prev };
@@ -135,17 +140,18 @@ function Toolbar(props) {
           />
 
           <button
-            className={`clear-grid toolbar-button active-stroke flex h-10 w-10 items-center justify-center active:border-[#B1000E] active:bg-clear-btn ${
+            className={`clear-grid toolbar-button active-stroke flex h-10 w-10 items-center justify-center rounded-full active:border-[#B1000E] active:bg-clear-btn ${
               buttonStates.clearGrid && "bg-clear-btn"
             }`}
             onClick={() => {
+              if (mazeOrAlgoRunning) return;
               props.clearGrid();
               setButtonStates((prev) => {
                 let curr = { ...prev };
                 for (let key in curr) curr[key] = false;
                 return curr;
               });
-              if (isTour && step !== 4) setIsTour(false);
+              setIsTour(false);
             }}
           >
             <Trash2
@@ -166,19 +172,20 @@ function Toolbar(props) {
           />
 
           <button
-            className={`bfs toolbar-button h-10 ${buttonStates.bfs && "bg-green-600"}`}
+            className={`bfs toolbar-button h-10 rounded-full ${buttonStates.bfs && "bg-green-600"}`}
             onClick={async () => {
-              if (step === 4 && isTour) {
-                setButtonStates((prev) => {
-                  const newSt = { ...prev };
-                  newSt.pickStart = true;
-                  newSt.pickGoal = true;
-                  newSt.clearGrid = false;
-                  return newSt;
-                });
-              }
+              setButtonStates((prev) => {
+                let curr = { ...prev };
+                curr.bfs = true;
+                return curr;
+              });
               setStep(Infinity);
               await props.startBfs();
+              setButtonStates((prev) => {
+                let curr = { ...prev };
+                curr.bfs = false;
+                return curr;
+              });
               if (isTour) {
                 if (step !== 3) setIsTour(false);
                 clearTimeout(timeout);
@@ -204,7 +211,7 @@ function Toolbar(props) {
         </div>
         {/* <Info style={{ marginLeft: "40px" }} /> */}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,8 +1,8 @@
 function Header() {
   return (
-    <div className="flex min-h-20 items-center justify-center">
-      <h1 className="text-2xl font-normal md:text-4xl">Find the shortest path</h1>
-    </div>
+    <h1 className="p-5 text-center text-2xl font-normal sm:p-7 md:text-4xl">
+      Find the shortest path
+    </h1>
   );
 }
 
