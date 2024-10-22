@@ -4,11 +4,7 @@ import React, { useRef, useState } from "react";
 import Node from "./Node";
 import Toolbar from "./Toolbar";
 // Functions
-import {
-  GetRowsCols,
-  fillMatrix,
-  pickRandomFreeNode,
-} from "./functions/helperMethods";
+import { GetRowsCols, fillMatrix, pickRandomFreeNode } from "./functions/helperMethods";
 import {
   turnToWall,
   isMovingStartEnd,
@@ -36,9 +32,7 @@ function Grid() {
   const [walls, setWalls] = useState(matrix);
   const [finalPath, setFinalPath] = useState(undefined);
   // DOM Refs
-  const refCollection = useRef(
-    matrix.map((rows) => rows.map((_) => React.createRef()))
-  );
+  const refCollection = useRef(matrix.map((rows) => rows.map((_) => React.createRef())));
   // Async
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -70,12 +64,7 @@ function Grid() {
           )
         }
         isMovingStartEnd={(bool) =>
-          isMovingStartEnd(
-            bool,
-            setIsMouseDown,
-            setIsChoosingEnd,
-            setIsChoosingStart
-          )
+          isMovingStartEnd(bool, setIsMouseDown, setIsChoosingEnd, setIsChoosingStart)
         }
         moveStartEnd={(bool, coord) =>
           moveStartEnd(
@@ -127,13 +116,7 @@ function Grid() {
     clearDrawnShortestPath(finalPath, refCollection);
     setAlgoRunning(true);
 
-    let [traversalOrder, shortestPath] = breadthFirstSearch(
-      walls,
-      startNode,
-      endNode,
-      rows,
-      cols
-    );
+    let [traversalOrder, shortestPath] = breadthFirstSearch(walls, startNode, endNode, rows, cols);
 
     traversalOrder.forEach(([y, x], i) => {
       setTimeout(() => {
@@ -153,8 +136,7 @@ function Grid() {
       }, i * 8);
     });
 
-    refCollection.current[endNode[0]][endNode[1]].current.className =
-      "node goal";
+    refCollection.current[endNode[0]][endNode[1]].current.className = "node goal";
     setFinalPath(shortestPath);
     setAlgoRunning(false);
   }
@@ -188,14 +170,7 @@ function Grid() {
           )
         }
         pickRandomEnd={() =>
-          pickRandomFreeNode(
-            walls,
-            setEndNode,
-            refCollection,
-            finalPath,
-            algoRunning,
-            mazeRunning
-          )
+          pickRandomFreeNode(walls, setEndNode, refCollection, finalPath, algoRunning, mazeRunning)
         }
         startBfs={async () => {
           if (!startNode || !endNode) {
@@ -214,10 +189,10 @@ function Grid() {
           setIsChoosingStart(false);
           setIsChoosingEnd(false);
         }}
-        className='grid'
+        className="flex flex-col items-center justify-center p-5"
       >
         {grid.map((row, i) => (
-          <div key={i} className='board-row'>
+          <div key={i} className="flex items-center justify-center">
             {row}
           </div>
         ))}
