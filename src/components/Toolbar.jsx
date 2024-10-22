@@ -45,14 +45,18 @@ function Toolbar(props) {
           </button>
           <Tooltip
             isOpen={isTour && step === 0}
+            opacity={1}
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
-            className="font-sans text-xs"
+            style={{ padding: "1rem 1.5rem" }}
             place="bottom"
             anchorSelect=".generate-maze"
-            content="Click “generate maze” to create a maze."
-          />
+          >
+            <p className="font-sans text-xs sm:text-sm">
+              Click “generate maze” {<br></br>} to create a maze.
+            </p>
+          </Tooltip>
 
           <button
             className="home toolbar-button flex h-10 w-10 items-center justify-center"
@@ -81,6 +85,8 @@ function Toolbar(props) {
           </button>
           <Tooltip
             isOpen={isTour && step === 1}
+            style={{ padding: "1rem 1.5rem" }}
+            opacity={1}
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
@@ -117,6 +123,8 @@ function Toolbar(props) {
           </button>
           <Tooltip
             isOpen={isTour && step === 2}
+            style={{ padding: "1rem 1.5rem" }}
+            opacity={1}
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
@@ -146,6 +154,8 @@ function Toolbar(props) {
           </button>
           <Tooltip
             isOpen={isTour && step === 4}
+            style={{ padding: "1rem 1.5rem" }}
+            opacity={1}
             afterShow={() => {
               timeout = setTimeout(() => setIsTour(false), 5000);
             }}
@@ -181,6 +191,8 @@ function Toolbar(props) {
           </button>
           <Tooltip
             isOpen={isTour && step === 3}
+            style={{ padding: "1rem 1.5rem" }}
+            opacity={1}
             afterShow={() => {
               timeout = setTimeout(() => setStep(undefined), 5000);
             }}
