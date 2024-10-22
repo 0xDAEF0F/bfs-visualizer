@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Flag, Trash2, House, Info } from "lucide-react";
 import { Tooltip } from "react-tooltip";
 import Modal from "./Modal";
+import ModalEnd from "./ModalEnd";
 
 function Toolbar(props) {
   const { mazeOrAlgoRunning } = props;
   const [isTour, setIsTour] = useState(false);
   const [step, setStep] = useState(0);
+  const [isOpenFinishModal, setIsOpenFinishModal] = useState(false);
   const [buttonStates, setButtonStates] = useState({
     generateMaze: false,
     pickStart: false,
@@ -20,6 +22,7 @@ function Toolbar(props) {
   return (
     <div className="mb-5 sm:mb-10">
       <Modal setIsTour={setIsTour} />
+      <ModalEnd isOpen={isOpenFinishModal} />
       <div className="toolbar">
         <div className="mx-10 flex flex-wrap gap-2 gap-y-3 md:gap-4">
           <button
@@ -33,12 +36,12 @@ function Toolbar(props) {
               });
               setStep(Infinity);
               await props.generateMaze();
-              setButtonStates((prev) => {
-                let curr = { ...prev };
-                curr.generateMaze = false;
-                return curr;
-              });
+              setButtonStates((prev) => ({ ...prev, generateMaze: false }));
               if (isTour) {
+                if (step !== 0) {
+                  setIsTour(false);
+                  return;
+                }
                 clearTimeout(timeout);
                 setStep(1);
               }
@@ -151,6 +154,9 @@ function Toolbar(props) {
                 for (let key in curr) curr[key] = false;
                 return curr;
               });
+              if (isTour && step === 4) {
+                setIsOpenFinishModal(true);
+              }
               setIsTour(false);
             }}
           >
@@ -168,26 +174,28 @@ function Toolbar(props) {
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".clear-grid"
-            content="Click to clear the grid. Feel free to play around!"
+            content="Click to clear the grid."
           />
 
           <button
             className={`bfs toolbar-button h-10 rounded-full ${buttonStates.bfs && "bg-green-600"}`}
             onClick={async () => {
-              setButtonStates((prev) => {
-                let curr = { ...prev };
-                curr.bfs = true;
-                return curr;
-              });
+              setButtonStates((prev) => ({
+                ...prev,
+                bfs: true,
+                clearGrid: step !== 3 ? false : prev.clearGrid,
+              }));
               setStep(Infinity);
               await props.startBfs();
-              setButtonStates((prev) => {
-                let curr = { ...prev };
-                curr.bfs = false;
-                return curr;
-              });
+              setButtonStates((prev) => ({
+                ...prev,
+                bfs: false,
+              }));
               if (isTour) {
-                if (step !== 3) setIsTour(false);
+                if (step !== 3) {
+                  setIsTour(false);
+                  return;
+                }
                 clearTimeout(timeout);
                 setStep(4);
                 setButtonStates((prev) => ({ ...prev, clearGrid: true }));
@@ -206,7 +214,7 @@ function Toolbar(props) {
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".bfs"
-            content="Click to visualize BFS algorithm."
+            content="Visualize BFS algorithm."
           />
         </div>
         {/* <Info style={{ marginLeft: "40px" }} /> */}

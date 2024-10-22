@@ -121,12 +121,12 @@ function Grid() {
     traversalOrder.forEach(([y, x], i) => {
       setTimeout(() => {
         refCollection.current[y][x].current.className = "node traversed";
-      }, i * 15);
+      }, i * 10);
     });
 
-    await delay(traversalOrder.length * 15);
+    await delay(traversalOrder.length * 10);
 
-    traversalOrder.forEach(([y, x], i) => {
+    traversalOrder.forEach(([y, x]) => {
       refCollection.current[y][x].current.className = "node";
     });
 

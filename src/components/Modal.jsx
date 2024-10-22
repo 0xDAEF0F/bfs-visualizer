@@ -19,7 +19,7 @@ export default function Modal({ setIsTour }) {
     <>
       {isOpen && (
         <div onClick={toggleDialog} className="dialog-overlay">
-          <div className="dialog">
+          <div onClick={(e) => e.stopPropagation()} className="dialog">
             <div className="flex items-center justify-end">
               <button type="button">
                 <X className="hover:stroke-[#939FAB]" onClick={toggleDialog} />
