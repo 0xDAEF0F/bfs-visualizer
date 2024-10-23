@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
-export default function Modal({ setIsTour }) {
+export default function Modal({ setStep }) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDialog = () => setIsOpen(!isOpen);
 
   useEffect(() => {
     const hasUserVisited = localStorage.getItem("hasUserVisited");
@@ -18,14 +16,14 @@ export default function Modal({ setIsTour }) {
   return (
     <>
       {isOpen && (
-        <div onClick={toggleDialog} className="dialog-overlay">
+        <div onClick={() => setIsOpen(false)} className="dialog-overlay">
           <div
             onClick={(e) => e.stopPropagation()}
             className="mx-5 w-full max-w-[500px] rounded-xl border border-[#C7C7C7]/45 bg-[#1f2224] px-5 pb-5 pt-[10px]"
           >
             <div className="flex items-center justify-end">
               <button type="button">
-                <X className="hover:stroke-[#939FAB]" onClick={toggleDialog} />
+                <X className="hover:stroke-[#939FAB]" onClick={() => setIsOpen(false)} />
               </button>
             </div>
             <div className="px-4 py-5 sm:px-8 sm:py-12">
@@ -35,13 +33,13 @@ export default function Modal({ setIsTour }) {
               </p>
             </div>
             <div className="flex items-center justify-end gap-3 font-sans text-xs">
-              <button onClick={toggleDialog} className="hover:text-[#939FAB]">
+              <button onClick={() => setIsOpen(false)} className="hover:text-[#939FAB]">
                 Skip
               </button>
               <button
                 onClick={() => {
-                  setIsTour(true);
-                  toggleDialog();
+                  setIsOpen(false);
+                  setStep(0);
                 }}
                 className="rounded-md bg-[#0477eb] px-4 py-1 font-light text-black hover:bg-[#1a85ee]"
               >

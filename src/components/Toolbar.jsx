@@ -6,55 +6,34 @@ import ModalEnd from "./ModalEnd";
 
 function Toolbar(props) {
   const { mazeOrAlgoRunning } = props;
-  const [isTour, setIsTour] = useState(false);
-  const [step, setStep] = useState(0);
-  const [isOpenFinishModal, setIsOpenFinishModal] = useState(false);
+  const [step, setStep] = useState();
   const [buttonStates, setButtonStates] = useState({
-    generateMaze: false,
     pickStart: false,
     pickGoal: false,
-    clearGrid: false,
     bfs: false,
   });
 
-  let timeout;
-
   return (
     <div className="mb-5 sm:mb-7">
-      <Modal setIsTour={setIsTour} />
-      <ModalEnd isOpen={isOpenFinishModal} />
+      <Modal setStep={setStep} />
+      <ModalEnd isOpen={step === 5} setIsOpen={setStep} />
       <div className="toolbar">
         <div className="mx-10 flex flex-wrap gap-2 gap-y-3 md:gap-4">
           <button
-            className={`generate-maze toolbar-button h-10 rounded-full ${buttonStates.generateMaze && "border-white"}`}
+            className={`generate-maze toolbar-button h-10 rounded-full focus:border-white`}
             onClick={async () => {
-              setButtonStates((prev) => {
-                let curr = { ...prev };
-                for (let key in curr) curr[key] = false;
-                curr.generateMaze = true;
-                return curr;
-              });
-              setStep(Infinity);
+              if (mazeOrAlgoRunning) return;
+              setButtonStates((p) => Object.fromEntries(Object.keys(p).map((k) => [k, false])));
               await props.generateMaze();
-              setButtonStates((prev) => ({ ...prev, generateMaze: false }));
-              if (isTour) {
-                if (step !== 0) {
-                  setIsTour(false);
-                  return;
-                }
-                clearTimeout(timeout);
-                setStep(1);
-              }
+              if (step === 0) setStep(1);
+              if (step !== 0) setStep(undefined);
             }}
           >
             <p className="px-3 text-xs">Generate maze</p>
           </button>
           <Tooltip
-            isOpen={isTour && step === 0}
+            isOpen={step === 0}
             opacity={1}
-            afterShow={() => {
-              timeout = setTimeout(() => setStep(undefined), 5000);
-            }}
             style={{ padding: "1rem 1.5rem" }}
             place="bottom"
             anchorSelect=".generate-maze"
@@ -68,22 +47,10 @@ function Toolbar(props) {
             className="home toolbar-button flex h-10 w-10 items-center justify-center rounded-full"
             onClick={() => {
               if (mazeOrAlgoRunning) return;
-              if (step === 4 && isTour) {
-                setButtonStates((prev) => {
-                  const newSt = { ...prev };
-                  newSt.pickStart = true;
-                  newSt.pickGoal = false;
-                  newSt.clearGrid = false;
-                  return newSt;
-                });
-              }
-              setButtonStates((prev) => ({ ...prev, pickStart: true }));
+              setButtonStates((p) => ({ ...p, pickStart: true }));
               props.pickRandomStart();
-              if (isTour) {
-                if (step !== 1) setIsTour(false);
-                clearTimeout(timeout);
-                setStep(2);
-              }
+              if (step === 1) setStep(2);
+              if (step !== 1) setStep(undefined);
             }}
           >
             <House
@@ -91,12 +58,9 @@ function Toolbar(props) {
             />
           </button>
           <Tooltip
-            isOpen={isTour && step === 1}
+            isOpen={step === 1}
             style={{ padding: "1rem 1.5rem" }}
             opacity={1}
-            afterShow={() => {
-              timeout = setTimeout(() => setStep(undefined), 5000);
-            }}
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".home"
@@ -107,22 +71,10 @@ function Toolbar(props) {
             className="goal toolbar-button flex h-10 w-10 items-center justify-center rounded-full"
             onClick={() => {
               if (mazeOrAlgoRunning) return;
-              if (step === 4 && isTour) {
-                setButtonStates((prev) => {
-                  const newSt = { ...prev };
-                  newSt.pickStart = true;
-                  newSt.pickGoal = true;
-                  newSt.clearGrid = false;
-                  return newSt;
-                });
-              }
-              setButtonStates((prev) => ({ ...prev, pickGoal: true }));
+              setButtonStates((p) => ({ ...p, pickGoal: true }));
               props.pickRandomEnd();
-              if (isTour) {
-                if (step !== 2) setIsTour(false);
-                clearTimeout(timeout);
-                setStep(3);
-              }
+              if (step === 2) setStep(3);
+              if (step !== 2) setStep(undefined);
             }}
           >
             <Flag
@@ -130,12 +82,9 @@ function Toolbar(props) {
             />
           </button>
           <Tooltip
-            isOpen={isTour && step === 2}
+            isOpen={step === 2}
             style={{ padding: "1rem 1.5rem" }}
             opacity={1}
-            afterShow={() => {
-              timeout = setTimeout(() => setStep(undefined), 5000);
-            }}
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".goal"
@@ -144,33 +93,22 @@ function Toolbar(props) {
 
           <button
             className={`clear-grid toolbar-button active-stroke flex h-10 w-10 items-center justify-center rounded-full active:border-[#B1000E] active:bg-clear-btn ${
-              buttonStates.clearGrid && "bg-clear-btn"
+              step == 4 && "bg-clear-btn"
             }`}
             onClick={() => {
               if (mazeOrAlgoRunning) return;
+              setButtonStates((p) => Object.fromEntries(Object.keys(p).map((k) => [k, false])));
               props.clearGrid();
-              setButtonStates((prev) => {
-                let curr = { ...prev };
-                for (let key in curr) curr[key] = false;
-                return curr;
-              });
-              if (isTour && step === 4) {
-                setIsOpenFinishModal(true);
-              }
-              setIsTour(false);
+              if (step === 4) setStep(5);
+              if (step !== 4) setStep(undefined);
             }}
           >
-            <Trash2
-              className={`${buttonStates.clearGrid && "stroke-[#FFB5AE]"} h-auto w-5 stroke-1`}
-            />
+            <Trash2 className={`${step === 4 && "stroke-[#FFB5AE]"} h-auto w-5 stroke-1`} />
           </button>
           <Tooltip
-            isOpen={isTour && step === 4}
+            isOpen={step === 4}
             style={{ padding: "1rem 1.5rem" }}
             opacity={1}
-            afterShow={() => {
-              timeout = setTimeout(() => setIsTour(false), 5000);
-            }}
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".clear-grid"
@@ -180,37 +118,20 @@ function Toolbar(props) {
           <button
             className={`bfs toolbar-button h-10 rounded-full ${buttonStates.bfs && "bg-green-600"}`}
             onClick={async () => {
-              setButtonStates((prev) => ({
-                ...prev,
-                bfs: true,
-                clearGrid: step !== 3 ? false : prev.clearGrid,
-              }));
-              setStep(Infinity);
+              if (mazeOrAlgoRunning) return;
+              setButtonStates((p) => ({ ...p, bfs: true }));
               await props.startBfs();
-              setButtonStates((prev) => ({
-                ...prev,
-                bfs: false,
-              }));
-              if (isTour) {
-                if (step !== 3) {
-                  setIsTour(false);
-                  return;
-                }
-                clearTimeout(timeout);
-                setStep(4);
-                setButtonStates((prev) => ({ ...prev, clearGrid: true }));
-              }
+              setButtonStates((p) => ({ ...p, bfs: false }));
+              if (step === 3) setStep(4);
+              if (step !== 3) setStep(undefined);
             }}
           >
             <p className="px-3 text-xs">Breadth First Search</p>
           </button>
           <Tooltip
-            isOpen={isTour && step === 3}
+            isOpen={step === 3}
             style={{ padding: "1rem 1.5rem" }}
             opacity={1}
-            afterShow={() => {
-              timeout = setTimeout(() => setStep(undefined), 5000);
-            }}
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".bfs"
