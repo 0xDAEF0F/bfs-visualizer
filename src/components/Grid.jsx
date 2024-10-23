@@ -191,7 +191,7 @@ function Grid() {
           setIsChoosingStart(false);
           setIsChoosingEnd(false);
         }}
-        className="flex flex-col items-center justify-center"
+        className="flex flex-col items-center justify-center md:pb-10"
       >
         {grid.map((row, i) => (
           <div key={i} className="flex items-center justify-center">

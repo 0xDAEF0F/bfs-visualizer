@@ -20,7 +20,7 @@ function Toolbar(props) {
   let timeout;
 
   return (
-    <div className="mb-5 sm:mb-10">
+    <div className="mb-5 sm:mb-7">
       <Modal setIsTour={setIsTour} />
       <ModalEnd isOpen={isOpenFinishModal} />
       <div className="toolbar">
