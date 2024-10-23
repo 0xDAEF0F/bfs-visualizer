@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flag, Trash2, House, Info } from "lucide-react";
+import { Flag, Trash2, House } from "lucide-react";
 import { Tooltip } from "react-tooltip";
 import Modal from "./Modal";
 import ModalEnd from "./ModalEnd";
@@ -217,7 +217,6 @@ function Toolbar(props) {
             content="Visualize BFS algorithm."
           />
         </div>
-        {/* <Info style={{ marginLeft: "40px" }} /> */}
       </div>
     </div>
   );
