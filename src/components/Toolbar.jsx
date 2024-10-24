@@ -20,7 +20,7 @@ function Toolbar(props) {
       <div className="toolbar">
         <div className="mx-10 flex flex-wrap gap-2 gap-y-3 md:gap-4">
           <button
-            className={`generate-maze toolbar-button h-10 rounded-full focus:border-white`}
+            className={`generate-maze toolbar-button h-10 rounded-full focus:border-white ${step === 0 && "animate-pulse"}`}
             onClick={async () => {
               if (mazeOrAlgoRunning) return;
               setButtonStates((p) => Object.fromEntries(Object.keys(p).map((k) => [k, false])));
@@ -35,6 +35,7 @@ function Toolbar(props) {
             isOpen={step === 0}
             opacity={1}
             style={{ padding: "1rem 1.5rem" }}
+            classNameArrow="my-tooltip-arrow"
             place="bottom"
             anchorSelect=".generate-maze"
           >
@@ -44,7 +45,7 @@ function Toolbar(props) {
           </Tooltip>
 
           <button
-            className="home toolbar-button flex h-10 w-10 items-center justify-center rounded-full"
+            className={`home toolbar-button flex h-10 w-10 items-center justify-center rounded-full ${step === 1 && "animate-pulse"}`}
             onClick={() => {
               if (mazeOrAlgoRunning) return;
               setButtonStates((p) => ({ ...p, pickStart: true }));
@@ -64,11 +65,12 @@ function Toolbar(props) {
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".home"
+            classNameArrow="my-tooltip-arrow"
             content="Pick a starting point."
           />
 
           <button
-            className="goal toolbar-button flex h-10 w-10 items-center justify-center rounded-full"
+            className={`goal toolbar-button flex h-10 w-10 items-center justify-center rounded-full ${step === 2 && "animate-pulse"}`}
             onClick={() => {
               if (mazeOrAlgoRunning) return;
               setButtonStates((p) => ({ ...p, pickGoal: true }));
@@ -87,13 +89,14 @@ function Toolbar(props) {
             opacity={1}
             className="font-sans text-xs"
             place="bottom"
+            classNameArrow="my-tooltip-arrow"
             anchorSelect=".goal"
             content="Pick a destination point."
           />
 
           <button
             className={`clear-grid toolbar-button active-stroke flex h-10 w-10 items-center justify-center rounded-full active:border-[#B1000E] active:bg-clear-btn ${
-              step == 4 && "bg-clear-btn"
+              step == 4 && "animate-pulse bg-clear-btn"
             }`}
             onClick={() => {
               if (mazeOrAlgoRunning) return;
@@ -110,13 +113,14 @@ function Toolbar(props) {
             style={{ padding: "1rem 1.5rem" }}
             opacity={1}
             className="font-sans text-xs"
+            classNameArrow="my-tooltip-arrow"
             place="bottom"
             anchorSelect=".clear-grid"
             content="Click to clear the grid."
           />
 
           <button
-            className={`bfs toolbar-button h-10 rounded-full ${buttonStates.bfs && "bg-green-600"}`}
+            className={`bfs toolbar-button h-10 rounded-full ${buttonStates.bfs && "bg-green-600"} ${step === 3 && "animate-pulse"}`}
             onClick={async () => {
               if (mazeOrAlgoRunning) return;
               setButtonStates((p) => ({ ...p, bfs: true }));
@@ -132,6 +136,7 @@ function Toolbar(props) {
             isOpen={step === 3}
             style={{ padding: "1rem 1.5rem" }}
             opacity={1}
+            classNameArrow="my-tooltip-arrow"
             className="font-sans text-xs"
             place="bottom"
             anchorSelect=".bfs"
