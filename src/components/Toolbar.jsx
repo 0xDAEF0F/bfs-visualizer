@@ -29,7 +29,7 @@ function Toolbar(props) {
               if (step !== 0) setStep(undefined);
             }}
           >
-            <p className="px-3 text-xs">Generate maze</p>
+            <p className={`px-3 text-xs ${step === 0 && "text-gray-200"}`}>Generate maze</p>
           </button>
           <Tooltip
             isOpen={step === 0}
@@ -55,7 +55,7 @@ function Toolbar(props) {
             }}
           >
             <House
-              className={`${buttonStates.pickStart && "stroke-[#0C86FF]"} h-auto w-5 stroke-1`}
+              className={`${buttonStates.pickStart && "stroke-[#0C86FF]"} ${step === 1 && "stroke-white"} h-auto w-5 stroke-1`}
             />
           </button>
           <Tooltip
@@ -80,7 +80,7 @@ function Toolbar(props) {
             }}
           >
             <Flag
-              className={`${buttonStates.pickGoal && "stroke-[#FF9A34]"} h-auto w-5 stroke-1`}
+              className={`${buttonStates.pickGoal && "stroke-[#FF9A34]"} ${step === 2 && "stroke-white"} h-auto w-5 stroke-1`}
             />
           </button>
           <Tooltip
@@ -130,7 +130,7 @@ function Toolbar(props) {
               if (step !== 3) setStep(undefined);
             }}
           >
-            <p className="px-3 text-xs">Breadth First Search</p>
+            <p className={`px-3 text-xs ${step === 3 && "text-gray-200"}`}>Breadth First Search</p>
           </button>
           <Tooltip
             isOpen={step === 3}
